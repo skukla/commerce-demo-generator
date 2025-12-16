@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 /**
- * BuildRight Data Pack Generator
+ * Commerce Datapack Generator
  * 
- * Generates a data pack compatible with the ACCS Data Importer.
- * Format aligned with vertical-data-citisignal/accs branch.
+ * Generates a datapack compatible with the ACCS Data Importer.
+ * Reads configuration and data from a project-specific data repository.
  * 
  * Output structure:
  *   - data/accs/*.json
@@ -21,29 +21,27 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Import generators
-import { generateStores } from '../stores/generate.js';
-import { generateCustomerGroups } from '../customers/generate-groups.js';
-import { generateAttributes, generateAttributeOptions } from '../attributes/generate.js';
-import { generateProducts } from '../products/generate.js';
-import { generateVariants } from '../products/generate-variants.js';
-import { generateCustomersWithDetails } from '../customers/generate.js';
-import { COMMERCE_CONFIG } from '#config/commerce-config';
-import { normalizeProductName } from '../products/name-normalizer.js';
-import { format, withSpinner, updateLine, finishLine } from '#shared/format';
+import { generateStores } from './stores.js';
+import { generateCustomerGroups } from './customer-groups.js';
+import { generateAttributes, generateAttributeOptions } from './attributes.js';
+import { generateProducts } from './products.js';
+import { generateVariants } from './product-variants.js';
+import { generateCustomersWithDetails } from './customers.js';
+import { PROJECT_CONFIG } from '../../config/project-config.js';
+import { normalizeProductName } from '../utils/name-normalizer.js';
+import { updateLine, finishLine } from '../utils/format.js';
 
 // Note: Pricing (tier prices, advanced pricing) is handled via ACO, not Commerce backend
 // Customer groups ARE managed in Commerce (for customer segmentation)
 
 // Output paths
-const OUTPUT_DIR = resolve(__dirname, '../output/buildright-datapack');
+const OUTPUT_DIR = PROJECT_CONFIG.paths.outputCommerce;
 const DATA_DIR = join(OUTPUT_DIR, 'data/accs');  // ACCS format files in data/accs/
 const MEDIA_DIR = join(OUTPUT_DIR, 'media/catalog/product');  // Magento product image structure
 
-// Source image paths (configurable via environment or defaults to local data directory)
-const EDS_IMAGES_PATH = process.env.PRODUCT_IMAGES_PATH 
-  ? resolve(process.env.PRODUCT_IMAGES_PATH)
-  : resolve(__dirname, '../../data/images/products');
-const IMAGE_MAPPING_PATH = join(EDS_IMAGES_PATH, 'IMAGE-PRODUCT-MAPPING.json');
+// Source image paths
+const IMAGES_PATH = join(PROJECT_CONFIG.paths.media, 'images/products');
+const IMAGE_MAPPING_PATH = join(IMAGES_PATH, 'IMAGE-PRODUCT-MAPPING.json');
 
 /**
  * Write JSON file with pretty formatting
@@ -83,7 +81,7 @@ function transformProductsToAccsFormat(products) {
         attribute_set_code: product.attribute_set_code || "Default",
         product_type: product.type_id || product.product_type || "simple",  // Preserve the original type_id
         categories: product.categories || [],
-        product_websites: [COMMERCE_CONFIG.websiteCode],
+        product_websites: [PROJECT_CONFIG.project.websiteCode],
         name: product.name,
         description: product.description || `<p>${product.name}</p>`,
         short_description: product.short_description || `<p>${product.name}</p>`,
@@ -145,7 +143,7 @@ function transformProductsToAccsFormat(products) {
 function transformCategoriesToAccsFormat(categories) {
   return {
     root_category: {
-      name: COMMERCE_CONFIG.ROOT_CATEGORY_NAME,
+      name: PROJECT_CONFIG.project.rootCategoryName,
       parent_id: 1,
       is_active: true,
       include_in_menu: false,
@@ -376,7 +374,7 @@ function splitArrayIntoChunks(array, chunkSize) {
  * Gracefully handles missing images directory
  */
 function copyProductImages(mediaDir) {
-  if (!existsSync(EDS_IMAGES_PATH)) {
+  if (!existsSync(IMAGES_PATH)) {
     // Images directory doesn't exist - this is OK, images are optional
     return 0;
   }
@@ -390,7 +388,7 @@ function copyProductImages(mediaDir) {
   let copiedCount = 0;
 
   for (const imageInfo of mapping.mapping || []) {
-    const sourcePath = join(EDS_IMAGES_PATH, imageInfo.newFilename);
+    const sourcePath = join(IMAGES_PATH, imageInfo.newFilename);
     if (existsSync(sourcePath)) {
       try {
         // Preserve original filename and extension (supports .jpg, .jpeg, .png)
@@ -421,7 +419,7 @@ function copyProductImages(mediaDir) {
  * Gracefully handles missing images
  */
 function generateProductImagesJson(products) {
-  if (!existsSync(EDS_IMAGES_PATH) || !existsSync(IMAGE_MAPPING_PATH)) {
+  if (!existsSync(IMAGES_PATH) || !existsSync(IMAGE_MAPPING_PATH)) {
     // Images not configured - this is OK, images are optional
     return [];
   }
@@ -437,7 +435,7 @@ function generateProductImagesJson(products) {
   }
 
       for (const imageInfo of mapping.mapping || []) {
-    const imagePath = join(EDS_IMAGES_PATH, imageInfo.newFilename);
+    const imagePath = join(IMAGES_PATH, imageInfo.newFilename);
     if (existsSync(imagePath)) {
       try {
         // Match image to product by normalized name
@@ -605,24 +603,15 @@ async function generateDataPack() {
 
   // Create zip file
   console.log('');
-  const zipFileName = 'buildright-datapack.zip';
-  const zipFilePath = resolve(__dirname, '../output', zipFileName);
-  
-  await withSpinner('Creating zip file...', async () => {
-    if (existsSync(zipFilePath)) {
-      rmSync(zipFilePath);
-    }
-    
-    execSync(`cd "${OUTPUT_DIR}" && zip -r "${zipFilePath}" data media`, { stdio: 'pipe' });
-  });
-  
   console.log(chalk.green(`✔ Data generation complete!`));
+  console.log(`\n📍 Output Location:`);
+  console.log(`   ${OUTPUT_DIR}`);
   console.log('');
 }
 
 // Run generator
 generateDataPack().catch(error => {
-  console.error(format.error(`Generation failed: ${error.message}`));
+  console.error(chalk.red(`✖ Generation failed: ${error.message}`));
   console.error(error.stack);
   process.exit(1);
 });

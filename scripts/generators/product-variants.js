@@ -4,10 +4,10 @@
  * Commerce is the source of truth (reads from product-definitions.js)
  */
 
-import { PRODUCT_CATEGORIES, BRANDS, BRANDS_BY_CATEGORY } from './product-definitions.js';
-import { SeededRandom } from '#shared/seeded-random';
-import { generateProductDescription, generateShortDescription } from './description-generator.js';
-import { generateHash, generateUrlKey } from './utils.js';
+import { PRODUCT_CATEGORIES, BRANDS, BRANDS_BY_CATEGORY } from '../utils/product-definitions.js';
+import { SeededRandom } from '../utils/seeded-random.js';
+import { generateProductDescription, generateShortDescription } from '../utils/description-generator.js';
+import { generateHash, generateUrlKey } from '../utils/product-utils.js';
 
 /**
  * Generate SKU for configurable product

@@ -1,33 +1,21 @@
 /**
- * Product definitions for BuildRight ACO product generation
+ * Product definitions for Commerce product generation
  * 
- * Loaded from JSON configuration files
- * Source: data/products/*.json
+ * Loaded from PROJECT_CONFIG which reads from data repository
+ * Source: {data-repo}/definitions/products/*.json
  * 
  * To update product catalog, brands, or units:
- * Edit the JSON files in data/products/
+ * Edit the JSON files in the data repository's definitions/products/ directory
  */
 
-import { readFileSync } from 'fs';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
+import { PROJECT_CONFIG } from '../../config/project-config.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+// Load brands from PROJECT_CONFIG
+export const BRANDS_BY_CATEGORY = PROJECT_CONFIG.brands.categorySpecific;
+export const BRANDS = PROJECT_CONFIG.brands.generic;
 
-// Load brands (category-specific + generic)
-const brandsData = JSON.parse(
-  readFileSync(join(__dirname, '../../data/products/brands.json'), 'utf-8')
-);
+// Load units of measure from PROJECT_CONFIG
+export const UNITS_OF_MEASURE = PROJECT_CONFIG.units;
 
-export const BRANDS_BY_CATEGORY = brandsData.categorySpecific;
-export const BRANDS = brandsData.generic;
-
-// Load units of measure
-export const UNITS_OF_MEASURE = JSON.parse(
-  readFileSync(join(__dirname, '../../data/products/units.json'), 'utf-8')
-);
-
-// Load product catalog
-export const PRODUCT_CATEGORIES = JSON.parse(
-  readFileSync(join(__dirname, '../../data/products/catalog.json'), 'utf-8')
-);
+// Load product catalog from PROJECT_CONFIG
+export const PRODUCT_CATEGORIES = PROJECT_CONFIG.productCatalog;

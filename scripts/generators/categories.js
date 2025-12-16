@@ -3,7 +3,9 @@
  * Generates categories.json for module-data-install
  */
 
-import { CATEGORY_TREE } from '#config/commerce-config';
+import { PROJECT_CONFIG } from '../../config/project-config.js';
+
+const CATEGORY_TREE = PROJECT_CONFIG.categoryTree;
 
 /**
  * Flatten category tree into array format expected by Data Installer

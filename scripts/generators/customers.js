@@ -3,7 +3,9 @@
  * Generates customers.json for module-data-install
  */
 
-import { DEMO_CUSTOMERS } from '#config/commerce-config';
+import { PROJECT_CONFIG } from '../../config/project-config.js';
+
+const DEMO_CUSTOMERS = PROJECT_CONFIG.demoCustomers;
 
 /**
  * Generate customers in Data Installer JSON format

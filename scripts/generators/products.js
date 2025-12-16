@@ -5,10 +5,10 @@
  * This makes Commerce the source of truth for catalog data.
  */
 
-import { SeededRandom } from '#shared/seeded-random';
-import { PRODUCT_CATEGORIES, BRANDS, BRANDS_BY_CATEGORY, UNITS_OF_MEASURE } from './product-definitions.js';
-import { generateProductDescription, generateShortDescription } from './description-generator.js';
-import { generateHash, generateUrlKey } from './utils.js';
+import { SeededRandom } from '../utils/seeded-random.js';
+import { PRODUCT_CATEGORIES, BRANDS, BRANDS_BY_CATEGORY, UNITS_OF_MEASURE } from '../utils/product-definitions.js';
+import { generateProductDescription, generateShortDescription } from '../utils/description-generator.js';
+import { generateHash, generateUrlKey } from '../utils/product-utils.js';
 
 const SEED = 12345; // Fixed seed for deterministic output
 const random = new SeededRandom(SEED);

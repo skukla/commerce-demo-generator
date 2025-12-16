@@ -3,7 +3,9 @@
  * Generates attributes.json and attribute_options.json for module-data-install
  */
 
-import { PRODUCT_ATTRIBUTES } from '#config/commerce-config';
+import { PROJECT_CONFIG } from '../../config/project-config.js';
+
+const PRODUCT_ATTRIBUTES = PROJECT_CONFIG.productAttributes;
 
 /**
  * Map frontend input types to backend types

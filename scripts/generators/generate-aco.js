@@ -24,15 +24,16 @@ import { promises as fs } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import chalk from 'chalk';
-import { updateLine, finishLine } from '#shared/format';
+import { updateLine, finishLine } from '../utils/format.js';
+import { PROJECT_CONFIG } from '../../config/project-config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Paths
-const COMMERCE_DATAPACK = join(__dirname, '../output/buildright-datapack/data/accs/accs_products.json');
-const COMMERCE_ATTRIBUTES = join(__dirname, '../output/buildright-datapack/data/accs/accs_product_attributes.json');
-const ACO_OUTPUT_DIR = join(__dirname, '../output/aco-format');
+const COMMERCE_DATAPACK = join(PROJECT_CONFIG.paths.outputCommerce, 'data/accs/accs_products.json');
+const COMMERCE_ATTRIBUTES = join(PROJECT_CONFIG.paths.outputCommerce, 'data/accs/accs_product_attributes.json');
+const ACO_OUTPUT_DIR = PROJECT_CONFIG.paths.outputAco;
 const ACO_PRODUCTS_FILE = join(ACO_OUTPUT_DIR, 'products.json');
 const ACO_VARIANTS_FILE = join(ACO_OUTPUT_DIR, 'variants.json');
 const ACO_METADATA_FILE = join(ACO_OUTPUT_DIR, 'metadata.json');

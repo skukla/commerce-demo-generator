@@ -10,30 +10,27 @@
  * @see https://github.com/PMET-public/module-data-install
  */
 
-import { COMMERCE_CONFIG } from '#config/commerce-config';
+import { PROJECT_CONFIG } from '../../config/project-config.js';
 
 /**
  * Generate stores configuration in data-install format
  * @returns {Array} Array of store configuration objects (one row per store view)
  */
 export function generateStores() {
-  const websiteCode = COMMERCE_CONFIG.websiteCode || 'buildright';
-  const storeCode = COMMERCE_CONFIG.storeCode || 'buildright_store';
-  const storeViewCode = COMMERCE_CONFIG.storeViewCode || 'buildright_us';
-  const rootCategory = COMMERCE_CONFIG.ROOT_CATEGORY_NAME || 'BuildRight';
+  const project = PROJECT_CONFIG.project;
   
   // Format matches stores.csv - one row per store view
   return [
     {
-      site_code: websiteCode,
-      site_name: 'BuildRight Website',
+      site_code: project.websiteCode,
+      site_name: `${project.displayName} Website`,
       site_order: 0,
-      store_code: storeCode,
-      store_name: 'BuildRight Store',
-      store_root_category: rootCategory,
+      store_code: project.storeCode,
+      store_name: `${project.displayName} Store`,
+      store_root_category: project.rootCategoryName,
       is_default_store: 'Y',
-      store_view_code: storeViewCode,
-      view_name: 'BuildRight US',
+      store_view_code: project.storeViewCode,
+      view_name: `${project.displayName} US`,
       is_default_view: 'Y',
       view_order: 0,
       view_is_active: 'Y',

@@ -4,7 +4,9 @@
  * Schema: schemas/customer_groups.json
  */
 
-import { CUSTOMER_GROUPS } from '#config/commerce-config';
+import { PROJECT_CONFIG } from '../../config/project-config.js';
+
+const CUSTOMER_GROUPS = PROJECT_CONFIG.customerGroups;
 
 /**
  * Generate customer groups in ACCS schema format
