@@ -14,9 +14,6 @@
  *   npm run transform:aco
  *   node scripts/workflows/transform-for-aco.js
  * 
- * After running, copy the output files to your ACO repository:
- *   cp output/aco-format/* ../buildright-aco/output/buildright/
- * 
  * @module scripts/workflows/transform-for-aco
  */
 
@@ -195,10 +192,6 @@ async function transformForAco() {
     
     console.log('');
     console.log(chalk.green('✔ Transform complete!'));
-    console.log('');
-    console.log(chalk.dim('📁 Output location: ' + ACO_OUTPUT_DIR));
-    console.log(chalk.dim('   To use with ACO, copy files to your ACO repository:'));
-    console.log(chalk.dim('   cp output/aco-format/* ../buildright-aco/output/buildright/'));
     console.log('');
     
     return {

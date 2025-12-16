@@ -604,8 +604,6 @@ async function generateDataPack() {
   // Create zip file
   console.log('');
   console.log(chalk.green(`✔ Data generation complete!`));
-  console.log(`\n📍 Output Location:`);
-  console.log(`   ${OUTPUT_DIR}`);
   console.log('');
 }
 
