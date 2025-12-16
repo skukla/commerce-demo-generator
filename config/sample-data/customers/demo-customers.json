@@ -1,0 +1,97 @@
+[
+  {
+    "email": "sarah.martinez@sunbelthomes.com",
+    "firstname": "Sarah",
+    "lastname": "Martinez",
+    "password": "BuildRight2024!",
+    "groupCode": "Production-Builder",
+    "company": "Sunbelt Homes",
+    "acoCatalogViewId": "22c02790-7c5e-474d-a3b6-c72b22203be5",
+    "acoPriceBookId": "Production-Builder",
+    "address": {
+      "street": ["2847 N Central Ave", "Suite 100"],
+      "city": "Phoenix",
+      "region": "Arizona",
+      "regionCode": "AZ",
+      "regionId": 4,
+      "postcode": "85004",
+      "telephone": "602-555-0101"
+    }
+  },
+  {
+    "email": "marcus.johnson@johnsonconstruction.com",
+    "firstname": "Marcus",
+    "lastname": "Johnson",
+    "password": "BuildRight2024!",
+    "groupCode": "Trade-Professional",
+    "company": "Johnson Construction",
+    "acoCatalogViewId": "7cba9c31-307b-4f9f-a7a7-4a4b1b49c2a4",
+    "acoPriceBookId": "Trade-Professional",
+    "address": {
+      "street": ["1550 Wewatta St"],
+      "city": "Denver",
+      "region": "Colorado",
+      "regionCode": "CO",
+      "regionId": 13,
+      "postcode": "80202",
+      "telephone": "303-555-0102"
+    }
+  },
+  {
+    "email": "lisa.chen@chendesignbuild.com",
+    "firstname": "Lisa",
+    "lastname": "Chen",
+    "password": "BuildRight2024!",
+    "groupCode": "Trade-Professional",
+    "company": "Chen Design Build",
+    "acoCatalogViewId": "7cba9c31-307b-4f9f-a7a7-4a4b1b49c2a4",
+    "acoPriceBookId": "Trade-Professional",
+    "address": {
+      "street": ["401 S Tryon St", "Suite 250"],
+      "city": "Charlotte",
+      "region": "North Carolina",
+      "regionCode": "NC",
+      "regionId": 34,
+      "postcode": "28202",
+      "telephone": "704-555-0103"
+    }
+  },
+  {
+    "email": "david.thompson@email.com",
+    "firstname": "David",
+    "lastname": "Thompson",
+    "password": "BuildRight2024!",
+    "groupCode": "Retail-Registered",
+    "company": null,
+    "acoCatalogViewId": "0a4dbd61-64ae-47f6-9ea8-2d91877dff71",
+    "acoPriceBookId": "Retail-Registered",
+    "address": {
+      "street": ["2315 NE Broadway St"],
+      "city": "Portland",
+      "region": "Oregon",
+      "regionCode": "OR",
+      "regionId": 49,
+      "postcode": "97232",
+      "telephone": "503-555-0104"
+    }
+  },
+  {
+    "email": "kevin.rodriguez@precisionlumber.com",
+    "firstname": "Kevin",
+    "lastname": "Rodriguez",
+    "password": "BuildRight2024!",
+    "groupCode": "Wholesale-Reseller",
+    "company": "Precision Lumber & Supply",
+    "acoCatalogViewId": "9cd9753d-baaf-4af1-b825-d9524d8e32ef",
+    "acoPriceBookId": "Wholesale-Reseller",
+    "address": {
+      "street": ["4302 S Pine St", "Unit 12"],
+      "city": "Tacoma",
+      "region": "Washington",
+      "regionCode": "WA",
+      "regionId": 62,
+      "postcode": "98409",
+      "telephone": "253-555-0105"
+    }
+  }
+]

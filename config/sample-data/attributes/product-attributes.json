@@ -1,0 +1,778 @@
+[
+  {
+    "attributeCode": "br_product_category",
+    "frontendLabel": "Product Category",
+    "frontendInput": "select",
+    "isRequired": true,
+    "isSearchable": true,
+    "isFilterable": true,
+    "isComparable": true,
+    "isVisibleOnFront": true,
+    "sortOrder": 1,
+    "options": [
+      "Structural Materials",
+      "Framing & Insulation",
+      "Windows & Doors",
+      "Fasteners & Hardware",
+      "Safety Equipment"
+    ]
+  },
+  {
+    "attributeCode": "br_brand",
+    "frontendLabel": "Brand",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": true,
+    "isFilterable": true,
+    "isComparable": true,
+    "isVisibleOnFront": true,
+    "sortOrder": 2,
+    "options": [
+      "BuildRight Pro",
+      "StructureMaster",
+      "ProFrame",
+      "SafeGuard",
+      "FastenPro",
+      "DuraBuilt",
+      "ToughGrip",
+      "MaxStrength",
+      "PremiumBuild",
+      "ReliaBuild"
+    ]
+  },
+  {
+    "attributeCode": "br_unit_of_measure",
+    "frontendLabel": "Unit of Measure",
+    "frontendInput": "select",
+    "isRequired": true,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 3,
+    "options": [
+      "Each",
+      "Linear Foot",
+      "Square Foot",
+      "Box",
+      "Bundle",
+      "Pallet",
+      "Bag",
+      "Roll",
+      "Pair",
+      "Sheet",
+      "Gallon",
+      "Case"
+    ],
+    "defaultValue": "EA"
+  },
+  {
+    "attributeCode": "br_project_types",
+    "frontendLabel": "Project Types",
+    "frontendInput": "multiselect",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 4,
+    "options": [
+      "New Construction",
+      "Remodel/Renovation",
+      "Repair/Maintenance",
+      "Restoration"
+    ]
+  },
+  {
+    "attributeCode": "br_lumber_species",
+    "frontendLabel": "Lumber Species",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 10,
+    "options": [
+      "Southern Yellow Pine (SYP)",
+      "Spruce-Pine-Fir (SPF)",
+      "Douglas Fir-Larch (DF-L)",
+      "Hem-Fir",
+      "Western Red Cedar",
+      "Redwood"
+    ]
+  },
+  {
+    "attributeCode": "br_lumber_grade",
+    "frontendLabel": "Lumber Grade",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": true,
+    "isVisibleOnFront": true,
+    "sortOrder": 11,
+    "options": [
+      "Select Structural",
+      "No. 1",
+      "No. 2",
+      "No. 3",
+      "Stud",
+      "Utility",
+      "Construction",
+      "Standard"
+    ]
+  },
+  {
+    "attributeCode": "br_lumber_treatment",
+    "frontendLabel": "Lumber Treatment",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 12,
+    "options": [
+      "Kiln-Dried (KD)",
+      "Green (Unseasoned)",
+      "Pressure-Treated (ACA)",
+      "Pressure-Treated (ACQ)",
+      "Pressure-Treated (CA-C)",
+      "Fire-Retardant Treated"
+    ]
+  },
+  {
+    "attributeCode": "br_lumber_certification",
+    "frontendLabel": "Lumber Certification",
+    "frontendInput": "multiselect",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 13,
+    "options": [
+      "FSC Certified",
+      "FSC Mix",
+      "SFI Certified",
+      "PEFC Certified",
+      "No Certification"
+    ]
+  },
+  {
+    "attributeCode": "br_drywall_thickness",
+    "frontendLabel": "Drywall Thickness",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 20,
+    "options": [
+      "1/4\"",
+      "3/8\"",
+      "1/2\"",
+      "5/8\"",
+      "3/4\""
+    ]
+  },
+  {
+    "attributeCode": "br_drywall_product_type",
+    "frontendLabel": "Drywall Product Type",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 21,
+    "options": [
+      "Regular Gypsum",
+      "Moisture-Resistant (MR)",
+      "Mold-Resistant",
+      "Fire-Rated",
+      "Sound-Dampening",
+      "Impact/Abuse-Resistant"
+    ]
+  },
+  {
+    "attributeCode": "br_drywall_fire_rating",
+    "frontendLabel": "Drywall Fire Rating",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 22,
+    "options": [
+      "Non-Rated",
+      "Type X (1-hour)",
+      "Type C (Enhanced)"
+    ]
+  },
+  {
+    "attributeCode": "br_drywall_edge_type",
+    "frontendLabel": "Drywall Edge Type",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 23,
+    "options": [
+      "Tapered",
+      "Square",
+      "Beveled",
+      "Tongue & Groove"
+    ]
+  },
+  {
+    "attributeCode": "br_window_material",
+    "frontendLabel": "Window Frame Material",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 30,
+    "options": [
+      "Vinyl",
+      "Wood",
+      "Aluminum",
+      "Fiberglass",
+      "Composite",
+      "Clad Wood"
+    ]
+  },
+  {
+    "attributeCode": "br_window_operation_type",
+    "frontendLabel": "Window Operation Type",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 31,
+    "options": [
+      "Single-Hung",
+      "Double-Hung",
+      "Casement",
+      "Awning",
+      "Sliding",
+      "Fixed/Picture",
+      "Bay",
+      "Bow"
+    ]
+  },
+  {
+    "attributeCode": "br_window_glazing_type",
+    "frontendLabel": "Window Glazing",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 32,
+    "options": [
+      "Single Pane",
+      "Double Pane",
+      "Triple Pane"
+    ]
+  },
+  {
+    "attributeCode": "br_window_energy_star",
+    "frontendLabel": "Energy Star Certified",
+    "frontendInput": "boolean",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 33,
+    "defaultValue": false
+  },
+  {
+    "attributeCode": "br_door_type",
+    "frontendLabel": "Door Type",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": true,
+    "isVisibleOnFront": true,
+    "sortOrder": 40,
+    "options": [
+      "Entry Door",
+      "Interior Door",
+      "Patio Door",
+      "French Door",
+      "Storm Door",
+      "Bi-Fold Door"
+    ]
+  },
+  {
+    "attributeCode": "br_door_material",
+    "frontendLabel": "Door Material",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": true,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 41,
+    "options": [
+      "Wood",
+      "Steel",
+      "Fiberglass",
+      "Aluminum",
+      "Vinyl",
+      "Composite"
+    ]
+  },
+  {
+    "attributeCode": "br_door_core_type",
+    "frontendLabel": "Door Core Type",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 42,
+    "options": [
+      "Solid Wood",
+      "Solid Core",
+      "Hollow Core",
+      "Foam Insulated"
+    ]
+  },
+  {
+    "attributeCode": "br_fastener_type",
+    "frontendLabel": "Fastener Type",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 50,
+    "options": [
+      "Nail",
+      "Screw",
+      "Bolt",
+      "Anchor",
+      "Staple"
+    ]
+  },
+  {
+    "attributeCode": "br_fastener_subtype",
+    "frontendLabel": "Fastener Subtype",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 51,
+    "options": [
+      "Common Nail",
+      "Finish Nail",
+      "Brad Nail",
+      "Roofing Nail",
+      "Framing Nail",
+      "Wood Screw",
+      "Drywall Screw",
+      "Deck Screw",
+      "Self-Drilling Screw",
+      "Lag Screw"
+    ]
+  },
+  {
+    "attributeCode": "br_fastener_material",
+    "frontendLabel": "Fastener Material",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 52,
+    "options": [
+      "Carbon Steel",
+      "Stainless Steel 304",
+      "Stainless Steel 316 (Marine)",
+      "Brass",
+      "Aluminum"
+    ]
+  },
+  {
+    "attributeCode": "br_fastener_coating",
+    "frontendLabel": "Fastener Coating/Finish",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 53,
+    "options": [
+      "Bright (Uncoated)",
+      "Zinc Plated",
+      "Galvanized",
+      "Hot-Dip Galvanized",
+      "Ceramic Coated",
+      "Polymer Coated"
+    ]
+  },
+  {
+    "attributeCode": "br_fastener_head_type",
+    "frontendLabel": "Fastener Head Type",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 54,
+    "options": [
+      "Flat/Countersunk",
+      "Pan",
+      "Round",
+      "Hex",
+      "Bugle",
+      "Truss"
+    ]
+  },
+  {
+    "attributeCode": "br_fastener_drive_type",
+    "frontendLabel": "Fastener Drive Type",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 55,
+    "options": [
+      "Phillips",
+      "Square (Robertson)",
+      "Torx (Star)",
+      "Hex",
+      "Slotted",
+      "Combination"
+    ]
+  },
+  {
+    "attributeCode": "br_ppe_category",
+    "frontendLabel": "PPE Category",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 60,
+    "options": [
+      "Head Protection",
+      "Eye Protection",
+      "Hearing Protection",
+      "Hand Protection",
+      "Respiratory Protection",
+      "Fall Protection",
+      "High-Visibility Apparel",
+      "Foot Protection"
+    ]
+  },
+  {
+    "attributeCode": "br_ppe_ansi_standard",
+    "frontendLabel": "ANSI Standard",
+    "frontendInput": "multiselect",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 61,
+    "options": [
+      "ANSI Z89.1 (Head)",
+      "ANSI Z87.1 (Eye)",
+      "ANSI S3.19 (Hearing)",
+      "ANSI/ISEA 105 (Hand)",
+      "ANSI Z359 (Fall)",
+      "ANSI/ISEA 107 (Hi-Vis)",
+      "ASTM F2413 (Foot)"
+    ]
+  },
+  {
+    "attributeCode": "br_ppe_hard_hat_type",
+    "frontendLabel": "Hard Hat Type",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 62,
+    "options": [
+      "Type 1 (Top Impact)",
+      "Type 2 (Top & Lateral)"
+    ]
+  },
+  {
+    "attributeCode": "br_ppe_hard_hat_class",
+    "frontendLabel": "Hard Hat Electrical Class",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 63,
+    "options": [
+      "Class E (Electrical - 20kV)",
+      "Class G (General - 2.2kV)",
+      "Class C (Conductive)"
+    ]
+  },
+  {
+    "attributeCode": "br_ppe_nrr_rating",
+    "frontendLabel": "NRR Rating (dB)",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 64,
+    "options": [
+      "20 dB",
+      "22 dB",
+      "25 dB",
+      "27 dB",
+      "29 dB",
+      "30 dB",
+      "31 dB",
+      "32 dB",
+      "33 dB"
+    ]
+  },
+  {
+    "attributeCode": "br_ppe_cut_resistance",
+    "frontendLabel": "Cut Resistance Level",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 65,
+    "options": [
+      "A1 (200-499g)",
+      "A2 (500-999g)",
+      "A3 (1000-1499g)",
+      "A4 (1500-2199g)",
+      "A5 (2200-2999g)",
+      "A6 (3000-3999g)",
+      "A7 (4000-4999g)",
+      "A8 (5000-5999g)",
+      "A9 (6000+g)"
+    ]
+  },
+  {
+    "attributeCode": "br_ppe_niosh_rating",
+    "frontendLabel": "NIOSH Filter Rating",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 66,
+    "options": [
+      "N95 (95% filtration)",
+      "N99 (99% filtration)",
+      "N100 (99.97% filtration)",
+      "P95 (Oil-proof, 95%)",
+      "P99 (Oil-proof, 99%)",
+      "P100 (Oil-proof, 99.97%)"
+    ]
+  },
+  {
+    "attributeCode": "br_ppe_hi_vis_class",
+    "frontendLabel": "High-Visibility Class",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 67,
+    "options": [
+      "Class 1 (Minimal)",
+      "Class 2 (Medium)",
+      "Class 3 (High)"
+    ]
+  },
+  {
+    "attributeCode": "br_ppe_size",
+    "frontendLabel": "PPE Size",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 68,
+    "options": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL",
+      "3XL",
+      "Universal"
+    ]
+  },
+  {
+    "attributeCode": "br_sheathing_location",
+    "frontendLabel": "Sheathing Location",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 70,
+    "options": [
+      "Wall",
+      "Roof",
+      "Subfloor"
+    ]
+  },
+  {
+    "attributeCode": "br_underlayment_type",
+    "frontendLabel": "Underlayment Type",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 71,
+    "options": [
+      "15# Felt",
+      "30# Felt",
+      "Synthetic Underlayment",
+      "Ice & Water Shield"
+    ]
+  },
+  {
+    "attributeCode": "br_insulation_type",
+    "frontendLabel": "Insulation Type",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 72,
+    "options": [
+      "Fiberglass Batt",
+      "Mineral Wool",
+      "Spray Foam",
+      "Cellulose"
+    ]
+  },
+  {
+    "attributeCode": "br_insulation_r_value",
+    "frontendLabel": "Insulation R-Value",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 73,
+    "options": [
+      "R-13",
+      "R-15",
+      "R-19",
+      "R-21",
+      "R-30"
+    ]
+  },
+  {
+    "attributeCode": "br_light_type",
+    "frontendLabel": "Light Fixture Type",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 74,
+    "options": [
+      "Recessed",
+      "Flush Mount",
+      "Pendant",
+      "Chandelier"
+    ]
+  },
+  {
+    "attributeCode": "br_light_technology",
+    "frontendLabel": "Light Technology",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 75,
+    "options": [
+      "LED",
+      "CFL",
+      "Incandescent"
+    ]
+  },
+  {
+    "attributeCode": "br_fixture_type",
+    "frontendLabel": "Plumbing Fixture Type",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 76,
+    "options": [
+      "Faucet",
+      "Sink",
+      "Toilet",
+      "Shower"
+    ]
+  },
+  {
+    "attributeCode": "br_fixture_location",
+    "frontendLabel": "Fixture Location",
+    "frontendInput": "select",
+    "isRequired": false,
+    "isSearchable": false,
+    "isFilterable": false,
+    "isComparable": false,
+    "isVisibleOnFront": true,
+    "sortOrder": 77,
+    "options": [
+      "Kitchen",
+      "Bathroom",
+      "Utility"
+    ]
+  }
+]

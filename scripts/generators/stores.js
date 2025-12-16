@@ -1,0 +1,46 @@
+/**
+ * Stores JSON Generator
+ * Generates accs_stores.json for ACCS Data Importer
+ * 
+ * Format matches module-data-install stores.csv columns:
+ * site_code, site_name, site_order, store_code, store_name, 
+ * store_root_category, is_default_store, store_view_code, view_name,
+ * is_default_view, view_order, view_is_active, host, theme
+ * 
+ * @see https://github.com/PMET-public/module-data-install
+ */
+
+import { COMMERCE_CONFIG } from '#config/commerce-config';
+
+/**
+ * Generate stores configuration in data-install format
+ * @returns {Array} Array of store configuration objects (one row per store view)
+ */
+export function generateStores() {
+  const websiteCode = COMMERCE_CONFIG.websiteCode || 'buildright';
+  const storeCode = COMMERCE_CONFIG.storeCode || 'buildright_store';
+  const storeViewCode = COMMERCE_CONFIG.storeViewCode || 'buildright_us';
+  const rootCategory = COMMERCE_CONFIG.ROOT_CATEGORY_NAME || 'BuildRight';
+  
+  // Format matches stores.csv - one row per store view
+  return [
+    {
+      site_code: websiteCode,
+      site_name: 'BuildRight Website',
+      site_order: 0,
+      store_code: storeCode,
+      store_name: 'BuildRight Store',
+      store_root_category: rootCategory,
+      is_default_store: 'Y',
+      store_view_code: storeViewCode,
+      view_name: 'BuildRight US',
+      is_default_view: 'Y',
+      view_order: 0,
+      view_is_active: 'Y',
+      host: '',
+      theme: ''
+    }
+  ];
+}
+
+export default { generateStores };

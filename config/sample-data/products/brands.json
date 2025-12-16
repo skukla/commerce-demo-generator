@@ -1,0 +1,244 @@
+{
+  "categorySpecific": {
+    "lumber": [
+      "Cascade Timber Co.",
+      "Rocky Mountain Mills",
+      "Pacific Northwest Lumber",
+      "Sierra Pine Supply"
+    ],
+    "sheathing": [
+      "Cascade Timber Co.",
+      "Pacific Northwest Lumber",
+      "StructureBoard Pro",
+      "Shield Panel Systems"
+    ],
+    "plywood": [
+      "PlyTech Industries",
+      "Panel Masters",
+      "StructureBoard Pro",
+      "LayerCraft Premium"
+    ],
+    "windows": [
+      "ClearView Windows",
+      "Panorama Systems",
+      "Vista Architectural",
+      "Horizon Fenestration"
+    ],
+    "doors": [
+      "Precision Entry Systems",
+      "Guardian Door Co.",
+      "Threshold Architectural",
+      "Portal Premium Doors"
+    ],
+    "nails": [
+      "HoldFast Industries",
+      "IronClad Fastening",
+      "Apex Anchors",
+      "Titan Grip Hardware"
+    ],
+    "screws": [
+      "HoldFast Industries",
+      "IronClad Fastening",
+      "ThreadMaster Pro",
+      "Precision Fastening Co."
+    ],
+    "bolts": [
+      "HoldFast Industries",
+      "IronClad Fastening",
+      "BoltWorks Industrial",
+      "Anchor Force Systems"
+    ],
+    "shingles": [
+      "SkyGuard Roofing",
+      "Vertex Shingles",
+      "Summit Protection",
+      "Ridge Runner Roofing"
+    ],
+    "underlayment": [
+      "SkyGuard Roofing",
+      "WeatherShield Pro",
+      "BarrierTech Systems",
+      "AquaBlock"
+    ],
+    "siding": [
+      "ExteriorWorks",
+      "CladdingMasters",
+      "ShieldSide Premium",
+      "WeatherGuard Exteriors"
+    ],
+    "concrete": [
+      "Foundation Force",
+      "StoneWorks Concrete",
+      "Titan Mix",
+      "SolidBase Materials"
+    ],
+    "ready-mix": [
+      "QuickSet Concrete",
+      "MixMaster Pro",
+      "Rapid Pour Systems",
+      "Foundation Force"
+    ],
+    "rebar": [
+      "Foundation Force",
+      "SteelCore Reinforcing",
+      "StructurSteel Pro",
+      "RebarTech Industries"
+    ],
+    "drywall": [
+      "WallTech Systems",
+      "SmoothFinish Pro",
+      "InteriorShield",
+      "PerfectSurface Drywall"
+    ],
+    "studs": [
+      "Cascade Timber Co.",
+      "FrameMaster Pro",
+      "StructureSteel Corp",
+      "ProFrame Industries"
+    ],
+    "insulation": [
+      "ThermalShield",
+      "ClimateBarrier",
+      "EcoSeal Insulation",
+      "ComfortGuard"
+    ],
+    "flooring": [
+      "FloorCraft Premium",
+      "SurfaceMasters",
+      "Heritage Flooring Co.",
+      "DuraStep"
+    ],
+    "paint": [
+      "ColorWorks Professional",
+      "Spectrum Coatings",
+      "Elite Finish Paint",
+      "ChromaShield"
+    ],
+    "lighting": [
+      "BrightWorks Lighting",
+      "Lumina Professional",
+      "RadiantEdge",
+      "VoltagePoint"
+    ],
+    "plumbing": [
+      "AquaFlow Systems",
+      "HydroTech Fixtures",
+      "StreamLine Plumbing",
+      "FlowMaster"
+    ],
+    "kitchen": [
+      "KitchenCraft Pro",
+      "Culinary Systems",
+      "Premier Appliances",
+      "HomeChef Elite"
+    ],
+    "electrical_boxes": [
+      "VoltagePoint",
+      "CircuitSafe Pro",
+      "PowerBox Industrial",
+      "WireTech Systems"
+    ],
+    "wiring": [
+      "VoltagePoint",
+      "CopperLine Pro",
+      "AmpleConductor",
+      "PowerPath Systems"
+    ],
+    "switches": [
+      "VoltagePoint",
+      "SwitchCraft Premium",
+      "ControlPoint Pro",
+      "CurrentFlow"
+    ],
+    "devices": [
+      "OutletMaster Pro",
+      "DeviceWorks",
+      "CircuitPoint",
+      "PowerTech Devices"
+    ],
+    "panels": [
+      "PanelMaster Pro",
+      "CircuitHub Industrial",
+      "PowerCenter Systems",
+      "LoadMaster"
+    ],
+    "water-supply": [
+      "AquaLine Pro",
+      "FlowMaster Supply",
+      "HydroPipe Systems",
+      "WaterWorks Elite"
+    ],
+    "drain-waste": [
+      "DrainTech Pro",
+      "WasteFlow Systems",
+      "SaniPipe",
+      "DrainMaster"
+    ],
+    "fittings": [
+      "FitTech Pro",
+      "ConnectorWorks",
+      "JointMaster",
+      "PipeFit Systems"
+    ],
+    "hvac": [
+      "ClimateControl Pro",
+      "AirFlow Dynamics",
+      "TempMaster Systems",
+      "VentTech Solutions"
+    ],
+    "units": [
+      "ClimateForce",
+      "CoolHeat Pro",
+      "ComfortZone Systems",
+      "AirMaster Elite"
+    ],
+    "ductwork": [
+      "AirFlow Duct Systems",
+      "VentPath Pro",
+      "DuctMaster",
+      "ClimateChannel"
+    ],
+    "vents": [
+      "VentTech Pro",
+      "AirGrate Systems",
+      "FlowVent",
+      "BreezeWay"
+    ],
+    "decking": [
+      "DeckMaster Pro",
+      "OutdoorLiving Systems",
+      "TimberTech Decking",
+      "Horizon Outdoor"
+    ],
+    "services": [
+      "ProBuild Services",
+      "Construction Solutions",
+      "BuildMaster Pro",
+      "TradeWorks"
+    ],
+    "supplies": [
+      "SupplyMaster",
+      "BuildStock Pro",
+      "Construction Essentials",
+      "TradeSupply Co."
+    ],
+    "safety": [
+      "SafetyFirst Pro",
+      "Guardian Workwear",
+      "ProtectTech Industries",
+      "ShieldForce PPE"
+    ]
+  },
+  "generic": [
+    "BuildRight Pro",
+    "StructureMaster",
+    "ProFrame",
+    "SafeGuard",
+    "FastenPro",
+    "DuraBuilt",
+    "ToughGrip",
+    "MaxStrength",
+    "PremiumBuild",
+    "ReliaBuild"
+  ]
+}

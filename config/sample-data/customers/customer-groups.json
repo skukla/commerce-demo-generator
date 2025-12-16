@@ -1,0 +1,32 @@
+[
+  {
+    "code": "US-Retail",
+    "taxClassId": 3,
+    "discountPercent": 0,
+    "description": "Default retail pricing for guests and unregistered users"
+  },
+  {
+    "code": "Retail-Registered",
+    "taxClassId": 3,
+    "discountPercent": 5,
+    "description": "Registered retail customers (David - DIY Homeowner)"
+  },
+  {
+    "code": "Trade-Professional",
+    "taxClassId": 3,
+    "discountPercent": 15,
+    "description": "Trade professionals (Marcus, Lisa)"
+  },
+  {
+    "code": "Production-Builder",
+    "taxClassId": 3,
+    "discountPercent": 20,
+    "description": "Production builders with volume discounts (Sarah)"
+  },
+  {
+    "code": "Wholesale-Reseller",
+    "taxClassId": 3,
+    "discountPercent": 25,
+    "description": "Wholesale resellers and retailers (Kevin)"
+  }
+]

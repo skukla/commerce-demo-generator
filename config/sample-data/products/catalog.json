@@ -1,0 +1,3316 @@
+{
+  "structural": {
+    "name": "Structural Materials",
+    "attributeValue": "Structural Materials",
+    "subcategories": {
+      "lumber": {
+        "simple": [
+          {
+            "name": "2x4 Stud - 8ft",
+            "uom": "EA",
+            "priceRange": [
+              8,
+              12
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_lumber_dimension": "2x4",
+            "br_lumber_length": "8ft",
+            "br_deck_compatible": true,
+            "br_deck_shape": [
+              "rectangular",
+              "l_shaped"
+            ],
+            "br_deck_material_type": "wood",
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 100,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "2x6 Stud - 8ft",
+            "uom": "EA",
+            "priceRange": [
+              12,
+              16
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_lumber_dimension": "2x6",
+            "br_lumber_length": "8ft",
+            "br_deck_compatible": true,
+            "br_deck_shape": [
+              "rectangular",
+              "l_shaped"
+            ],
+            "br_deck_material_type": "wood",
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 75,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "2x8 Joist - 10ft",
+            "uom": "EA",
+            "priceRange": [
+              18,
+              24
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_lumber_dimension": "2x8",
+            "br_lumber_length": "10ft",
+            "br_deck_compatible": true,
+            "br_deck_shape": [
+              "rectangular",
+              "l_shaped"
+            ],
+            "br_deck_material_type": "wood",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 50,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "2x10 Joist - 12ft",
+            "uom": "EA",
+            "priceRange": [
+              24,
+              32
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_lumber_dimension": "2x10",
+            "br_lumber_length": "12ft",
+            "br_deck_compatible": true,
+            "br_deck_shape": [
+              "rectangular",
+              "l_shaped"
+            ],
+            "br_deck_material_type": "wood",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 40,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "2x12 Beam - 16ft",
+            "uom": "EA",
+            "priceRange": [
+              36,
+              48
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Premium",
+            "br_deck_compatible": false,
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "4x4 Post - 8ft",
+            "uom": "EA",
+            "priceRange": [
+              28,
+              36
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_deck_compatible": true,
+            "br_deck_shape": [
+              "rectangular",
+              "l_shaped"
+            ],
+            "br_deck_material_type": "wood",
+            "br_deck_railing_compatible": [
+              "wood"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 30,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": [
+          {
+            "name": "Dimensional Lumber",
+            "dimensions": {
+              "depth": [
+                "1.75",
+                "3.5"
+              ],
+              "width": [
+                "5.5",
+                "9.25"
+              ],
+              "length": [
+                "8",
+                "12"
+              ]
+            }
+          },
+          {
+            "name": "LVL Beam",
+            "dimensions": {
+              "depth": [
+                "1.75",
+                "3.5"
+              ],
+              "width": [
+                "9.25",
+                "11.875"
+              ],
+              "length": [
+                "12",
+                "20"
+              ]
+            }
+          }
+        ]
+      },
+      "plywood": {
+        "simple": [
+          {
+            "name": "OSB Sheathing 7/16\" - 4x8",
+            "uom": "SHEET",
+            "priceRange": [
+              18,
+              24
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_lumber_dimension": "4x8",
+            "br_sheathing_location": "roof",
+            "br_deck_compatible": false,
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 50,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "CDX Plywood 1/2\" - 4x8",
+            "uom": "SHEET",
+            "priceRange": [
+              28,
+              36
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_deck_compatible": false,
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 40,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "T&G Subfloor 3/4\" - 4x8",
+            "uom": "SHEET",
+            "priceRange": [
+              38,
+              48
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_lumber_dimension": "4x8",
+            "br_deck_compatible": false,
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 30,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Marine Plywood 3/4\" - 4x8",
+            "uom": "SHEET",
+            "priceRange": [
+              68,
+              88
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Premium",
+            "br_deck_compatible": true,
+            "br_deck_material_type": "wood",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 10,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Hardwood Plywood 1/4\" - 4x8",
+            "uom": "SHEET",
+            "priceRange": [
+              48,
+              62
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_flooring_material": "hardwood",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "surfaces",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 15,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Siding Panel 3/8\" - 4x8",
+            "uom": "SHEET",
+            "priceRange": [
+              32,
+              42
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_deck_compatible": false,
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 25,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": [
+          {
+            "name": "Plywood Sheet",
+            "dimensions": {
+              "thickness": [
+                "0.5",
+                "0.75"
+              ],
+              "width": [
+                "4"
+              ],
+              "length": [
+                "8",
+                "10"
+              ]
+            }
+          }
+        ]
+      },
+      "services": [
+        {
+          "name": "Structural Material Delivery",
+          "priceRange": [
+            75,
+            150
+          ]
+        },
+        {
+          "name": "Lumber Cutting Service",
+          "priceRange": [
+            50,
+            100
+          ]
+        }
+      ]
+    }
+  },
+  "framing": {
+    "name": "Framing & Drywall",
+    "attributeValue": "Framing & Drywall",
+    "subcategories": {
+      "studs": {
+        "simple": [
+          {
+            "name": "Metal Stud 20ga - 3.5\" x 10ft",
+            "uom": "EA",
+            "priceRange": [
+              8,
+              12
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 50,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Metal Stud 20ga - 6\" x 10ft",
+            "uom": "EA",
+            "priceRange": [
+              12,
+              16
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 40,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Metal Track 20ga - 3.5\" x 10ft",
+            "uom": "EA",
+            "priceRange": [
+              9,
+              13
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 45,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Metal Track 20ga - 6\" x 10ft",
+            "uom": "EA",
+            "priceRange": [
+              13,
+              17
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 35,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Steel C-Channel - 8ft",
+            "uom": "EA",
+            "priceRange": [
+              18,
+              24
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Premium",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Hat Channel - 12ft",
+            "uom": "EA",
+            "priceRange": [
+              14,
+              18
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 25,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          }
+        ],
+        "configurable": [
+          {
+            "name": "Metal Stud System",
+            "dimensions": {
+              "gauge": [
+                "20",
+                "18"
+              ],
+              "width": [
+                "3.5",
+                "6"
+              ],
+              "length": [
+                "8",
+                "10"
+              ]
+            }
+          }
+        ]
+      },
+      "drywall": {
+        "simple": [
+          {
+            "name": "Drywall 1/2\" - 4x8",
+            "uom": "SHEET",
+            "priceRange": [
+              12,
+              16
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_drywall_thickness": "0.5",
+            "br_package_tier": [
+              "good",
+              "better"
+            ],
+            "br_room_category": "surfaces",
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 60,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Drywall 5/8\" - 4x8",
+            "uom": "SHEET",
+            "priceRange": [
+              14,
+              18
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better",
+              "best"
+            ],
+            "br_room_category": "surfaces",
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 50,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Moisture Resistant Drywall - 4x8",
+            "uom": "SHEET",
+            "priceRange": [
+              18,
+              24
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better",
+              "best"
+            ],
+            "br_room_category": "surfaces",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 30,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Fire Rated Drywall - 4x8",
+            "uom": "SHEET",
+            "priceRange": [
+              22,
+              28
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "surfaces",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Cement Board 1/2\" - 3x5",
+            "uom": "SHEET",
+            "priceRange": [
+              16,
+              20
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better",
+              "best"
+            ],
+            "br_room_category": "surfaces",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 25,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Sound Dampening Drywall - 4x8",
+            "uom": "SHEET",
+            "priceRange": [
+              28,
+              36
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "surfaces",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 15,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          }
+        ],
+        "configurable": [
+          {
+            "name": "Gypsum Board",
+            "dimensions": {
+              "thickness": [
+                "0.5",
+                "0.625"
+              ],
+              "width": [
+                "4"
+              ],
+              "length": [
+                "8",
+                "10"
+              ]
+            }
+          }
+        ]
+      },
+      "insulation": {
+        "simple": [
+          {
+            "name": "Fiberglass Insulation - R-19 15\" x 93\"",
+            "uom": "ROLL",
+            "priceRange": [
+              42,
+              52
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_insulation_type": "Fiberglass Batt",
+            "br_insulation_r_value": "r19",
+            "br_package_tier": [
+              "good"
+            ]
+          },
+          {
+            "name": "Fiberglass Insulation - R-30 24\" x 48\"",
+            "uom": "ROLL",
+            "priceRange": [
+              60,
+              75
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ]
+          },
+          {
+            "name": "Spray Foam Insulation Kit - 600 Board Feet",
+            "uom": "KIT",
+            "priceRange": [
+              450,
+              550
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ]
+          }
+        ],
+        "configurable": []
+      },
+      "services": [
+        {
+          "name": "Drywall Installation Service",
+          "priceRange": [
+            200,
+            400
+          ]
+        },
+        {
+          "name": "Framing Consultation",
+          "priceRange": [
+            150,
+            250
+          ]
+        }
+      ]
+    }
+  },
+  "windows-doors": {
+    "name": "Windows & Doors",
+    "attributeValue": "Windows & Doors",
+    "subcategories": {
+      "windows": {
+        "simple": [
+          {
+            "name": "Single Hung Window - 36\"x48\"",
+            "uom": "EA",
+            "priceRange": [
+              180,
+              240
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_window_operation_type": "Single Hung",
+            "br_window_material": "Vinyl",
+            "br_window_glazing_type": "Triple Pane",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "fixtures",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 15,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Double Hung Window - 36\"x60\"",
+            "uom": "EA",
+            "priceRange": [
+              280,
+              360
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_window_operation_type": "Double Hung",
+            "br_window_material": "Vinyl",
+            "br_window_glazing_type": "Double Pane",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "fixtures",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 12,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Sliding Window - 48\"x36\"",
+            "uom": "EA",
+            "priceRange": [
+              220,
+              280
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "fixtures",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 10,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Casement Window - 30\"x48\"",
+            "uom": "EA",
+            "priceRange": [
+              320,
+              420
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "fixtures",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 8,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Bay Window - 72\"x48\"",
+            "uom": "EA",
+            "priceRange": [
+              880,
+              1200
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "fixtures",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 5,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Awning Window - 36\"x24\"",
+            "uom": "EA",
+            "priceRange": [
+              180,
+              240
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "fixtures",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 10,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          }
+        ],
+        "configurable": [
+          {
+            "name": "Custom Window",
+            "dimensions": {
+              "style": [
+                "single-hung",
+                "double-hung"
+              ],
+              "width": [
+                "30",
+                "36"
+              ],
+              "height": [
+                "48",
+                "60"
+              ]
+            }
+          },
+          {
+            "name": "Energy Efficient Window",
+            "dimensions": {
+              "glazing": [
+                "double",
+                "triple"
+              ],
+              "frame": [
+                "vinyl",
+                "fiberglass"
+              ],
+              "size": [
+                "30x48",
+                "36x48"
+              ]
+            }
+          }
+        ]
+      },
+      "doors": {
+        "simple": [
+          {
+            "name": "Entry Door - Steel 36\"x80\"",
+            "uom": "EA",
+            "priceRange": [
+              280,
+              380
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_door_type": "Entry",
+            "br_door_material": "Steel",
+            "br_door_core_type": "Polyurethane Foam",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "fixtures",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 10,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Interior Door - Hollow Core 32\"x80\"",
+            "uom": "EA",
+            "priceRange": [
+              80,
+              120
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_door_type": "Interior",
+            "br_door_core_type": "Hollow Core",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "fixtures",
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 25,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "French Door - 60\"x80\"",
+            "uom": "PAIR",
+            "priceRange": [
+              680,
+              880
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Premium",
+            "br_door_type": "French",
+            "br_door_material": "Wood",
+            "br_door_core_type": "Solid Wood",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "fixtures",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 5,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Sliding Patio Door - 72\"x80\"",
+            "uom": "EA",
+            "priceRange": [
+              880,
+              1200
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Premium",
+            "br_door_type": "Patio",
+            "br_door_material": "Vinyl",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "fixtures",
+            "br_deck_compatible": true,
+            "br_deck_shape": [
+              "rectangular",
+              "l_shaped"
+            ],
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 5,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Bi-fold Closet Door - 36\"x80\"",
+            "uom": "EA",
+            "priceRange": [
+              120,
+              180
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_door_type": "Bifold",
+            "br_door_material": "Wood",
+            "br_door_core_type": "Hollow Core",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "fixtures",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 15,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Storm Door - 36\"x80\"",
+            "uom": "EA",
+            "priceRange": [
+              180,
+              280
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_door_type": "Storm",
+            "br_door_material": "Aluminum",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "fixtures",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 8,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          }
+        ],
+        "configurable": [
+          {
+            "name": "Custom Entry Door",
+            "dimensions": {
+              "material": [
+                "steel",
+                "fiberglass"
+              ],
+              "width": [
+                "32",
+                "36"
+              ],
+              "height": [
+                "80",
+                "84"
+              ]
+            }
+          },
+          {
+            "name": "Interior Door System",
+            "dimensions": {
+              "style": [
+                "panel",
+                "flush"
+              ],
+              "width": [
+                "30",
+                "32",
+                "36"
+              ],
+              "height": [
+                "80",
+                "84"
+              ]
+            }
+          }
+        ]
+      },
+      "services": [
+        {
+          "name": "Door & Window Installation",
+          "priceRange": [
+            300,
+            500
+          ]
+        },
+        {
+          "name": "Window Measurement Service",
+          "priceRange": [
+            75,
+            125
+          ]
+        }
+      ]
+    }
+  },
+  "fasteners": {
+    "name": "Fasteners & Hardware",
+    "attributeValue": "Fasteners & Hardware",
+    "subcategories": {
+      "nails": {
+        "simple": [
+          {
+            "name": "Framing Nails 16d - 50lb Box",
+            "uom": "BOX",
+            "priceRange": [
+              48,
+              62
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_fastener_type": "Nail",
+            "br_fastener_subtype": "Framing Nail",
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 30,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Finish Nails 8d - 5lb Box",
+            "uom": "BOX",
+            "priceRange": [
+              18,
+              24
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 40,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Roofing Nails - 50lb Box",
+            "uom": "BOX",
+            "priceRange": [
+              42,
+              56
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 25,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Brad Nails 18ga - 5000ct",
+            "uom": "BOX",
+            "priceRange": [
+              24,
+              32
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 35,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Concrete Nails - 5lb Box",
+            "uom": "BOX",
+            "priceRange": [
+              22,
+              28
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Ring Shank Nails - 25lb Box",
+            "uom": "BOX",
+            "priceRange": [
+              38,
+              48
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_deck_compatible": true,
+            "br_deck_material_type": "wood",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": [
+          {
+            "name": "Bulk Nail Pack",
+            "dimensions": {
+              "type": [
+                "framing",
+                "finish"
+              ],
+              "size": [
+                "8d",
+                "16d"
+              ],
+              "quantity": [
+                "25lb",
+                "50lb"
+              ]
+            }
+          },
+          {
+            "name": "Specialty Nails",
+            "dimensions": {
+              "coating": [
+                "galvanized",
+                "stainless"
+              ],
+              "length": [
+                "2",
+                "3"
+              ],
+              "gauge": [
+                "11",
+                "12"
+              ]
+            }
+          }
+        ]
+      },
+      "screws": {
+        "simple": [
+          {
+            "name": "Deck Screws #8 - 5lb Box",
+            "uom": "BOX",
+            "priceRange": [
+              28,
+              36
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_deck_compatible": true,
+            "br_deck_material_type": "wood",
+            "br_deck_shape": [
+              "rectangular",
+              "l_shaped"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 35,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Drywall Screws - 5lb Box",
+            "uom": "BOX",
+            "priceRange": [
+              18,
+              24
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 50,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Wood Screws #10 - 1lb Box",
+            "uom": "BOX",
+            "priceRange": [
+              12,
+              16
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 40,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Self-Drilling Screws - 1lb",
+            "uom": "BOX",
+            "priceRange": [
+              16,
+              22
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 30,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Lag Screws 1/2\" - 50ct",
+            "uom": "BOX",
+            "priceRange": [
+              38,
+              48
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Premium",
+            "br_deck_compatible": true,
+            "br_deck_material_type": "wood",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 15,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Cabinet Screws - 100ct",
+            "uom": "BOX",
+            "priceRange": [
+              14,
+              18
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better",
+              "best"
+            ],
+            "br_room_category": "fixtures",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 25,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": [
+          {
+            "name": "Construction Screws",
+            "dimensions": {
+              "type": [
+                "deck",
+                "drywall"
+              ],
+              "length": [
+                "1.5",
+                "2",
+                "2.5"
+              ],
+              "quantity": [
+                "1lb",
+                "5lb"
+              ]
+            }
+          }
+        ]
+      },
+      "services": [
+        {
+          "name": "Fastener Consultation",
+          "priceRange": [
+            50,
+            100
+          ]
+        },
+        {
+          "name": "Bulk Order Processing",
+          "priceRange": [
+            75,
+            150
+          ]
+        }
+      ]
+    }
+  },
+  "roofing": {
+    "name": "Roofing",
+    "attributeValue": "Roofing",
+    "subcategories": {
+      "shingles": {
+        "simple": [
+          {
+            "name": "Asphalt Shingles 3-Tab - Bundle",
+            "uom": "BUNDLE",
+            "priceRange": [
+              28,
+              38
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_roofing_material": "asphalt",
+            "br_roofing_style": "architectural",
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 40,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Architectural Shingles - Bundle",
+            "uom": "BUNDLE",
+            "priceRange": [
+              38,
+              52
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_roofing_material": "asphalt_shingle",
+            "br_roofing_style": "architectural",
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 35,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Premium Designer Shingles - Bundle",
+            "uom": "BUNDLE",
+            "priceRange": [
+              58,
+              78
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "finishes",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Impact Resistant Shingles - Bundle",
+            "uom": "BUNDLE",
+            "priceRange": [
+              48,
+              68
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "finishes",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 25,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Starter Strip Shingles - Roll",
+            "uom": "ROLL",
+            "priceRange": [
+              32,
+              44
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 30,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Ridge Cap Shingles - Bundle",
+            "uom": "BUNDLE",
+            "priceRange": [
+              42,
+              56
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 25,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": [
+          {
+            "name": "Architectural Shingle System",
+            "dimensions": {
+              "style": [
+                "dimensional",
+                "laminated"
+              ],
+              "color": [
+                "charcoal",
+                "weathered-wood"
+              ],
+              "warranty": [
+                "25yr",
+                "30yr"
+              ]
+            }
+          },
+          {
+            "name": "Specialty Roofing Shingles",
+            "dimensions": {
+              "type": [
+                "impact-resistant",
+                "cool-roof"
+              ],
+              "profile": [
+                "standard",
+                "high-profile"
+              ],
+              "coverage": [
+                "100sf",
+                "133sf"
+              ]
+            }
+          }
+        ]
+      },
+      "underlayment": {
+        "simple": [
+          {
+            "name": "Roofing Felt 15lb - Roll",
+            "uom": "ROLL",
+            "priceRange": [
+              18,
+              26
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 30,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Roofing Felt 30lb - Roll",
+            "uom": "ROLL",
+            "priceRange": [
+              28,
+              38
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 25,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Synthetic Underlayment - Roll",
+            "uom": "ROLL",
+            "priceRange": [
+              68,
+              92
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_underlayment_type": "synthetic",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "finishes",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 15,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Ice & Water Shield - Roll",
+            "uom": "ROLL",
+            "priceRange": [
+              78,
+              108
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "better",
+              "best"
+            ],
+            "br_room_category": "finishes",
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Self-Adhering Underlayment - Roll",
+            "uom": "ROLL",
+            "priceRange": [
+              88,
+              118
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "finishes",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 10,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Ventilated Underlayment - Roll",
+            "uom": "ROLL",
+            "priceRange": [
+              98,
+              132
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "finishes",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 10,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          }
+        ],
+        "configurable": [
+          {
+            "name": "Premium Underlayment System",
+            "dimensions": {
+              "type": [
+                "felt",
+                "synthetic"
+              ],
+              "weight": [
+                "15lb",
+                "30lb"
+              ],
+              "coverage": [
+                "500sf",
+                "1000sf"
+              ]
+            }
+          }
+        ]
+      },
+      "siding": {
+        "simple": [
+          {
+            "name": "Vinyl Siding - Standard Profile",
+            "uom": "SF",
+            "priceRange": [
+              2.5,
+              3.5
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_siding_material": "vinyl",
+            "br_package_tier": [
+              "good"
+            ]
+          },
+          {
+            "name": "Fiber Cement Siding - Smooth Lap",
+            "uom": "SF",
+            "priceRange": [
+              3.5,
+              4.5
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ]
+          },
+          {
+            "name": "Fiber Cement Siding - Cedar Texture",
+            "uom": "SF",
+            "priceRange": [
+              4,
+              5
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ]
+          },
+          {
+            "name": "Stucco System - 3-Coat Traditional",
+            "uom": "SF",
+            "priceRange": [
+              6,
+              8
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ]
+          },
+          {
+            "name": "Natural Stone Veneer - Stacked Ledge",
+            "uom": "SF",
+            "priceRange": [
+              12,
+              16
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ]
+          },
+          {
+            "name": "Premium Stucco System - Acrylic Finish",
+            "uom": "SF",
+            "priceRange": [
+              8,
+              10
+            ],
+            "br_construction_phase": [
+              "Envelope"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ]
+          }
+        ],
+        "configurable": []
+      },
+      "services": [
+        {
+          "name": "Roof Inspection Service",
+          "priceRange": [
+            150,
+            300
+          ]
+        },
+        {
+          "name": "Roofing Material Delivery",
+          "priceRange": [
+            100,
+            200
+          ]
+        }
+      ]
+    }
+  },
+  "interior-finishes": {
+    "name": "Interior Finishes",
+    "attributeValue": "Interior Finishes",
+    "subcategories": {
+      "flooring": {
+        "simple": [
+          {
+            "name": "Luxury Vinyl Plank - Oak Finish",
+            "uom": "SF",
+            "priceRange": [
+              2.5,
+              3.5
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "surfaces"
+          },
+          {
+            "name": "Standard Carpet - Beige Neutral",
+            "uom": "SF",
+            "priceRange": [
+              1.8,
+              2.4
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "surfaces"
+          },
+          {
+            "name": "Engineered Hardwood - Red Oak",
+            "uom": "SF",
+            "priceRange": [
+              4.5,
+              6
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_flooring_material": "hardwood",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "surfaces"
+          },
+          {
+            "name": "Ceramic Floor Tile - 12x12 Neutral",
+            "uom": "SF",
+            "priceRange": [
+              3,
+              4
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "surfaces"
+          },
+          {
+            "name": "Premium Vinyl Plank - Gray Stone Look",
+            "uom": "SF",
+            "priceRange": [
+              3.5,
+              4.5
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "surfaces"
+          },
+          {
+            "name": "Solid Hardwood - Black Walnut",
+            "uom": "SF",
+            "priceRange": [
+              8,
+              10
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "surfaces"
+          },
+          {
+            "name": "Porcelain Tile - 24x24 Marble Look",
+            "uom": "SF",
+            "priceRange": [
+              5.5,
+              7.5
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "surfaces"
+          },
+          {
+            "name": "Premium Carpet - Neutral Luxury",
+            "uom": "SF",
+            "priceRange": [
+              3.5,
+              4.5
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "surfaces"
+          }
+        ],
+        "configurable": []
+      },
+      "paint": {
+        "simple": [
+          {
+            "name": "Interior Paint - Flat White 5 Gallon",
+            "uom": "GALLON",
+            "priceRange": [
+              120,
+              160
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_paint_type": "Interior Latex",
+            "br_paint_finish": "Flat",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "finishes"
+          },
+          {
+            "name": "Interior Paint - Eggshell Neutral Beige 5 Gallon",
+            "uom": "GALLON",
+            "priceRange": [
+              140,
+              180
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_paint_type": "Interior Latex",
+            "br_paint_finish": "Eggshell",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "finishes"
+          },
+          {
+            "name": "Sherwin Williams Interior Satin - 5 Gallon",
+            "uom": "GALLON",
+            "priceRange": [
+              200,
+              250
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_paint_type": "Interior Latex",
+            "br_paint_finish": "Satin",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "finishes"
+          },
+          {
+            "name": "Sherwin Williams Exterior Satin - 5 Gallon",
+            "uom": "GALLON",
+            "priceRange": [
+              220,
+              270
+            ],
+            "br_construction_phase": [
+              "Exterior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_paint_type": "Exterior Latex",
+            "br_paint_finish": "Satin",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "finishes"
+          },
+          {
+            "name": "Benjamin Moore Aura Interior - 5 Gallon",
+            "uom": "GALLON",
+            "priceRange": [
+              280,
+              340
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Premium",
+            "br_paint_type": "Interior Latex",
+            "br_paint_finish": "Matte",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "finishes"
+          },
+          {
+            "name": "Benjamin Moore Aura Exterior - 5 Gallon",
+            "uom": "GALLON",
+            "priceRange": [
+              300,
+              360
+            ],
+            "br_construction_phase": [
+              "Exterior finish"
+            ],
+            "br_quality_tier": "Premium",
+            "br_paint_type": "Exterior Latex",
+            "br_paint_finish": "Satin",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "finishes"
+          }
+        ],
+        "configurable": []
+      },
+      "lighting": {
+        "simple": [
+          {
+            "name": "Flush Mount Ceiling Light - Basic White",
+            "uom": "EA",
+            "priceRange": [
+              25,
+              35
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_light_type": "Flush Mount",
+            "br_light_technology": "LED",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "fixtures"
+          },
+          {
+            "name": "Recessed Can Light - 4\" Standard",
+            "uom": "EA",
+            "priceRange": [
+              15,
+              25
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_light_type": "Recessed",
+            "br_light_technology": "Incandescent",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "fixtures"
+          },
+          {
+            "name": "Semi-Flush Ceiling Light - Brushed Nickel",
+            "uom": "EA",
+            "priceRange": [
+              45,
+              65
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_light_type": "Semi Flush",
+            "br_light_technology": "LED",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "fixtures"
+          },
+          {
+            "name": "LED Recessed Downlight - 6\" Integrated",
+            "uom": "EA",
+            "priceRange": [
+              35,
+              50
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_light_type": "Recessed",
+            "br_light_technology": "LED",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "fixtures"
+          },
+          {
+            "name": "Dining Chandelier - Modern 5-Light",
+            "uom": "EA",
+            "priceRange": [
+              180,
+              250
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Premium",
+            "br_light_type": "Chandelier",
+            "br_light_technology": "LED",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "fixtures"
+          },
+          {
+            "name": "Kitchen Island Pendant Set - 3 Glass Globes",
+            "uom": "EA",
+            "priceRange": [
+              150,
+              200
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Premium",
+            "br_light_type": "Pendant",
+            "br_light_technology": "LED",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "fixtures"
+          }
+        ],
+        "configurable": []
+      },
+      "plumbing": {
+        "simple": [
+          {
+            "name": "Kitchen Faucet - Chrome Single Handle",
+            "uom": "EA",
+            "priceRange": [
+              80,
+              120
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_fixture_type": "Faucet",
+            "br_fixture_location": "Kitchen",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "fixtures"
+          },
+          {
+            "name": "Bathroom Faucet - Chrome 4\" Centerset",
+            "uom": "EA",
+            "priceRange": [
+              60,
+              90
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_fixture_type": "Faucet",
+            "br_fixture_location": "Bathroom",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "fixtures"
+          },
+          {
+            "name": "Kitchen Faucet - Brushed Nickel Commercial Style",
+            "uom": "EA",
+            "priceRange": [
+              150,
+              200
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_fixture_type": "Faucet",
+            "br_fixture_location": "Kitchen",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "fixtures"
+          },
+          {
+            "name": "Bathroom Faucet - Brushed Nickel Widespread",
+            "uom": "EA",
+            "priceRange": [
+              120,
+              180
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_fixture_type": "Faucet",
+            "br_fixture_location": "Bathroom",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "fixtures"
+          },
+          {
+            "name": "Kitchen Faucet - Delta Touch2O Technology",
+            "uom": "EA",
+            "priceRange": [
+              280,
+              350
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Premium",
+            "br_fixture_type": "Faucet",
+            "br_fixture_location": "Kitchen",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "fixtures"
+          },
+          {
+            "name": "Bathroom Faucet - Kohler Artifacts Collection",
+            "uom": "EA",
+            "priceRange": [
+              250,
+              320
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Premium",
+            "br_fixture_type": "Faucet",
+            "br_fixture_location": "Bathroom",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "fixtures"
+          }
+        ],
+        "configurable": []
+      },
+      "services": [
+        {
+          "name": "Flooring Installation Service",
+          "priceRange": [
+            300,
+            600
+          ]
+        },
+        {
+          "name": "Interior Painting Service",
+          "priceRange": [
+            500,
+            1000
+          ]
+        }
+      ]
+    }
+  },
+  "concrete": {
+    "name": "Concrete & Foundation",
+    "attributeValue": "Concrete & Foundation",
+    "subcategories": {
+      "ready-mix": {
+        "simple": [
+          {
+            "name": "Ready-Mix Concrete - 3000 PSI",
+            "uom": "CY",
+            "priceRange": [
+              140,
+              160
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_concrete_type": "ready_mix",
+            "br_concrete_psi": "3000",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 10,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Ready-Mix Concrete - 4000 PSI",
+            "uom": "CY",
+            "priceRange": [
+              165,
+              185
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 8,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Ready-Mix Concrete - 5000 PSI High-Strength",
+            "uom": "CY",
+            "priceRange": [
+              190,
+              210
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 5,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Concrete Mix - 60lb Bag",
+            "uom": "BAG",
+            "priceRange": [
+              4,
+              6
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 200,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Concrete Mix - 80lb Bag High-Strength",
+            "uom": "BAG",
+            "priceRange": [
+              6,
+              8
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 150,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": []
+      }
+    }
+  },
+  "electrical": {
+    "name": "Electrical Systems",
+    "attributeValue": "Electrical Systems",
+    "subcategories": {
+      "wiring": {
+        "simple": [
+          {
+            "name": "Romex 14/2 NM-B Wire - 250ft Roll",
+            "uom": "ROLL",
+            "priceRange": [
+              45,
+              60
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Romex 12/2 NM-B Wire - 250ft Roll",
+            "uom": "ROLL",
+            "priceRange": [
+              65,
+              85
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 15,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Romex 10/2 NM-B Wire - 250ft Roll",
+            "uom": "ROLL",
+            "priceRange": [
+              95,
+              120
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 10,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": []
+      },
+      "devices": {
+        "simple": [
+          {
+            "name": "Electrical Outlet - 15A Duplex White",
+            "uom": "EA",
+            "priceRange": [
+              1,
+              2
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 500,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "GFCI Outlet - 20A Weather-Resistant",
+            "uom": "EA",
+            "priceRange": [
+              15,
+              22
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 100,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Light Switch - Single Pole White",
+            "uom": "EA",
+            "priceRange": [
+              1,
+              2
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 500,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Dimmer Switch - LED Compatible",
+            "uom": "EA",
+            "priceRange": [
+              18,
+              28
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 100,
+            "br_typical_days_supply": 21,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "3-Way Light Switch - White",
+            "uom": "EA",
+            "priceRange": [
+              3,
+              5
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 200,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": []
+      },
+      "panels": {
+        "simple": [
+          {
+            "name": "Main Service Panel - 200 Amp",
+            "uom": "EA",
+            "priceRange": [
+              180,
+              250
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 5,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Circuit Breaker - 15 Amp Single Pole",
+            "uom": "EA",
+            "priceRange": [
+              5,
+              8
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 100,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Circuit Breaker - 20 Amp Single Pole",
+            "uom": "EA",
+            "priceRange": [
+              6,
+              10
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 100,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": []
+      }
+    }
+  },
+  "plumbing-pipes": {
+    "name": "Plumbing Pipes & Fittings",
+    "attributeValue": "Plumbing Pipes & Fittings",
+    "subcategories": {
+      "water-supply": {
+        "simple": [
+          {
+            "name": "PEX Pipe 1/2\" - Red (Hot) 100ft Coil",
+            "uom": "ROLL",
+            "priceRange": [
+              35,
+              50
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "PEX Pipe 1/2\" - Blue (Cold) 100ft Coil",
+            "uom": "ROLL",
+            "priceRange": [
+              35,
+              50
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "PEX Pipe 3/4\" - Red (Hot) 100ft Coil",
+            "uom": "ROLL",
+            "priceRange": [
+              50,
+              70
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 15,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Copper Pipe Type L 1/2\" - 10ft",
+            "uom": "EA",
+            "priceRange": [
+              18,
+              25
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 30,
+            "br_typical_days_supply": 21,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": []
+      },
+      "drain-waste": {
+        "simple": [
+          {
+            "name": "PVC Drain Pipe 2\" Schedule 40 - 10ft",
+            "uom": "EA",
+            "priceRange": [
+              8,
+              12
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 50,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "PVC Drain Pipe 3\" Schedule 40 - 10ft",
+            "uom": "EA",
+            "priceRange": [
+              12,
+              18
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 40,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "PVC Drain Pipe 4\" Schedule 40 - 10ft",
+            "uom": "EA",
+            "priceRange": [
+              18,
+              25
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 30,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": []
+      },
+      "fittings": {
+        "simple": [
+          {
+            "name": "PEX Fittings Assortment Kit - 50pc",
+            "uom": "KIT",
+            "priceRange": [
+              45,
+              65
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 21,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "PVC Fittings Assortment Kit - 40pc",
+            "uom": "KIT",
+            "priceRange": [
+              35,
+              50
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 15,
+            "br_typical_days_supply": 21,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Shut-Off Valve 1/2\" Quarter Turn",
+            "uom": "EA",
+            "priceRange": [
+              8,
+              12
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 100,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": []
+      }
+    }
+  },
+  "hvac": {
+    "name": "HVAC Systems",
+    "attributeValue": "HVAC Systems",
+    "subcategories": {
+      "units": {
+        "simple": [
+          {
+            "name": "Central AC/Heat Pump - 3 Ton 14 SEER",
+            "uom": "EA",
+            "priceRange": [
+              2800,
+              3500
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 2,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Central AC/Heat Pump - 4 Ton 16 SEER",
+            "uom": "EA",
+            "priceRange": [
+              3500,
+              4200
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 2,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Central AC/Heat Pump - 5 Ton 18 SEER High-Efficiency",
+            "uom": "EA",
+            "priceRange": [
+              4500,
+              5500
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 1,
+            "br_typical_days_supply": 45,
+            "br_restock_priority": "low"
+          }
+        ],
+        "configurable": []
+      },
+      "ductwork": {
+        "simple": [
+          {
+            "name": "Flexible Duct 6\" Insulated - 25ft",
+            "uom": "ROLL",
+            "priceRange": [
+              35,
+              50
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 21,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Flexible Duct 8\" Insulated - 25ft",
+            "uom": "ROLL",
+            "priceRange": [
+              45,
+              65
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 15,
+            "br_typical_days_supply": 21,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Round Duct 10\" Galvanized - 10ft",
+            "uom": "EA",
+            "priceRange": [
+              25,
+              35
+            ],
+            "br_construction_phase": [
+              "Rough-in"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 21,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": []
+      },
+      "vents": {
+        "simple": [
+          {
+            "name": "Supply Register 4\"x10\" White",
+            "uom": "EA",
+            "priceRange": [
+              8,
+              12
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 100,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Return Grille 20\"x20\" White",
+            "uom": "EA",
+            "priceRange": [
+              25,
+              35
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 30,
+            "br_typical_days_supply": 21,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Programmable Thermostat - 7-Day",
+            "uom": "EA",
+            "priceRange": [
+              45,
+              65
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 20,
+            "br_typical_days_supply": 21,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Smart Thermostat - WiFi Enabled",
+            "uom": "EA",
+            "priceRange": [
+              180,
+              250
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 10,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          }
+        ],
+        "configurable": []
+      }
+    }
+  },
+  "drywall-supplies": {
+    "name": "Drywall & Supplies",
+    "attributeValue": "Drywall & Supplies",
+    "subcategories": {
+      "drywall": {
+        "simple": [
+          {
+            "name": "Drywall 1/2\" - 4x8 Sheet",
+            "uom": "SHEET",
+            "priceRange": [
+              12,
+              16
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 200,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Drywall 1/2\" - 4x12 Sheet",
+            "uom": "SHEET",
+            "priceRange": [
+              18,
+              24
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 150,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Drywall 5/8\" Moisture-Resistant - 4x8",
+            "uom": "SHEET",
+            "priceRange": [
+              22,
+              28
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Premium",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_store_velocity_category": "medium",
+            "br_recommended_restock_quantity": 100,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          }
+        ],
+        "configurable": []
+      },
+      "supplies": {
+        "simple": [
+          {
+            "name": "Joint Compound - 5 Gallon Bucket",
+            "uom": "BUCKET",
+            "priceRange": [
+              25,
+              32
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 50,
+            "br_typical_days_supply": 7,
+            "br_restock_priority": "high"
+          },
+          {
+            "name": "Drywall Tape - Paper 250ft Roll",
+            "uom": "ROLL",
+            "priceRange": [
+              5,
+              8
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 100,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Corner Bead Metal - 8ft",
+            "uom": "EA",
+            "priceRange": [
+              2,
+              4
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 200,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "medium"
+          },
+          {
+            "name": "Drywall Screws - 1lb Box",
+            "uom": "BOX",
+            "priceRange": [
+              7,
+              10
+            ],
+            "br_construction_phase": [
+              "Foundation & framing"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_store_velocity_category": "high",
+            "br_recommended_restock_quantity": 200,
+            "br_typical_days_supply": 14,
+            "br_restock_priority": "high"
+          }
+        ],
+        "configurable": []
+      }
+    }
+  },
+  "appliances": {
+    "name": "Kitchen Appliances",
+    "attributeValue": "Kitchen Appliances",
+    "subcategories": {
+      "kitchen": {
+        "simple": [
+          {
+            "name": "Electric Range 30\" - White",
+            "uom": "EA",
+            "priceRange": [
+              450,
+              600
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "kitchen",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 3,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Gas Range 30\" - Stainless Steel",
+            "uom": "EA",
+            "priceRange": [
+              750,
+              950
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "kitchen",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 2,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Professional Range 36\" - Dual Fuel",
+            "uom": "EA",
+            "priceRange": [
+              2200,
+              2800
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Luxury",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "kitchen",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 1,
+            "br_typical_days_supply": 60,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Dishwasher - White Standard",
+            "uom": "EA",
+            "priceRange": [
+              350,
+              450
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "kitchen",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 3,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Dishwasher - Stainless Quiet",
+            "uom": "EA",
+            "priceRange": [
+              600,
+              750
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "kitchen",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 2,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Dishwasher - Panel-Ready Ultra-Quiet",
+            "uom": "EA",
+            "priceRange": [
+              1200,
+              1500
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Luxury",
+            "br_package_tier": [
+              "best"
+            ],
+            "br_room_category": "kitchen",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 1,
+            "br_typical_days_supply": 60,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Microwave Over-Range - White",
+            "uom": "EA",
+            "priceRange": [
+              180,
+              250
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Builder grade",
+            "br_package_tier": [
+              "good"
+            ],
+            "br_room_category": "kitchen",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 3,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          },
+          {
+            "name": "Microwave Built-In - Stainless",
+            "uom": "EA",
+            "priceRange": [
+              400,
+              550
+            ],
+            "br_construction_phase": [
+              "Interior finish"
+            ],
+            "br_quality_tier": "Professional",
+            "br_package_tier": [
+              "better"
+            ],
+            "br_room_category": "kitchen",
+            "br_store_velocity_category": "low",
+            "br_recommended_restock_quantity": 2,
+            "br_typical_days_supply": 30,
+            "br_restock_priority": "low"
+          }
+        ],
+        "configurable": []
+      }
+    }
+  }
+}

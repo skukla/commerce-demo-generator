@@ -1,0 +1,26 @@
+[
+  {
+    "attributeCode": "aco_catalog_view_id",
+    "frontendLabel": "ACO Catalog View ID",
+    "frontendInput": "text",
+    "isRequired": false,
+    "isUserDefined": true,
+    "isVisible": true,
+    "sortOrder": 100,
+    "isUsedInGrid": true,
+    "isFilterableInGrid": false,
+    "isSearchableInGrid": false
+  },
+  {
+    "attributeCode": "aco_price_book_id",
+    "frontendLabel": "ACO Price Book ID",
+    "frontendInput": "text",
+    "isRequired": false,
+    "isUserDefined": true,
+    "isVisible": true,
+    "sortOrder": 101,
+    "isUsedInGrid": true,
+    "isFilterableInGrid": false,
+    "isSearchableInGrid": false
+  }
+]
