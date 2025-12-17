@@ -25,19 +25,45 @@ const loadJSON = (relativePath) => {
 // Load project configuration
 const projectConfig = loadJSON('project.json');
 
-// Set defaults for ACO configuration if not present
-const acoDefaults = {
-  locale: 'en-US',
-  defaultProductStatus: 'ENABLED',
-  defaultVisibility: ['CATALOG', 'SEARCH'],
-  defaultCategoryActive: true
-};
+// Validate required ACO configuration
+if (!projectConfig.aco) {
+  throw new Error(
+    'Missing required "aco" configuration in project.json. ' +
+    'Please add:\n' +
+    '  "aco": {\n' +
+    '    "locale": "en-US",\n' +
+    '    "defaultProductStatus": "ENABLED",\n' +
+    '    "defaultVisibility": ["CATALOG", "SEARCH"],\n' +
+    '    "defaultCategoryActive": true\n' +
+    '  }'
+  );
+}
 
-// Set defaults for Commerce configuration if not present
-const commerceDefaults = {
-  defaultActive: true,
-  defaultIncludeInMenu: true
-};
+// Validate required Commerce configuration
+if (!projectConfig.commerce) {
+  throw new Error(
+    'Missing required "commerce" configuration in project.json. ' +
+    'Please add:\n' +
+    '  "commerce": {\n' +
+    '    "defaultActive": true,\n' +
+    '    "defaultIncludeInMenu": true\n' +
+    '  }'
+  );
+}
+
+// Validate required ACO fields
+const requiredAcoFields = ['locale', 'defaultProductStatus', 'defaultVisibility', 'defaultCategoryActive'];
+const missingAcoFields = requiredAcoFields.filter(field => !(field in projectConfig.aco));
+if (missingAcoFields.length > 0) {
+  throw new Error(`Missing required ACO configuration fields: ${missingAcoFields.join(', ')}`);
+}
+
+// Validate required Commerce fields
+const requiredCommerceFields = ['defaultActive', 'defaultIncludeInMenu'];
+const missingCommerceFields = requiredCommerceFields.filter(field => !(field in projectConfig.commerce));
+if (missingCommerceFields.length > 0) {
+  throw new Error(`Missing required Commerce configuration fields: ${missingCommerceFields.join(', ')}`);
+}
 
 export const PROJECT_CONFIG = {
   paths: {
@@ -47,12 +73,8 @@ export const PROJECT_CONFIG = {
     media: resolve(DATA_REPO, 'media')
   },
   
-  // Load project settings from definitions with defaults
-  project: {
-    ...projectConfig,
-    aco: { ...acoDefaults, ...(projectConfig.aco || {}) },
-    commerce: { ...commerceDefaults, ...(projectConfig.commerce || {}) }
-  },
+  // Load project settings from definitions (no defaults - explicit configuration required)
+  project: projectConfig,
   
   // Load data files
   productCatalog: loadJSON('products/catalog.json'),
