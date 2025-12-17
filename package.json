@@ -4,8 +4,8 @@
   "description": "Generic datapack generator for Adobe Commerce demo projects",
   "type": "module",
   "scripts": {
-    "generate:commerce": "node scripts/generators/generate-commerce.js",
-    "generate:aco": "node scripts/generators/generate-aco.js",
+    "generate:commerce": "node generators/generate-commerce.js",
+    "generate:aco": "node generators/generate-aco.js",
     "generate:all": "npm run generate:commerce && npm run generate:aco"
   },
   "dependencies": {

@@ -1,0 +1,88 @@
+{
+  "companies": [
+    {
+      "company_name": "Sunset Valley Homes",
+      "company_email": "info@sunsetvalleyhomes.example.com",
+      "legal_name": "Sunset Valley Homes, LLC",
+      "vat_tax_id": "12-3456789",
+      "reseller_id": "SVH-2024",
+      "comment": "Regional production builder - 20-30 homes per year in Desert Ridge subdivision",
+      "street": ["1500 Desert Ridge Parkway"],
+      "city": "Phoenix",
+      "country_id": "US",
+      "region": "Arizona",
+      "region_id": 4,
+      "postcode": "85054",
+      "telephone": "(602) 555-0150",
+      "customer_group_id": 2,
+      "extension_attributes": {
+        "company_type": "regional_builder",
+        "annual_volume": "20-30 homes",
+        "tier": "Commercial-Tier2"
+      }
+    },
+    {
+      "company_name": "Johnson Custom Builders",
+      "company_email": "info@johnsoncustombuilders.example.com",
+      "legal_name": "Johnson Custom Builders, Inc.",
+      "vat_tax_id": "23-4567890",
+      "reseller_id": "JCB-2024",
+      "comment": "General contractor - 3-5 custom homes per year, $800K-$1.5M each",
+      "street": ["789 Mountain View Drive"],
+      "city": "Denver",
+      "country_id": "US",
+      "region": "Colorado",
+      "region_id": 6,
+      "postcode": "80202",
+      "telephone": "(303) 555-0200",
+      "customer_group_id": 3,
+      "extension_attributes": {
+        "company_type": "general_contractor",
+        "annual_volume": "3-5 homes",
+        "tier": "Residential-Builder"
+      }
+    },
+    {
+      "company_name": "Chen Kitchen & Bath Remodeling",
+      "company_email": "info@chenkitchenbath.example.com",
+      "legal_name": "Chen Kitchen & Bath Remodeling, LLC",
+      "vat_tax_id": "34-5678901",
+      "reseller_id": "CKB-2024",
+      "comment": "Remodeling contractor - 30-40 kitchen/bath remodels per year, $20K-$60K each",
+      "street": ["456 Trade Center Boulevard"],
+      "city": "Charlotte",
+      "country_id": "US",
+      "region": "North Carolina",
+      "region_id": 37,
+      "postcode": "28202",
+      "telephone": "(704) 555-0300",
+      "customer_group_id": 3,
+      "extension_attributes": {
+        "company_type": "remodeling_contractor",
+        "annual_volume": "30-40 projects",
+        "tier": "Residential-Builder"
+      }
+    },
+    {
+      "company_name": "Precision Lumber & Supply",
+      "company_email": "info@precisionlumber.example.com",
+      "legal_name": "Precision Lumber & Supply, Inc.",
+      "vat_tax_id": "45-6789012",
+      "reseller_id": "PLS-2024",
+      "comment": "Regional hardware/lumber chain - 3 locations in Texas",
+      "street": ["4521 South Congress Avenue"],
+      "city": "Austin",
+      "country_id": "US",
+      "region": "Texas",
+      "region_id": 57,
+      "postcode": "78745",
+      "telephone": "(512) 555-0100",
+      "customer_group_id": 4,
+      "extension_attributes": {
+        "company_type": "retail_chain",
+        "annual_volume": "15 stores",
+        "tier": "Retail-Chain-Buyer"
+      }
+    }
+  ]
+}

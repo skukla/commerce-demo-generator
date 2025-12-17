@@ -12,6 +12,8 @@ This tool generates datapacks for Adobe Commerce and Adobe Commerce Optimizer (A
 - Transforms Commerce data to ACO format
 - Fully configurable via data repository
 - Supports products (simple & configurable), categories, attributes, customers, customer groups
+- **NEW**: Multi-Source Inventory (MSI) sources and inventory management
+- **NEW**: B2B companies, teams, and roles
 - Image handling with base64 encoding
 - No dependencies on target Commerce or ACO instances
 
@@ -134,12 +136,39 @@ This file defines project-specific configuration:
 
 See `config/sample-data/` for BuildRight data as a reference example.
 
+## New Features
+
+### Multi-Source Inventory (MSI) Support
+
+The generator now creates MSI sources (warehouses, distribution centers, retail stores) with inventory quantities assigned per product per source. This enables:
+
+- Multi-warehouse inventory management
+- Regional fulfillment strategies
+- In-store pickup (BOPIS) capabilities
+- Priority-based source allocation
+
+See [docs/MSI-AND-B2B-SUPPORT.md](docs/MSI-AND-B2B-SUPPORT.md) for detailed documentation.
+
+### B2B Companies Support
+
+The generator creates B2B company structures including:
+
+- Company profiles with legal and contact information
+- Company teams for organizational hierarchy
+- Company roles with granular permissions
+- Company admin user assignments
+
+Based on the BuildRight Solutions use case, demonstrating regional builders, contractors, and retail chains.
+
+See [docs/MSI-AND-B2B-SUPPORT.md](docs/MSI-AND-B2B-SUPPORT.md) for detailed documentation.
+
 ## Output
 
 ### Commerce Output (ACCS Format)
 
 Generated in `{data-repo}/generated/commerce/`:
 
+**Core Entities:**
 - `data/accs/accs_products.json` - Products (simple & configurable)
 - `data/accs/accs_categories.json` - Category tree
 - `data/accs/accs_product_attributes.json` - Product attributes
@@ -148,6 +177,16 @@ Generated in `{data-repo}/generated/commerce/`:
 - `data/accs/accs_customers.json` - Demo customers
 - `data/accs/accs_product_images_*.json` - Product images (base64)
 - `media/catalog/product/` - Image files
+
+**Multi-Source Inventory (MSI):**
+- `data/accs/accs_inventory_sources.json` - Warehouse and store locations
+- `data/accs/accs_stock_source_links.json` - Source-to-stock associations
+- `data/accs/accs_source_items_*.json` - Per-source inventory quantities
+
+**B2B Companies:**
+- `data/accs/accs_companies.json` - Company profiles
+- `data/accs/accs_company_roles_template.json` - Role definitions
+- `data/accs/accs_company_teams_template.json` - Team structures
 
 ### ACO Output
 

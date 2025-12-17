@@ -1,0 +1,81 @@
+{
+  "sources": [
+    {
+      "source_code": "warehouse_west",
+      "name": "West Coast Distribution Center",
+      "enabled": true,
+      "description": "Primary distribution center for western region",
+      "contact_name": "Sarah Martinez",
+      "email": "sarah.martinez@buildright.example.com",
+      "phone": "(602) 555-0100",
+      "country_id": "US",
+      "region_id": 4,
+      "region": "Arizona",
+      "city": "Phoenix",
+      "street": "2450 West Buckeye Road",
+      "postcode": "85009",
+      "latitude": 33.435463,
+      "longitude": -112.109985,
+      "use_default_carrier_config": true
+    },
+    {
+      "source_code": "warehouse_central",
+      "name": "Central Distribution Center",
+      "enabled": true,
+      "description": "Primary distribution center for central region",
+      "contact_name": "Marcus Johnson",
+      "email": "marcus.johnson@buildright.example.com",
+      "phone": "(214) 555-0200",
+      "country_id": "US",
+      "region_id": 57,
+      "region": "Texas",
+      "city": "Dallas",
+      "street": "1200 Industrial Boulevard",
+      "postcode": "75207",
+      "latitude": 32.80334,
+      "longitude": -96.82207,
+      "use_default_carrier_config": true
+    },
+    {
+      "source_code": "warehouse_east",
+      "name": "East Coast Distribution Center",
+      "enabled": true,
+      "description": "Primary distribution center for eastern region",
+      "contact_name": "Lisa Chen",
+      "email": "lisa.chen@buildright.example.com",
+      "phone": "(404) 555-0300",
+      "country_id": "US",
+      "region_id": 18,
+      "region": "Georgia",
+      "city": "Atlanta",
+      "street": "850 Distribution Drive",
+      "postcode": "30318",
+      "latitude": 33.77863,
+      "longitude": -84.42954,
+      "use_default_carrier_config": true
+    },
+    {
+      "source_code": "store_austin",
+      "name": "Austin Retail Store",
+      "enabled": true,
+      "description": "Retail showroom and pickup location",
+      "contact_name": "Kevin Rodriguez",
+      "email": "austin@buildright.example.com",
+      "phone": "(512) 555-0100",
+      "country_id": "US",
+      "region_id": 57,
+      "region": "Texas",
+      "city": "Austin",
+      "street": "4521 South Congress Avenue",
+      "postcode": "78745",
+      "latitude": 30.23018,
+      "longitude": -97.80014,
+      "use_default_carrier_config": true,
+      "extension_attributes": {
+        "is_pickup_location_active": true,
+        "frontend_name": "Austin (South Congress) Store",
+        "frontend_description": "South Congress, Austin - Retail showroom with pickup"
+      }
+    }
+  ]
+}

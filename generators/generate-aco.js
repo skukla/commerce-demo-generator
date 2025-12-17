@@ -21,7 +21,7 @@ import { promises as fs } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import chalk from 'chalk';
-import { updateLine, finishLine } from '../utils/format.js';
+import { updateLine, finishLine } from '../lib/format.js';
 import { PROJECT_CONFIG } from '../../config/project-config.js';
 import { generatePriceBooks, generatePrices, getPricingStats } from './generate-aco-pricing.js';
 

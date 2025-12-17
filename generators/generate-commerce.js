@@ -27,9 +27,24 @@ import { generateAttributes, generateAttributeOptions } from './attributes.js';
 import { generateProducts } from './products.js';
 import { generateVariants } from './product-variants.js';
 import { generateCustomersWithDetails } from './customers.js';
+import { 
+  generateInventorySources, 
+  transformSourcesToAccsFormat,
+  generateStockSourceLinks,
+  generateSourceItems 
+} from './inventory-sources.js';
+import { 
+  generateCompanies,
+  generateTeamsForCompany,
+  generateCompanyRoles,
+  transformCompaniesToAccsFormat,
+  transformTeamsToAccsFormat,
+  transformRolesToAccsFormat,
+  createCompanyAdminAssignment
+} from './companies.js';
 import { PROJECT_CONFIG } from '../../config/project-config.js';
-import { normalizeProductName } from '../utils/name-normalizer.js';
-import { updateLine, finishLine } from '../utils/format.js';
+import { normalizeProductName } from '../lib/name-normalizer.js';
+import { updateLine, finishLine } from '../lib/format.js';
 
 // Note: Pricing (tier prices, advanced pricing) is handled via ACO, not Commerce backend
 // Customer groups ARE managed in Commerce (for customer segmentation)
@@ -607,6 +622,58 @@ async function generateDataPack() {
   finishLine();
   
   writeFileSync(join(DATA_DIR, 'accs_customers.json'), JSON.stringify(accsCustomers, null, 4), 'utf8');
+
+  // Generate MSI inventory sources
+  updateLine('📦 Generating MSI inventory sources...');
+  const inventorySources = generateInventorySources({ includeStorePickup: true });
+  const accsInventorySources = transformSourcesToAccsFormat(inventorySources);
+  writeJsonFile(join(DATA_DIR, 'accs_inventory_sources.json'), accsInventorySources, 'MSI Inventory Sources', 'sources');
+  
+  // Generate stock-source links (linking sources to stock_id 2)
+  updateLine('📦 Generating stock-source links...');
+  const stockSourceLinks = generateStockSourceLinks(inventorySources, 2);
+  writeJsonFile(join(DATA_DIR, 'accs_stock_source_links.json'), stockSourceLinks, 'Stock-Source Links', 'links');
+  
+  // Generate source items (inventory quantities per source per product)
+  updateLine('📦 Generating source inventory quantities...');
+  const sourceItems = generateSourceItems(allProducts, inventorySources, { minQty: 100, maxQty: 2000 });
+  
+  // Split source items into chunks for better performance (500 items per file)
+  const SOURCE_ITEMS_PER_FILE = 500;
+  const sourceItemChunks = splitArrayIntoChunks(sourceItems.sourceItems, SOURCE_ITEMS_PER_FILE);
+  
+  sourceItemChunks.forEach((chunk, index) => {
+    const fileNumber = index + 1;
+    const jsonContent = JSON.stringify({ sourceItems: chunk }, null, 4);
+    writeFileSync(join(DATA_DIR, `accs_source_items_${fileNumber}.json`), jsonContent, 'utf8');
+  });
+  
+  updateLine(chalk.green(`✔ Generating source inventory quantities (${sourceItems.sourceItems.length} records across ${sourceItemChunks.length} files)`));
+  finishLine();
+
+  // Generate B2B companies
+  updateLine('📦 Generating B2B companies...');
+  const companies = generateCompanies();
+  const accsCompanies = transformCompaniesToAccsFormat(companies);
+  writeJsonFile(join(DATA_DIR, 'accs_companies.json'), accsCompanies, 'B2B Companies', 'companies');
+  
+  // Generate company roles (shared across all companies)
+  updateLine('📦 Generating company roles...');
+  const companyRoles = generateCompanyRoles();
+  // Note: In real implementation, roles would be created per company via API
+  // For demo, we export a template that can be applied to each company
+  writeJsonFile(join(DATA_DIR, 'accs_company_roles_template.json'), { roles: companyRoles }, 'Company Roles Template');
+  
+  // Generate company teams (template for each company)
+  updateLine('📦 Generating company teams...');
+  const companyTeams = {};
+  companies.forEach(company => {
+    const teams = generateTeamsForCompany(company.company_name);
+    if (teams.length > 0) {
+      companyTeams[company.company_name] = teams;
+    }
+  });
+  writeJsonFile(join(DATA_DIR, 'accs_company_teams_template.json'), { teams: companyTeams }, 'Company Teams Template');
 
   // Create zip file
   console.log('');
