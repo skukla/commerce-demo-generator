@@ -422,7 +422,7 @@ async function transformForAco() {
     const commerceProducts = commerceData.source.items;
     const commerceAttributes = JSON.parse(await fs.readFile(COMMERCE_ATTRIBUTES, 'utf-8'));
     const productCount = commerceProducts.length;
-    updateLine(chalk.green(`✔ ${productCount} ${productCount === 1 ? 'product' : 'products'} from Commerce datapack`));
+    updateLine(chalk.green(`✔ Read ${productCount} ${productCount === 1 ? 'product' : 'products'} from Commerce datapack`));
     finishLine();
     
     // Step 2: Transform categories to ACO format
@@ -431,7 +431,7 @@ async function transformForAco() {
     const { categories: acoCategories, categoryMap } = transformToAcoCategories(categoryTree);
     const categoryCodeMap = buildCategoryCodeMap(categoryTree);
     const catCount = acoCategories.length;
-    updateLine(chalk.green(`✔ ${catCount} ${catCount === 1 ? 'category' : 'categories'}`));
+    updateLine(chalk.green(`✔ Transformed ${catCount} ${catCount === 1 ? 'category' : 'categories'}`));
     finishLine();
     
     // Step 3: Transform products to ACO format with category linkage
@@ -446,28 +446,28 @@ async function transformForAco() {
     const acoConfigurables = configurables.map(p => transformToAcoProduct(p, categoryCodeMap));
     const acoVariants = [...acoConfigurables, ...variants.map(v => transformToAcoVariant(v, configurableAttrsMap, categoryCodeMap))];
     
-    updateLine(chalk.green(`✔ ${acoSimples.length} simple, ${acoConfigurables.length} configurable, ${variants.length} ${variants.length === 1 ? 'variant' : 'variants'}`));
+    updateLine(chalk.green(`✔ Transformed ${acoSimples.length} simple, ${acoConfigurables.length} configurable, ${variants.length} ${variants.length === 1 ? 'variant' : 'variants'}`));
     finishLine();
     
     // Step 5: Extract metadata from Commerce attributes
     updateLine('📦 Extracting metadata...');
     const metadata = extractMetadata(commerceAttributes);
     const metaCount = metadata.length;
-    updateLine(chalk.green(`✔ ${metaCount} ${metaCount === 1 ? 'attribute' : 'attributes'}`));
+    updateLine(chalk.green(`✔ Extracted ${metaCount} ${metaCount === 1 ? 'attribute' : 'attributes'}`));
     finishLine();
     
     // Step 6: Generate price books and prices
     updateLine('📦 Generating price books...');
     const priceBooks = generatePriceBooks();
     const pbCount = priceBooks.length;
-    updateLine(chalk.green(`✔ ${pbCount} price ${pbCount === 1 ? 'book' : 'books'}`));
+    updateLine(chalk.green(`✔ Generated ${pbCount} price ${pbCount === 1 ? 'book' : 'books'}`));
     finishLine();
     
     updateLine('📦 Generating prices...');
     const prices = generatePrices(commerceProducts);
     const pricingStats = getPricingStats(commerceProducts, prices);
     const priceCount = prices.length;
-    updateLine(chalk.green(`✔ ${priceCount} ${priceCount === 1 ? 'price' : 'prices'} (${pricingStats.tieredPriceEntries} with tiers)`));
+    updateLine(chalk.green(`✔ Generated ${priceCount} ${priceCount === 1 ? 'price' : 'prices'} (${pricingStats.tieredPriceEntries} with tiers)`));
     finishLine();
     
     // Step 7: Ensure ACO directory exists
@@ -484,7 +484,7 @@ async function transformForAco() {
     await fs.writeFile(ACO_PRICES_FILE, JSON.stringify(prices, null, 2));
     
     const totalFiles = 6;
-    updateLine(chalk.green(`✔ ${totalFiles} ACO ${totalFiles === 1 ? 'file' : 'files'} written`));
+    updateLine(chalk.green(`✔ Wrote ${totalFiles} ACO ${totalFiles === 1 ? 'file' : 'files'}`));
     finishLine();
     
     console.log('');

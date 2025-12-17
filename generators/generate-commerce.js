@@ -76,7 +76,7 @@ function pluralize(count, singular, plural = null) {
 function writeJsonFile(filePath, data, description, countField = null) {
   const jsonContent = JSON.stringify(data, null, 4);
   writeFileSync(filePath, jsonContent, 'utf8');
-  updateLine(chalk.green(`✔ ${description}`));
+  updateLine(chalk.green(`✔ Generated ${description}`));
   finishLine();
 }
 
@@ -560,13 +560,13 @@ async function generateDataPack() {
   writeFileSync(join(DATA_DIR, 'accs_product_attributes.json'), JSON.stringify(accsAttributes, null, 4), 'utf8');
   const attributeAssignments = generateAttributeAssignToSet(rawAttributes);
   writeFileSync(join(DATA_DIR, 'accs_attribute_assign_to_set.json'), JSON.stringify(attributeAssignments, null, 4), 'utf8');
-  updateLine(chalk.green(`✔ ${rawAttributes.length} ${pluralize(rawAttributes.length, 'attribute')} with ${attributeAssignments.length} ${pluralize(attributeAssignments.length, 'assignment')}`));
+  updateLine(chalk.green(`✔ Generated ${rawAttributes.length} ${pluralize(rawAttributes.length, 'attribute')} with ${attributeAssignments.length} ${pluralize(attributeAssignments.length, 'assignment')}`));
   finishLine();
 
   // Generate simple products
   updateLine('📦 Generating simple products...');
   const rawProducts = await generateProducts();
-  updateLine(chalk.green(`✔ ${rawProducts.length} simple ${pluralize(rawProducts.length, 'product')}`));
+  updateLine(chalk.green(`✔ Generated ${rawProducts.length} simple ${pluralize(rawProducts.length, 'product')}`));
   finishLine();
   
   // Generate configurable products and variants
@@ -574,7 +574,7 @@ async function generateDataPack() {
   const rawVariants = await generateVariants();
   const configurableCount = rawVariants.filter(p => p.type_id === 'configurable').length;
   const variantCount = rawVariants.filter(p => p.type_id === 'simple').length;
-  updateLine(chalk.green(`✔ ${configurableCount} ${pluralize(configurableCount, 'configurable')} with ${variantCount} ${pluralize(variantCount, 'variant')}`));
+  updateLine(chalk.green(`✔ Generated ${configurableCount} ${pluralize(configurableCount, 'configurable')} with ${variantCount} ${pluralize(variantCount, 'variant')}`));
   finishLine();
   
   // Combine all products
@@ -625,7 +625,7 @@ async function generateDataPack() {
   // Copy image files to media directory
   const copiedImages = copyProductImages(MEDIA_DIR);
   const imageFileCount = Math.ceil(productImages.length / 5);
-  updateLine(chalk.green(`✔ ${productImages.length} ${pluralize(productImages.length, 'image')} (${copiedImages} copied, ${imageFileCount} ${pluralize(imageFileCount, 'file')})`));
+  updateLine(chalk.green(`✔ Generated ${productImages.length} ${pluralize(productImages.length, 'image')} (${copiedImages} copied, ${imageFileCount} ${pluralize(imageFileCount, 'file')})`));
   finishLine();
 
   // Generate customers
@@ -633,7 +633,7 @@ async function generateDataPack() {
   const rawCustomers = generateCustomersWithDetails();
   const accsCustomers = transformCustomersToAccsFormat(rawCustomers);
   const customerCount = accsCustomers.source?.items?.length || rawCustomers.length;
-  updateLine(chalk.green(`✔ ${customerCount} demo ${pluralize(customerCount, 'customer')}`));
+  updateLine(chalk.green(`✔ Generated ${customerCount} demo ${pluralize(customerCount, 'customer')}`));
   finishLine();
   
   writeFileSync(join(DATA_DIR, 'accs_customers.json'), JSON.stringify(accsCustomers, null, 4), 'utf8');
@@ -666,7 +666,7 @@ async function generateDataPack() {
   });
   
   const itemCount = sourceItems.sourceItems.length;
-  updateLine(chalk.green(`✔ ${itemCount} inventory ${pluralize(itemCount, 'item')} (${sourceItemChunks.length} ${pluralize(sourceItemChunks.length, 'file')})`));
+  updateLine(chalk.green(`✔ Generated ${itemCount} inventory ${pluralize(itemCount, 'item')} (${sourceItemChunks.length} ${pluralize(sourceItemChunks.length, 'file')})`));
   finishLine();
 
   // Generate B2B companies
@@ -701,7 +701,7 @@ async function generateDataPack() {
   const adminInstructions = generateB2BAdminInstructions();
   writeFileSync(join(DATA_DIR, 'b2b_enable_instructions.json'), JSON.stringify(adminInstructions, null, 4), 'utf8');
   
-  updateLine(chalk.green(`✔ B2B structures with ${companyRoles.length} ${pluralize(companyRoles.length, 'role')} (setup instructions included)`));
+  updateLine(chalk.green(`✔ Generated B2B structures with ${companyRoles.length} ${pluralize(companyRoles.length, 'role')} (setup instructions included)`));
   finishLine();
 
   // Done
