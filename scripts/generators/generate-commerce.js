@@ -470,7 +470,7 @@ function generateProductImagesJson(products) {
                 label: "",
                 position: 1,
                 disabled: false,
-                types: ["image", "small_image", "thumbnail", "swatch_image"],
+                types: ["image", "small_image", "thumbnail"],
                 content: {
                   base64_encoded_data: base64Data,
                   type: mimeType,
