@@ -547,9 +547,8 @@ function extractProductImagesToMedia(productImages, outputMediaPath) {
       if (entry.content?.base64_encoded_data) {
         try {
           const buffer = Buffer.from(entry.content.base64_encoded_data, 'base64');
-          const mimeType = entry.content.type || 'image/jpeg';
-          const ext = mimeType.split('/')[1] || 'jpeg';
-          const outputFile = join(outputMediaPath, `${sku}.${ext}`);
+          // Always use .jpg extension for consistency (standardized across all repos)
+          const outputFile = join(outputMediaPath, `${sku}.jpg`);
           
           writeFileSync(outputFile, buffer);
           extractedCount++;
