@@ -160,11 +160,13 @@ function transformProductsToAccsFormat(products) {
  * Transform categories to ACCS format
  */
 function transformCategoriesToAccsFormat(categories) {
+  const commerceConfig = PROJECT_CONFIG.project.commerce;
+  
   return {
     root_category: {
       name: PROJECT_CONFIG.project.rootCategoryName,
       parent_id: 1,
-      is_active: true,
+      is_active: commerceConfig.defaultActive,
       include_in_menu: false,
       customAttributes: [
         {
@@ -177,10 +179,10 @@ function transformCategoriesToAccsFormat(categories) {
       category: {
         name: cat.name,
         parent_id: 0,
-        is_active: true,
+        is_active: commerceConfig.defaultActive,
         position: index + 1,
         path: "",
-        include_in_menu: true,
+        include_in_menu: commerceConfig.defaultIncludeInMenu,
         customAttributes: [
           {
             attributeCode: "is_anchor",

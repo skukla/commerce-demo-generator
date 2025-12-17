@@ -45,15 +45,18 @@ const ACO_CATEGORIES_FILE = join(ACO_OUTPUT_DIR, 'categories.json');
  * @param {Map} categoryCodeMap - Map of category names/paths to ACO codes (optional)
  */
 function transformToAcoProduct(commerceProduct, categoryCodeMap = null) {
+  // Get ACO configuration defaults from project config
+  const acoConfig = PROJECT_CONFIG.project.aco;
+  
   const acoProduct = {
     sku: commerceProduct.sku,
     source: {
-      locale: 'en-US'
+      locale: acoConfig.locale
     },
     name: commerceProduct.name,
     slug: commerceProduct.url_key,
     description: commerceProduct.description || commerceProduct.short_description || '',
-    status: commerceProduct.product_online === 1 ? 'ENABLED' : 'DISABLED',
+    status: commerceProduct.product_online === 1 ? acoConfig.defaultProductStatus : 'DISABLED',
     visibleIn: []
   };
   
@@ -74,7 +77,7 @@ function transformToAcoProduct(commerceProduct, categoryCodeMap = null) {
   };
   
   const visibility = parseInt(commerceProduct.visibility) || 4;
-  acoProduct.visibleIn = visibilityMap[visibility] || ['CATALOG', 'SEARCH'];
+  acoProduct.visibleIn = visibilityMap[visibility] || acoConfig.defaultVisibility;
   
   // Transform custom attributes
   acoProduct.attributes = [];
@@ -303,15 +306,18 @@ function transformToAcoCategories(categoryTree) {
     const code = node.urlKey || slugify(node.name);
     const currentSlug = slugPath ? `${slugPath}/${code}` : code;
     
+    // Get ACO configuration defaults from project config
+    const acoConfig = PROJECT_CONFIG.project.aco;
+    
     const acoCategory = {
       code: code,
       source: {
-        locale: 'en-US'
+        locale: acoConfig.locale
       },
       name: node.name,
       slug: currentSlug,
       description: node.description || `${node.name} category`,
-      active: true
+      active: acoConfig.defaultCategoryActive
     };
     
     // Add parentId if not root level
