@@ -299,39 +299,44 @@ function transformToAcoCategories(categoryTree) {
   /**
    * Recursively flatten category tree
    * @param {Object} node - Category node
-   * @param {string|null} parentCode - Parent category code
-   * @param {string} slugPath - Accumulated slug path
+   * @param {string} slugPath - Accumulated slug path (hierarchy via slug)
+   * 
+   * ACO Category Schema (v1.0.0):
+   * - slug: REQUIRED - hierarchical path (e.g., "men/clothing/pants")
+   * - source: REQUIRED - { locale: "en-US" }
+   * - name: REQUIRED - display name
+   * - families: OPTIONAL - array of product family identifiers
+   * 
+   * REMOVED from schema (no longer supported):
+   * - code (use slug instead)
+   * - description (not supported)
+   * - active (not supported)
+   * - parentId (hierarchy via slug path)
    */
-  function flattenCategory(node, parentCode = null, slugPath = '') {
+  function flattenCategory(node, slugPath = '') {
     const code = node.urlKey || slugify(node.name);
     const currentSlug = slugPath ? `${slugPath}/${code}` : code;
     
     // Get ACO configuration defaults from project config
     const acoConfig = PROJECT_CONFIG.project.aco;
     
+    // ACO Category Schema v1.0.0 - ONLY these fields are allowed
     const acoCategory = {
-      code: code,
+      slug: currentSlug, // REQUIRED - hierarchical path represents parent-child
       source: {
         locale: acoConfig.locale
       },
-      name: node.name,
-      slug: currentSlug,
-      description: node.description || `${node.name} category`,
-      active: acoConfig.defaultCategoryActive
+      name: node.name // REQUIRED - display name
+      // families: [] // OPTIONAL - not used in BuildRight
     };
-    
-    // Add parentId if not root level
-    if (parentCode) {
-      acoCategory.parentId = parentCode;
-    }
     
     categories.push(acoCategory);
     categoryMap.set(code, currentSlug);
     
-    // Process children
+    // Process children - hierarchy is represented via slug path
     if (node.children && node.children.length > 0) {
       for (const child of node.children) {
-        flattenCategory(child, code, currentSlug);
+        flattenCategory(child, currentSlug); // Pass current slug as parent path
       }
     }
   }
