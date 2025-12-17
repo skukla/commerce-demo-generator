@@ -484,7 +484,8 @@ async function transformForAco() {
     updateLine('📦 Writing ACO files...');
     
     await fs.writeFile(ACO_CATEGORIES_FILE, JSON.stringify(acoCategories, null, 2));
-    await fs.writeFile(ACO_PRODUCTS_FILE, JSON.stringify(acoSimples, null, 2));
+    // Products file should contain both simple products AND parent configurables
+    await fs.writeFile(ACO_PRODUCTS_FILE, JSON.stringify([...acoSimples, ...acoConfigurables], null, 2));
     await fs.writeFile(ACO_VARIANTS_FILE, JSON.stringify(acoVariants, null, 2));
     await fs.writeFile(ACO_METADATA_FILE, JSON.stringify(metadata, null, 2));
     await fs.writeFile(ACO_PRICE_BOOKS_FILE, JSON.stringify(priceBooks, null, 2));
