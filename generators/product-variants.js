@@ -8,7 +8,7 @@ import { PRODUCT_CATEGORIES, BRANDS, BRANDS_BY_CATEGORY } from '../lib/product-d
 import { SeededRandom } from '../lib/seeded-random.js';
 import { generateProductDescription, generateShortDescription } from '../lib/description-generator.js';
 import { generateHash, generateUrlKey } from '../lib/product-utils.js';
-import { PROJECT_CONFIG } from '../../config/project-config.js';
+import { PROJECT_CONFIG } from '../config/project-config.js';
 
 /**
  * Generate SKU for configurable product

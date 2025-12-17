@@ -3,7 +3,7 @@
  * Generates customers.json for module-data-install
  */
 
-import { PROJECT_CONFIG } from '../../config/project-config.js';
+import { PROJECT_CONFIG } from '../config/project-config.js';
 
 const DEMO_CUSTOMERS = PROJECT_CONFIG.demoCustomers;
 

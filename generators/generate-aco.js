@@ -22,7 +22,7 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 import { updateLine, finishLine } from '../lib/format.js';
-import { PROJECT_CONFIG } from '../../config/project-config.js';
+import { PROJECT_CONFIG } from '../config/project-config.js';
 import { generatePriceBooks, generatePrices, getPricingStats } from './generate-aco-pricing.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -37,11 +37,14 @@ const ACO_VARIANTS_FILE = join(ACO_OUTPUT_DIR, 'variants.json');
 const ACO_METADATA_FILE = join(ACO_OUTPUT_DIR, 'metadata.json');
 const ACO_PRICE_BOOKS_FILE = join(ACO_OUTPUT_DIR, 'price-books.json');
 const ACO_PRICES_FILE = join(ACO_OUTPUT_DIR, 'prices.json');
+const ACO_CATEGORIES_FILE = join(ACO_OUTPUT_DIR, 'categories.json');
 
 /**
  * Transform Commerce product to ACO format
+ * @param {Object} commerceProduct - Commerce product data
+ * @param {Map} categoryCodeMap - Map of category names/paths to ACO codes (optional)
  */
-function transformToAcoProduct(commerceProduct) {
+function transformToAcoProduct(commerceProduct, categoryCodeMap = null) {
   const acoProduct = {
     sku: commerceProduct.sku,
     source: {
@@ -53,6 +56,14 @@ function transformToAcoProduct(commerceProduct) {
     status: commerceProduct.product_online === 1 ? 'ENABLED' : 'DISABLED',
     visibleIn: []
   };
+  
+  // Add category codes if available
+  if (categoryCodeMap && commerceProduct.categories) {
+    const categoryCodes = extractCategoryCodes(commerceProduct.categories, categoryCodeMap);
+    if (categoryCodes.length > 0) {
+      acoProduct.categoryCodes = categoryCodes;
+    }
+  }
   
   // Map Commerce visibility (numeric) to ACO visibleIn (string array)
   const visibilityMap = {
@@ -125,11 +136,12 @@ function buildConfigurableAttributesMap(products) {
  * 
  * @param {Object} commerceVariant - The variant product
  * @param {Map} configurableAttrsMap - Map of parent SKU to configurable attributes (unused but kept for API compatibility)
+ * @param {Map} categoryCodeMap - Map of category names/paths to ACO codes (optional)
  */
-function transformToAcoVariant(commerceVariant, configurableAttrsMap = new Map()) {
+function transformToAcoVariant(commerceVariant, configurableAttrsMap = new Map(), categoryCodeMap = null) {
   // Transform as a standard product - ACO handles variants as regular products
   // The variation attributes (size, color, etc.) are already in the product's attributes
-  return transformToAcoProduct(commerceVariant);
+  return transformToAcoProduct(commerceVariant, categoryCodeMap);
 }
 
 /**
@@ -274,6 +286,124 @@ function extractMetadata(commerceAttributes) {
 }
 
 /**
+ * Transform category tree to ACO format with flat structure
+ * ACO categories use parentId references and slug-based paths
+ */
+function transformToAcoCategories(categoryTree) {
+  const categories = [];
+  const categoryMap = new Map(); // Track codes for building slugs
+  
+  /**
+   * Recursively flatten category tree
+   * @param {Object} node - Category node
+   * @param {string|null} parentCode - Parent category code
+   * @param {string} slugPath - Accumulated slug path
+   */
+  function flattenCategory(node, parentCode = null, slugPath = '') {
+    const code = node.urlKey || slugify(node.name);
+    const currentSlug = slugPath ? `${slugPath}/${code}` : code;
+    
+    const acoCategory = {
+      code: code,
+      source: {
+        locale: 'en-US'
+      },
+      name: node.name,
+      slug: currentSlug,
+      description: node.description || `${node.name} category`,
+      active: true
+    };
+    
+    // Add parentId if not root level
+    if (parentCode) {
+      acoCategory.parentId = parentCode;
+    }
+    
+    categories.push(acoCategory);
+    categoryMap.set(code, currentSlug);
+    
+    // Process children
+    if (node.children && node.children.length > 0) {
+      for (const child of node.children) {
+        flattenCategory(child, code, currentSlug);
+      }
+    }
+  }
+  
+  // Start with root node's children
+  if (categoryTree.children && categoryTree.children.length > 0) {
+    for (const child of categoryTree.children) {
+      flattenCategory(child, null, '');
+    }
+  }
+  
+  return { categories, categoryMap };
+}
+
+/**
+ * Build a map of Commerce category paths to ACO category codes
+ * This allows us to link products to categories
+ */
+function buildCategoryCodeMap(categoryTree) {
+  const pathToCode = new Map();
+  
+  function traverse(node, pathParts = []) {
+    const currentPath = [...pathParts, node.name].join('/');
+    const code = node.urlKey || slugify(node.name);
+    
+    pathToCode.set(currentPath, code);
+    pathToCode.set(node.name, code); // Also map simple name
+    
+    if (node.children) {
+      for (const child of node.children) {
+        traverse(child, [...pathParts, node.name]);
+      }
+    }
+  }
+  
+  // Start traversal from root's children
+  if (categoryTree.children) {
+    for (const child of categoryTree.children) {
+      traverse(child, []);
+    }
+  }
+  
+  return pathToCode;
+}
+
+/**
+ * Extract category codes from a Commerce product's categories array
+ * @param {Array} productCategories - Commerce category paths (e.g., ["Default Category/BuildRight/Lumber"])
+ * @param {Map} categoryCodeMap - Map of category names/paths to ACO codes
+ * @returns {Array} Array of ACO category codes
+ */
+function extractCategoryCodes(productCategories, categoryCodeMap) {
+  if (!productCategories || productCategories.length === 0) {
+    return [];
+  }
+  
+  const codes = new Set();
+  
+  for (const categoryPath of productCategories) {
+    // Try full path first
+    if (categoryCodeMap.has(categoryPath)) {
+      codes.add(categoryCodeMap.get(categoryPath));
+      continue;
+    }
+    
+    // Try splitting and using the last part (leaf category)
+    const parts = categoryPath.split('/');
+    const leafCategory = parts[parts.length - 1];
+    
+    if (categoryCodeMap.has(leafCategory)) {
+      codes.add(categoryCodeMap.get(leafCategory));
+    }
+  }
+  
+  return Array.from(codes);
+}
+
+/**
  * Main transform function
  */
 async function transformForAco() {
@@ -288,28 +418,36 @@ async function transformForAco() {
     updateLine(chalk.green(`✔ Reading Commerce datapack (${commerceProducts.length} products)`));
     finishLine();
     
-    // Step 2: Transform to ACO format
-    updateLine('📦 Transforming to ACO format...');
-    const acoProducts = commerceProducts.map(transformToAcoProduct);
+    // Step 2: Transform categories to ACO format
+    updateLine('📦 Transforming categories...');
+    const categoryTree = PROJECT_CONFIG.categoryTree;
+    const { categories: acoCategories, categoryMap } = transformToAcoCategories(categoryTree);
+    const categoryCodeMap = buildCategoryCodeMap(categoryTree);
+    updateLine(chalk.green(`✔ Transforming categories (${acoCategories.length} categories)`));
+    finishLine();
     
-    // Step 3: Separate by type and build configurable attributes map
+    // Step 3: Transform products to ACO format with category linkage
+    updateLine('📦 Transforming to ACO format...');
+    const acoProducts = commerceProducts.map(p => transformToAcoProduct(p, categoryCodeMap));
+    
+    // Step 4: Separate by type and build configurable attributes map
     const { simples, configurables, variants } = separateByType(commerceProducts);
     const configurableAttrsMap = buildConfigurableAttributesMap(commerceProducts);
     
-    const acoSimples = simples.map(transformToAcoProduct);
-    const acoConfigurables = configurables.map(transformToAcoProduct);
-    const acoVariants = [...acoConfigurables, ...variants.map(v => transformToAcoVariant(v, configurableAttrsMap))];
+    const acoSimples = simples.map(p => transformToAcoProduct(p, categoryCodeMap));
+    const acoConfigurables = configurables.map(p => transformToAcoProduct(p, categoryCodeMap));
+    const acoVariants = [...acoConfigurables, ...variants.map(v => transformToAcoVariant(v, configurableAttrsMap, categoryCodeMap))];
     
     updateLine(chalk.green(`✔ Transforming to ACO format (${acoSimples.length} simple, ${acoConfigurables.length} configurable, ${variants.length} variants)`));
     finishLine();
     
-    // Step 4: Extract metadata from Commerce attributes
+    // Step 5: Extract metadata from Commerce attributes
     updateLine('📦 Extracting metadata...');
     const metadata = extractMetadata(commerceAttributes);
     updateLine(chalk.green(`✔ Extracting metadata (${metadata.length} attributes)`));
     finishLine();
     
-    // Step 5: Generate price books and prices
+    // Step 6: Generate price books and prices
     updateLine('📦 Generating price books...');
     const priceBooks = generatePriceBooks();
     updateLine(chalk.green(`✔ Generating price books (${priceBooks.length} price books)`));
@@ -321,19 +459,20 @@ async function transformForAco() {
     updateLine(chalk.green(`✔ Generating prices (${prices.length} price entries for ${pricingStats.totalProducts} products, ${pricingStats.tieredPriceEntries} with tier pricing, ${pricingStats.totalTierDefinitions} total tiers)`));
     finishLine();
     
-    // Step 6: Ensure ACO directory exists
+    // Step 7: Ensure ACO directory exists
     await fs.mkdir(ACO_OUTPUT_DIR, { recursive: true });
     
-    // Step 7: Write to ACO data directory
+    // Step 8: Write to ACO data directory
     updateLine('📦 Writing ACO data files...');
     
+    await fs.writeFile(ACO_CATEGORIES_FILE, JSON.stringify(acoCategories, null, 2));
     await fs.writeFile(ACO_PRODUCTS_FILE, JSON.stringify(acoSimples, null, 2));
     await fs.writeFile(ACO_VARIANTS_FILE, JSON.stringify(acoVariants, null, 2));
     await fs.writeFile(ACO_METADATA_FILE, JSON.stringify(metadata, null, 2));
     await fs.writeFile(ACO_PRICE_BOOKS_FILE, JSON.stringify(priceBooks, null, 2));
     await fs.writeFile(ACO_PRICES_FILE, JSON.stringify(prices, null, 2));
     
-    updateLine(chalk.green(`✔ Writing ACO data files (${acoSimples.length} products, ${acoVariants.length} variants, ${metadata.length} attributes, ${priceBooks.length} price books, ${prices.length} prices)`));
+    updateLine(chalk.green(`✔ Writing ACO data files (${acoCategories.length} categories, ${acoSimples.length} products, ${acoVariants.length} variants, ${metadata.length} attributes, ${priceBooks.length} price books, ${prices.length} prices)`));
     finishLine();
     
     console.log('');
@@ -342,6 +481,7 @@ async function transformForAco() {
     
     return {
       success: true,
+      categories: acoCategories.length,
       products: acoSimples.length,
       variants: acoVariants.length,
       metadata: metadata.length,

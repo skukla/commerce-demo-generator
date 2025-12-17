@@ -42,7 +42,11 @@ import {
   transformRolesToAccsFormat,
   createCompanyAdminAssignment
 } from './companies.js';
-import { PROJECT_CONFIG } from '../../config/project-config.js';
+import {
+  generateB2BConfigReference,
+  generateB2BAdminInstructions
+} from './b2b-config.js';
+import { PROJECT_CONFIG } from '../config/project-config.js';
 import { normalizeProductName } from '../lib/name-normalizer.js';
 import { updateLine, finishLine } from '../lib/format.js';
 
@@ -674,6 +678,19 @@ async function generateDataPack() {
     }
   });
   writeJsonFile(join(DATA_DIR, 'accs_company_teams_template.json'), { teams: companyTeams }, 'Company Teams Template');
+
+  // Generate B2B configuration instructions
+  // NOTE: B2B features must be enabled manually via Admin UI before importing companies
+  updateLine('📦 Generating B2B configuration instructions...');
+  
+  const b2bConfigRef = generateB2BConfigReference();
+  writeJsonFile(join(DATA_DIR, 'b2b_config_reference.json'), b2bConfigRef, 'B2B Config Reference');
+  
+  const adminInstructions = generateB2BAdminInstructions();
+  writeJsonFile(join(DATA_DIR, 'b2b_enable_instructions.json'), adminInstructions, 'B2B Setup Instructions');
+  
+  updateLine(chalk.green(`✔ Generating B2B configuration instructions (manual setup required)`));
+  finishLine();
 
   // Create zip file
   console.log('');

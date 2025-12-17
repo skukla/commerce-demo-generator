@@ -3,7 +3,7 @@
  * Generates attributes.json and attribute_options.json for module-data-install
  */
 
-import { PROJECT_CONFIG } from '../../config/project-config.js';
+import { PROJECT_CONFIG } from '../config/project-config.js';
 
 const PRODUCT_ATTRIBUTES = PROJECT_CONFIG.productAttributes;
 

@@ -4,7 +4,7 @@
  * Schema: schemas/customer_groups.json
  */
 
-import { PROJECT_CONFIG } from '../../config/project-config.js';
+import { PROJECT_CONFIG } from '../config/project-config.js';
 
 const CUSTOMER_GROUPS = PROJECT_CONFIG.customerGroups;
 

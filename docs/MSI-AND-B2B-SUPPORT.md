@@ -70,6 +70,16 @@ The generator creates the following B2B-related files:
    - Organizational hierarchies
    - Department groupings
 
+4. **`b2b_enable_instructions.json`**
+   - Step-by-step manual configuration instructions
+   - Complete setup guide for Admin UI
+   - Verification checklist
+
+5. **`b2b_config_reference.json`**
+   - Configuration paths and values reference
+   - Required vs recommended settings
+   - Technical reference for B2B features
+
 ## Configuration
 
 ### Default Configuration
@@ -274,6 +284,47 @@ output/commerce/
 └── media/catalog/product/
     └── ... (product images)
 ```
+
+## ⚠️ Enabling B2B Features (Required Manual Step)
+
+**IMPORTANT:** B2B features must be enabled manually via the Admin UI **BEFORE** importing company data. Adobe Commerce does not provide APIs for setting configuration values.
+
+### Manual Configuration Instructions
+
+The generator creates a detailed instruction file: `b2b_enable_instructions.json`
+
+**Quick Steps:**
+
+1. **Login** to Adobe Commerce Admin at `/admin`
+2. **Navigate** to **Stores** > **Configuration** > **General** > **B2B Features**
+3. **Enable Required Settings:**
+   - ✅ **Enable Company** = `Yes` (REQUIRED - main toggle)
+   - ✅ **Enable Shared Catalog** = `Yes` (REQUIRED - enabled automatically)
+   - ✅ **Enable B2B Quote** = `Yes` (REQUIRED - for price negotiation)
+   - **Enable Quick Order** = `Yes` (recommended)
+   - **Enable Requisition List** = `Yes` (recommended)
+   - **Number of Requisition Lists** = `999` (recommended)
+4. **Save Config** - Click "Save Config" button
+5. **Flush Cache** - Go to **System** > **Cache Management** > **Flush Cache Storage**
+
+### Verification
+
+After configuration, verify B2B features are enabled:
+- ✅ **Companies** menu appears under **Customers** in admin sidebar
+- ✅ **Shared Catalogs** menu appears under **Catalog**
+- ✅ **Quotes** menu appears under **Sales**
+
+### Why Manual Configuration?
+
+Adobe Commerce does not provide:
+- ❌ REST API endpoints for setting configuration
+- ❌ GraphQL mutations for configuration
+- ❌ ACCS import support for core_config_data
+
+Configuration can **only** be set via:
+- ✅ Admin UI (recommended)
+- ✅ CLI commands (requires server access)
+- ✅ Direct database modification (not recommended)
 
 ## Import to Adobe Commerce
 

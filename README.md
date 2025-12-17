@@ -187,6 +187,10 @@ Generated in `{data-repo}/generated/commerce/`:
 - `data/accs/accs_companies.json` - Company profiles
 - `data/accs/accs_company_roles_template.json` - Role definitions
 - `data/accs/accs_company_teams_template.json` - Team structures
+- `data/accs/b2b_enable_instructions.json` - Setup instructions (manual configuration required)
+- `data/accs/b2b_config_reference.json` - Configuration reference
+
+> **⚠️ Important:** B2B features must be enabled manually via Admin UI before importing companies. See generated instructions file.
 
 ### ACO Output
 

@@ -10,7 +10,7 @@
  * @see https://github.com/PMET-public/module-data-install
  */
 
-import { PROJECT_CONFIG } from '../../config/project-config.js';
+import { PROJECT_CONFIG } from '../config/project-config.js';
 
 /**
  * Generate stores configuration in data-install format

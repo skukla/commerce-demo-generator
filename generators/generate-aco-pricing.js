@@ -19,7 +19,7 @@
  * 4. Generate prices by applying rules with tier pricing
  */
 
-import { PROJECT_CONFIG } from '../../config/project-config.js';
+import { PROJECT_CONFIG } from '../config/project-config.js';
 
 /**
  * Round price to 2 decimal places
