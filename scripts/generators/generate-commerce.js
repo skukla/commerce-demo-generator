@@ -233,12 +233,19 @@ function transformAttributesToAccsFormat(attributes) {
     const frontendInput = attr.frontendInput || attr.frontend_input || "select";
     const attributeCode = attr.attributeCode || attr.attribute_code;
     const frontendLabel = attr.frontendLabel || attr.frontend_label || attributeCode;
-    const isRequired = attr.isRequired || attr.is_required || false;
-    const isSearchable = attr.isSearchable || attr.is_searchable || true;
-    const isFilterable = attr.isFilterable || attr.is_filterable || true;
-    const isComparable = attr.isComparable || attr.is_comparable || true;
-    const isVisibleOnFront = attr.isVisibleOnFront || attr.is_visible_on_front || true;
-    const isFilterableInSearch = attr.isFilterableInSearch || attr.is_filterable_in_search || true;
+    const isRequired = attr.isRequired ?? attr.is_required ?? false;
+    const isSearchable = attr.isSearchable ?? attr.is_searchable ?? true;
+    
+    // Text fields CANNOT be filterable in Commerce - force to false for text/textarea
+    const isFilterable = (frontendInput === 'text' || frontendInput === 'textarea') 
+      ? false 
+      : (attr.isFilterable ?? attr.is_filterable ?? true);
+    const isFilterableInSearch = (frontendInput === 'text' || frontendInput === 'textarea')
+      ? false
+      : (attr.isFilterableInSearch ?? attr.is_filterable_in_search ?? true);
+    
+    const isComparable = attr.isComparable ?? attr.is_comparable ?? true;
+    const isVisibleOnFront = attr.isVisibleOnFront ?? attr.is_visible_on_front ?? true;
     
     // Determine backend_type based on frontend_input
     let backendType;
