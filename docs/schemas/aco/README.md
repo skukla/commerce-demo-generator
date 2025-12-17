@@ -7,6 +7,7 @@ These schemas are based on the official `@adobe-commerce/aco-ts-sdk` TypeScript 
 ## Schema Files
 
 - **[metadata.md](metadata.md)** - Product attribute metadata schema
+- **[categories.md](categories.md)** - Category hierarchy schema (⚠️ Updated v1.0.0 - December 2024)
 - **[products.md](products.md)** - Product catalog schema  
 - **[price-books.md](price-books.md)** - Price book hierarchy schema
 - **[prices.md](prices.md)** - Product pricing with tier support schema
@@ -18,9 +19,10 @@ These schemas are based on the official `@adobe-commerce/aco-ts-sdk` TypeScript 
 The recommended order for ingesting data into ACO:
 
 1. **Metadata** - Define product attributes and their properties
-2. **Products** - Ingest product catalog (simple and configurable products)
-3. **Price Books** - Define pricing hierarchies and currencies
-4. **Prices** - Assign prices to products within each price book
+2. **Categories** - Create category hierarchy for product organization
+3. **Products** - Ingest product catalog (simple and configurable products)
+4. **Price Books** - Define pricing hierarchies and currencies
+5. **Prices** - Assign prices to products within each price book
 
 ### Schema Validation
 
