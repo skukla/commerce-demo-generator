@@ -114,7 +114,7 @@ function transformProductsToAccsFormat(products) {
         weight: product.weight || 0,
         product_online: product.product_online !== undefined ? product.product_online : 1,
         tax_class_name: "Taxable Goods",
-        visibility: product.visibility || "Catalog, Search",
+        visibility: product.visibility || 4, // Default: Catalog, Search (numeric for ACO compatibility)
         price: product.price,
         special_price: product.special_price || "",
         special_price_from_date: "",

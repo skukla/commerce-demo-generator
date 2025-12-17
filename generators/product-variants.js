@@ -132,7 +132,7 @@ function generateConfigurableParent(configDef, categoryKey, category, subcategor
     price: 0, // Price varies by configuration
     weight: 1,
     product_online: 1,
-    visibility: 'Catalog, Search',
+    visibility: 4, // Catalog, Search - parent configurable visible everywhere
     tax_class_name: 'Taxable Goods',
     categories: `${PROJECT_CONFIG.project.rootCategoryName}/${category.name}`,
     url_key: generateUrlKey(name),
@@ -195,7 +195,7 @@ function generateVariantChildren(configDef, parent, categoryKey, category, subca
         ? dimValues.reduce((sum, val) => sum * val, 1) / 100 // Approximate weight based on dimensions
         : 1, // Default weight if no numeric dimensions
       product_online: 1,
-      visibility: 'Not Visible Individually', // Variants not visible in catalog
+      visibility: 1, // Not Visible Individually - variants not visible in catalog/search
       tax_class_name: 'Taxable Goods',
       categories: `${PROJECT_CONFIG.project.rootCategoryName}/${category.name}`,
       url_key: generateUrlKey(name),
