@@ -41,6 +41,11 @@ export const PROJECT_CONFIG = {
   productAttributes: loadJSON('attributes/product-attributes.json'),
   customerAttributes: loadJSON('attributes/customer-attributes.json'),
   customerGroups: loadJSON('customers/customer-groups.json'),
-  demoCustomers: loadJSON('customers/demo-customers.json')
+  demoCustomers: loadJSON('customers/demo-customers.json'),
+  
+  
+  // Load ACO data files
+  acoPriceBooks: loadJSON('aco/price-books.json'),
+  acoPricingRules: loadJSON('aco/pricing-rules.json')
 };
 

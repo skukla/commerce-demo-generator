@@ -30,7 +30,7 @@ function flattenCategoryTree(node, parentPath = 'Default Category', position = 1
     description: node.description || '',
     meta_title: node.name,
     meta_keywords: node.name.toLowerCase(),
-    meta_description: `Shop ${node.name} at BuildRight Supply`
+    meta_description: `Shop ${node.name} at ${PROJECT_CONFIG.project.displayName}`
   });
   
   // Process children

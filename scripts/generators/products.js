@@ -9,6 +9,7 @@ import { SeededRandom } from '../utils/seeded-random.js';
 import { PRODUCT_CATEGORIES, BRANDS, BRANDS_BY_CATEGORY, UNITS_OF_MEASURE } from '../utils/product-definitions.js';
 import { generateProductDescription, generateShortDescription } from '../utils/description-generator.js';
 import { generateHash, generateUrlKey } from '../utils/product-utils.js';
+import { PROJECT_CONFIG } from '../../config/project-config.js';
 
 const SEED = 12345; // Fixed seed for deterministic output
 const random = new SeededRandom(SEED);
@@ -63,7 +64,7 @@ function generateSimpleProduct(template, category, subcategory, index) {
     status: 1,
     visibility: 4, // Catalog, Search
     tax_class_name: 'Taxable Goods',
-    categories: `BuildRight Catalog/${categoryName}`,
+    categories: `${PROJECT_CONFIG.project.rootCategoryName}/${categoryName}`,
     url_key: slug,
     qty: 100,
     is_in_stock: 1,

@@ -8,6 +8,7 @@ import { PRODUCT_CATEGORIES, BRANDS, BRANDS_BY_CATEGORY } from '../utils/product
 import { SeededRandom } from '../utils/seeded-random.js';
 import { generateProductDescription, generateShortDescription } from '../utils/description-generator.js';
 import { generateHash, generateUrlKey } from '../utils/product-utils.js';
+import { PROJECT_CONFIG } from '../../config/project-config.js';
 
 /**
  * Generate SKU for configurable product
@@ -126,14 +127,14 @@ function generateConfigurableParent(configDef, categoryKey, category, subcategor
     sku,
     attribute_set_code: 'Default',
     type_id: 'configurable',
-    product_websites: 'buildright',
+    product_websites: PROJECT_CONFIG.project.websiteCode,
     name,
     price: 0, // Price varies by configuration
     weight: 1,
     product_online: 1,
     visibility: 'Catalog, Search',
     tax_class_name: 'Taxable Goods',
-    categories: `BuildRight Catalog/${category.name}`,
+    categories: `${PROJECT_CONFIG.project.rootCategoryName}/${category.name}`,
     url_key: generateUrlKey(name),
     qty: 100,
     is_in_stock: 1,
@@ -187,7 +188,7 @@ function generateVariantChildren(configDef, parent, categoryKey, category, subca
       sku,
       attribute_set_code: 'Default',
       type_id: 'simple',
-      product_websites: 'buildright',
+      product_websites: PROJECT_CONFIG.project.websiteCode,
       name,
       price: price.toFixed(2),
       weight: dimValues.length > 0 
@@ -196,7 +197,7 @@ function generateVariantChildren(configDef, parent, categoryKey, category, subca
       product_online: 1,
       visibility: 'Not Visible Individually', // Variants not visible in catalog
       tax_class_name: 'Taxable Goods',
-      categories: `BuildRight Catalog/${category.name}`,
+      categories: `${PROJECT_CONFIG.project.rootCategoryName}/${category.name}`,
       url_key: generateUrlKey(name),
       qty: random.nextInt(50, 200),
       is_in_stock: 1,
