@@ -63,13 +63,20 @@ const IMAGES_PATH = join(PROJECT_CONFIG.paths.media, 'images/products');
 const IMAGE_MAPPING_PATH = join(IMAGES_PATH, 'IMAGE-PRODUCT-MAPPING.json');
 
 /**
+ * Helper to pluralize words
+ */
+function pluralize(count, singular, plural = null) {
+  if (count === 1) return singular;
+  return plural || `${singular}s`;
+}
+
+/**
  * Write JSON file with pretty formatting
  */
 function writeJsonFile(filePath, data, description, countField = null) {
   const jsonContent = JSON.stringify(data, null, 4);
   writeFileSync(filePath, jsonContent, 'utf8');
-  const count = countField ? data[countField]?.length || 'N/A' : (Array.isArray(data) ? data.length : 1);
-  updateLine(chalk.green(`✔ Generating ${description.toLowerCase()} (${count} records)`));
+  updateLine(chalk.green(`✔ ${description}`));
   finishLine();
 }
 
@@ -533,17 +540,18 @@ async function generateDataPack() {
   // Generate stores
   updateLine('📦 Generating stores...');
   const stores = generateStores();
-  writeJsonFile(join(DATA_DIR, 'accs_stores.json'), stores, 'Stores');
+  writeJsonFile(join(DATA_DIR, 'accs_stores.json'), stores, `${stores.length} ${pluralize(stores.length, 'store')}`);
 
   // Generate customer groups
   updateLine('📦 Generating customer groups...');
   const customerGroups = generateCustomerGroups();
-  writeJsonFile(join(DATA_DIR, 'accs_customer_groups.json'), customerGroups, 'Customer groups');
+  writeJsonFile(join(DATA_DIR, 'accs_customer_groups.json'), customerGroups, `${customerGroups.length} ${pluralize(customerGroups.length, 'group')}`);
 
   // Generate attribute sets
   updateLine('📦 Generating attribute sets...');
   const attributeSets = transformAttributeSetsToAccsFormat();
-  writeJsonFile(join(DATA_DIR, 'accs_attribute_sets.json'), attributeSets, 'Attribute sets');
+  writeJsonFile(join(DATA_DIR, 'accs_attribute_sets.json'), attributeSets, `${attributeSets.length} ${pluralize(attributeSets.length, 'set')}`);
+
 
   // Generate attributes and assignments
   updateLine('📦 Generating product attributes...');
@@ -552,13 +560,13 @@ async function generateDataPack() {
   writeFileSync(join(DATA_DIR, 'accs_product_attributes.json'), JSON.stringify(accsAttributes, null, 4), 'utf8');
   const attributeAssignments = generateAttributeAssignToSet(rawAttributes);
   writeFileSync(join(DATA_DIR, 'accs_attribute_assign_to_set.json'), JSON.stringify(attributeAssignments, null, 4), 'utf8');
-  updateLine(chalk.green(`✔ Generating product attributes (${rawAttributes.length} attributes, ${attributeAssignments.length} assignments)`));
+  updateLine(chalk.green(`✔ ${rawAttributes.length} ${pluralize(rawAttributes.length, 'attribute')} with ${attributeAssignments.length} ${pluralize(attributeAssignments.length, 'assignment')}`));
   finishLine();
 
   // Generate simple products
   updateLine('📦 Generating simple products...');
   const rawProducts = await generateProducts();
-  updateLine(chalk.green(`✔ Generating simple products (${rawProducts.length} products)`));
+  updateLine(chalk.green(`✔ ${rawProducts.length} simple ${pluralize(rawProducts.length, 'product')}`));
   finishLine();
   
   // Generate configurable products and variants
@@ -566,7 +574,7 @@ async function generateDataPack() {
   const rawVariants = await generateVariants();
   const configurableCount = rawVariants.filter(p => p.type_id === 'configurable').length;
   const variantCount = rawVariants.filter(p => p.type_id === 'simple').length;
-  updateLine(chalk.green(`✔ Generating configurable products (${configurableCount} configurable, ${variantCount} variants)`));
+  updateLine(chalk.green(`✔ ${configurableCount} ${pluralize(configurableCount, 'configurable')} with ${variantCount} ${pluralize(variantCount, 'variant')}`));
   finishLine();
   
   // Combine all products
@@ -616,7 +624,8 @@ async function generateDataPack() {
   
   // Copy image files to media directory
   const copiedImages = copyProductImages(MEDIA_DIR);
-  updateLine(chalk.green(`✔ Generating product images (${productImages.length} encoded across ${Math.ceil(productImages.length / 5)} files, ${copiedImages} copied)`));
+  const imageFileCount = Math.ceil(productImages.length / 5);
+  updateLine(chalk.green(`✔ ${productImages.length} ${pluralize(productImages.length, 'image')} (${copiedImages} copied, ${imageFileCount} ${pluralize(imageFileCount, 'file')})`));
   finishLine();
 
   // Generate customers
@@ -624,7 +633,7 @@ async function generateDataPack() {
   const rawCustomers = generateCustomersWithDetails();
   const accsCustomers = transformCustomersToAccsFormat(rawCustomers);
   const customerCount = accsCustomers.source?.items?.length || rawCustomers.length;
-  updateLine(chalk.green(`✔ Generating demo customers (${customerCount} customers)`));
+  updateLine(chalk.green(`✔ ${customerCount} demo ${pluralize(customerCount, 'customer')}`));
   finishLine();
   
   writeFileSync(join(DATA_DIR, 'accs_customers.json'), JSON.stringify(accsCustomers, null, 4), 'utf8');
@@ -633,12 +642,14 @@ async function generateDataPack() {
   updateLine('📦 Generating MSI inventory sources...');
   const inventorySources = generateInventorySources({ includeStorePickup: true });
   const accsInventorySources = transformSourcesToAccsFormat(inventorySources);
-  writeJsonFile(join(DATA_DIR, 'accs_inventory_sources.json'), accsInventorySources, 'MSI Inventory Sources', 'sources');
+  const sourceCount = accsInventorySources.sources?.length || inventorySources.length;
+  writeJsonFile(join(DATA_DIR, 'accs_inventory_sources.json'), accsInventorySources, `${sourceCount} MSI ${pluralize(sourceCount, 'source')}`, 'sources');
   
   // Generate stock-source links (linking sources to stock_id 2)
   updateLine('📦 Generating stock-source links...');
   const stockSourceLinks = generateStockSourceLinks(inventorySources, 2);
-  writeJsonFile(join(DATA_DIR, 'accs_stock_source_links.json'), stockSourceLinks, 'Stock-Source Links', 'links');
+  const linkCount = stockSourceLinks.links?.length || 0;
+  writeJsonFile(join(DATA_DIR, 'accs_stock_source_links.json'), stockSourceLinks, `${linkCount} stock ${pluralize(linkCount, 'link')}`, 'links');
   
   // Generate source items (inventory quantities per source per product)
   updateLine('📦 Generating source inventory quantities...');
@@ -654,24 +665,25 @@ async function generateDataPack() {
     writeFileSync(join(DATA_DIR, `accs_source_items_${fileNumber}.json`), jsonContent, 'utf8');
   });
   
-  updateLine(chalk.green(`✔ Generating source inventory quantities (${sourceItems.sourceItems.length} records across ${sourceItemChunks.length} files)`));
+  const itemCount = sourceItems.sourceItems.length;
+  updateLine(chalk.green(`✔ ${itemCount} inventory ${pluralize(itemCount, 'item')} (${sourceItemChunks.length} ${pluralize(sourceItemChunks.length, 'file')})`));
   finishLine();
 
   // Generate B2B companies
   updateLine('📦 Generating B2B companies...');
   const companies = generateCompanies();
   const accsCompanies = transformCompaniesToAccsFormat(companies);
-  writeJsonFile(join(DATA_DIR, 'accs_companies.json'), accsCompanies, 'B2B Companies', 'companies');
+  const companyCount = accsCompanies.companies?.length || companies.length;
+  writeJsonFile(join(DATA_DIR, 'accs_companies.json'), accsCompanies, `${companyCount} B2B ${pluralize(companyCount, 'company', 'companies')}`, 'companies');
   
   // Generate company roles (shared across all companies)
-  updateLine('📦 Generating company roles...');
+  updateLine('📦 Generating B2B company structures...');
   const companyRoles = generateCompanyRoles();
   // Note: In real implementation, roles would be created per company via API
   // For demo, we export a template that can be applied to each company
-  writeJsonFile(join(DATA_DIR, 'accs_company_roles_template.json'), { roles: companyRoles }, 'Company Roles Template');
+  writeFileSync(join(DATA_DIR, 'accs_company_roles_template.json'), JSON.stringify({ roles: companyRoles }, null, 4), 'utf8');
   
   // Generate company teams (template for each company)
-  updateLine('📦 Generating company teams...');
   const companyTeams = {};
   companies.forEach(company => {
     const teams = generateTeamsForCompany(company.company_name);
@@ -679,24 +691,22 @@ async function generateDataPack() {
       companyTeams[company.company_name] = teams;
     }
   });
-  writeJsonFile(join(DATA_DIR, 'accs_company_teams_template.json'), { teams: companyTeams }, 'Company Teams Template');
+  writeFileSync(join(DATA_DIR, 'accs_company_teams_template.json'), JSON.stringify({ teams: companyTeams }, null, 4), 'utf8');
 
   // Generate B2B configuration instructions
   // NOTE: B2B features must be enabled manually via Admin UI before importing companies
-  updateLine('📦 Generating B2B configuration instructions...');
-  
   const b2bConfigRef = generateB2BConfigReference();
-  writeJsonFile(join(DATA_DIR, 'b2b_config_reference.json'), b2bConfigRef, 'B2B Config Reference');
+  writeFileSync(join(DATA_DIR, 'b2b_config_reference.json'), JSON.stringify(b2bConfigRef, null, 4), 'utf8');
   
   const adminInstructions = generateB2BAdminInstructions();
-  writeJsonFile(join(DATA_DIR, 'b2b_enable_instructions.json'), adminInstructions, 'B2B Setup Instructions');
+  writeFileSync(join(DATA_DIR, 'b2b_enable_instructions.json'), JSON.stringify(adminInstructions, null, 4), 'utf8');
   
-  updateLine(chalk.green(`✔ Generating B2B configuration instructions (manual setup required)`));
+  updateLine(chalk.green(`✔ B2B structures with ${companyRoles.length} ${pluralize(companyRoles.length, 'role')} (setup instructions included)`));
   finishLine();
 
-  // Create zip file
+  // Done
   console.log('');
-  console.log(chalk.green(`✔ Data generation complete!`));
+  console.log(chalk.green(`✔ Commerce datapack generated successfully`));
   console.log('');
 }
 
