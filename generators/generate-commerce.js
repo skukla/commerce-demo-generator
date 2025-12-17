@@ -547,8 +547,14 @@ function extractProductImagesToMedia(productImages, outputMediaPath) {
       if (entry.content?.base64_encoded_data) {
         try {
           const buffer = Buffer.from(entry.content.base64_encoded_data, 'base64');
+          
+          // Extract hash from SKU (everything after first hyphen)
+          // Example: "STR-49C283DE" → "49C283DE"
+          // This allows SKU prefix changes without affecting image files
+          const hash = sku.split('-').slice(1).join('-');
+          
           // Always use .jpg extension for consistency (standardized across all repos)
-          const outputFile = join(outputMediaPath, `${sku}.jpg`);
+          const outputFile = join(outputMediaPath, `${hash}.jpg`);
           
           writeFileSync(outputFile, buffer);
           extractedCount++;
