@@ -449,7 +449,9 @@ async function transformForAco() {
     
     const acoSimples = simples.map(p => transformToAcoProduct(p, categoryCodeMap));
     const acoConfigurables = configurables.map(p => transformToAcoProduct(p, categoryCodeMap));
-    const acoVariants = [...acoConfigurables, ...variants.map(v => transformToAcoVariant(v, configurableAttrsMap, categoryCodeMap))];
+    // ACO variants file should contain ONLY the variant products, not parent configurables
+    // Parent configurables belong in the products file
+    const acoVariants = variants.map(v => transformToAcoVariant(v, configurableAttrsMap, categoryCodeMap));
     
     updateLine(chalk.green(`✔ Transformed ${acoSimples.length} simple, ${acoConfigurables.length} configurable, ${variants.length} ${variants.length === 1 ? 'variant' : 'variants'}`));
     finishLine();
