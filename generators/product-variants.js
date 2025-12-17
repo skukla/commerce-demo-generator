@@ -12,9 +12,17 @@ import { PROJECT_CONFIG } from '../config/project-config.js';
 
 /**
  * Generate SKU for configurable product
+ * 
+ * Uses same prefix logic as simple products:
+ * 1. Use skuPrefix from category definition (explicit business decision)
+ * 2. Fallback to first 3 characters of category key (auto-generation)
  */
 function generateConfigurableSKU(categoryKey, subcategoryKey, productName) {
-  const prefix = categoryKey.substring(0, 3).toUpperCase();
+  // Read skuPrefix from category config (user-defined business decision)
+  const categoryConfig = PRODUCT_CATEGORIES[categoryKey];
+  const prefix = categoryConfig?.skuPrefix 
+    || categoryKey.substring(0, 3).toUpperCase(); // Fallback: first 3 chars
+  
   const hash = generateHash(`${categoryKey}-${subcategoryKey}-${productName}`);
   return `${prefix}-${hash}-CONFIG`;
 }

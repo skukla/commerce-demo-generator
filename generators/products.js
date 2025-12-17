@@ -19,9 +19,23 @@ const generatedSkus = new Set();
 
 /**
  * Generate SKU for simple product
+ * 
+ * SKU Format: {PREFIX}-{HASH}
+ * 
+ * Prefix Priority:
+ * 1. Use skuPrefix from category definition (explicit business decision)
+ * 2. Fallback to first 3 characters of category key (auto-generation)
+ * 
+ * Example:
+ *   Category "roofing" with skuPrefix: "ROF" → ROF-A1B2C3D4
+ *   Category "roofing" without skuPrefix → ROO-A1B2C3D4 (fallback)
  */
 function generateSKU(category, subcategory, index) {
-  const categoryPrefix = category.slice(0, 3).toUpperCase();
+  // Read skuPrefix from category config (user-defined business decision)
+  const categoryConfig = PRODUCT_CATEGORIES[category];
+  const categoryPrefix = categoryConfig?.skuPrefix 
+    || category.slice(0, 3).toUpperCase(); // Fallback: first 3 chars
+  
   const hash = generateHash(`${category}-${subcategory}-${index}`);
   
   let sku = `${categoryPrefix}-${hash}`;
