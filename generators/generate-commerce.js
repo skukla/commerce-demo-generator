@@ -469,7 +469,7 @@ function generateProductImagesJson(products) {
     productNameToSku.set(normalizedName, product.sku);
   }
 
-      for (const imageInfo of mapping.mapping || []) {
+  for (const imageInfo of mapping.mapping || []) {
     const imagePath = join(IMAGES_PATH, imageInfo.newFilename);
     if (existsSync(imagePath)) {
       try {
@@ -522,6 +522,45 @@ function generateProductImagesJson(products) {
   }
 
   return imageEntries;
+}
+
+/**
+ * Extract product images from generated JSON to media/images/products/
+ * This provides a source for frontend image syncing
+ * @param {Array} productImages - Array of product image entries (from generateProductImagesJson)
+ * @param {string} outputMediaPath - Path to media/images/products/ directory
+ * @returns {number} Number of images extracted
+ */
+function extractProductImagesToMedia(productImages, outputMediaPath) {
+  if (productImages.length === 0) {
+    return 0;
+  }
+  
+  ensureDir(outputMediaPath);
+  let extractedCount = 0;
+  
+  for (const item of productImages) {
+    const sku = item.product.sku;
+    const entries = item.product.media_gallery_entries || [];
+    
+    for (const entry of entries) {
+      if (entry.content?.base64_encoded_data) {
+        try {
+          const buffer = Buffer.from(entry.content.base64_encoded_data, 'base64');
+          const mimeType = entry.content.type || 'image/jpeg';
+          const ext = mimeType.split('/')[1] || 'jpeg';
+          const outputFile = join(outputMediaPath, `${sku}.${ext}`);
+          
+          writeFileSync(outputFile, buffer);
+          extractedCount++;
+        } catch (err) {
+          console.log(`  ⚠ Failed to extract image for SKU ${sku}: ${err.message}`);
+        }
+      }
+    }
+  }
+  
+  return extractedCount;
 }
 
 /**
@@ -622,10 +661,15 @@ async function generateDataPack() {
     });
   }
   
-  // Copy image files to media directory
+  // Copy image files to media/catalog/product directory (for Commerce import)
   const copiedImages = copyProductImages(MEDIA_DIR);
+  
+  // Extract images to media/images/products/ (for frontend sync)
+  const frontendMediaPath = join(PROJECT_CONFIG.paths.media, 'images/products');
+  const extractedImages = extractProductImagesToMedia(productImages, frontendMediaPath);
+  
   const imageFileCount = Math.ceil(productImages.length / 5);
-  updateLine(chalk.green(`✔ Generated ${productImages.length} ${pluralize(productImages.length, 'image')} (${copiedImages} copied, ${imageFileCount} ${pluralize(imageFileCount, 'file')})`));
+  updateLine(chalk.green(`✔ Generated ${productImages.length} ${pluralize(productImages.length, 'image')} (${copiedImages} for Commerce, ${extractedImages} for frontend, ${imageFileCount} ${pluralize(imageFileCount, 'file')})`));
   finishLine();
 
   // Generate customers
