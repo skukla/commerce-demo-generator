@@ -43,8 +43,9 @@ const ACO_CATEGORIES_FILE = join(ACO_OUTPUT_DIR, 'categories.json');
  * Transform Commerce product to ACO format
  * @param {Object} commerceProduct - Commerce product data
  * @param {Map} categoryCodeMap - Map of category names/paths to ACO codes (optional)
+ * @param {Array} configurations - Configurations array for configurable products (optional)
  */
-function transformToAcoProduct(commerceProduct, categoryCodeMap = null) {
+function transformToAcoProduct(commerceProduct, categoryCodeMap = null, configurations = null) {
   // Get ACO configuration defaults from project config
   const acoConfig = PROJECT_CONFIG.project.aco;
   
@@ -60,11 +61,14 @@ function transformToAcoProduct(commerceProduct, categoryCodeMap = null) {
     visibleIn: []
   };
   
-  // Add category codes if available
+  // Add category routes if available
   if (categoryCodeMap && commerceProduct.categories) {
     const categoryCodes = extractCategoryCodes(commerceProduct.categories, categoryCodeMap);
     if (categoryCodes.length > 0) {
-      acoProduct.categoryCodes = categoryCodes;
+      acoProduct.routes = categoryCodes.map((code, index) => ({
+        path: code,
+        position: index
+      }));
     }
   }
   
@@ -110,6 +114,11 @@ function transformToAcoProduct(commerceProduct, categoryCodeMap = null) {
     });
   }
   
+  // Add configurations for configurable products
+  if (configurations && configurations.length > 0) {
+    acoProduct.configurations = configurations;
+  }
+  
   return acoProduct;
 }
 
@@ -131,20 +140,127 @@ function buildConfigurableAttributesMap(products) {
 }
 
 /**
+ * Build configurations for configurable products
+ * Returns map of parent SKU to configurations array
+ */
+function buildConfigurationsMap(products, configurableAttrsMap) {
+  const configurationsMap = new Map();
+  
+  // Find all variants for each configurable
+  for (const product of products) {
+    if (product.product_type === 'configurable') {
+      const configurableAttrs = configurableAttrsMap.get(product.sku);
+      if (!configurableAttrs) continue;
+      
+      // Find all variants of this configurable
+      const variants = products.filter(p => p.parent_sku === product.sku);
+      
+      // Build configurations array
+      const configurations = [];
+      
+      for (const attrCode of configurableAttrs) {
+        // Collect all unique values for this attribute across variants
+        const valueSet = new Set();
+        for (const variant of variants) {
+          const value = variant[attrCode];
+          if (value) {
+            valueSet.add(value.toString());
+          }
+        }
+        
+        // Convert to ProductOptionValue array
+        const values = Array.from(valueSet).sort().map(value => ({
+          variantReferenceId: `${attrCode}-${value}`,
+          label: value
+        }));
+        
+        if (values.length > 0) {
+          configurations.push({
+            attributeCode: attrCode,
+            label: formatAttributeLabel(attrCode),
+            type: 'CONFIGURABLE',
+            values
+          });
+        }
+      }
+      
+      if (configurations.length > 0) {
+        configurationsMap.set(product.sku, configurations);
+      }
+    }
+  }
+  
+  return configurationsMap;
+}
+
+/**
+ * Format attribute code to human-readable label
+ */
+function formatAttributeLabel(code) {
+  return code
+    .replace(/^br_/, '')
+    .split('_')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+/**
  * Transform Commerce variant to ACO format
  * 
- * NOTE: ACO does not support parentSku or selections fields in the product schema.
- * Variants are treated as standalone products with their variation attributes included
- * in the standard attributes array.
+ * NOTE: ACO variant schema uses variantReferenceId and links array (not parentSku).
+ * Variants are standalone products with their variation attributes in the attributes array,
+ * plus relationship fields linking them to their parent configurable product.
  * 
  * @param {Object} commerceVariant - The variant product
  * @param {Map} configurableAttrsMap - Map of parent SKU to configurable attributes (unused but kept for API compatibility)
  * @param {Map} categoryCodeMap - Map of category names/paths to ACO codes (optional)
  */
 function transformToAcoVariant(commerceVariant, configurableAttrsMap = new Map(), categoryCodeMap = null) {
-  // Transform as a standard product - ACO handles variants as regular products
-  // The variation attributes (size, color, etc.) are already in the product's attributes
-  return transformToAcoProduct(commerceVariant, categoryCodeMap);
+  // Transform as a standard product first
+  const acoProduct = transformToAcoProduct(commerceVariant, categoryCodeMap);
+  
+  // Control variant visibility for import/delete operations
+  // DEFAULT: Variants are generated as visible for verification during import
+  // Set VARIANT_INITIAL_VISIBLE=false to generate as invisible (for testing)
+  // The import script will toggle them to invisible after verification
+  const variantInitialVisible = process.env.VARIANT_INITIAL_VISIBLE !== 'false';
+  
+  if (variantInitialVisible) {
+    // Make variants visible for verification during import
+    acoProduct.visibleIn = ['CATALOG', 'SEARCH'];
+  } else {
+    // Default: variants are invisible (not shown as standalone products)
+    acoProduct.visibleIn = [];
+  }
+  
+  // Add variant-specific fields required by ACO schema
+  // Per ACO TypeScript SDK: interface ProductLink { type: string; sku: string; }
+  // variantReferenceId belongs INSIDE ProductAttribute, not at product root level
+  if (commerceVariant.parent_sku) {
+    // Links array: establishes parent-child relationship
+    acoProduct.links = [
+      {
+        type: 'VARIANT_OF',
+        sku: commerceVariant.parent_sku
+      }
+    ];
+    
+    // Add variantReferenceId to the configurable attributes
+    // variantReferenceId format: "attributeCode-value" (e.g., "br_depth-1.75")
+    // This must match the variantReferenceId in the parent's configurations array
+    const configurableAttrs = configurableAttrsMap.get(commerceVariant.parent_sku);
+    if (configurableAttrs && configurableAttrs.length > 0) {
+      for (const attrCode of configurableAttrs) {
+        const attr = acoProduct.attributes.find(a => a.code === attrCode);
+        if (attr && attr.values && attr.values.length > 0) {
+          // Format: "attrCode-value" matches configurations[].values[].variantReferenceId
+          attr.variantReferenceId = `${attrCode}-${attr.values[0]}`;
+        }
+      }
+    }
+  }
+  
+  return acoProduct;
 }
 
 /**
@@ -205,6 +321,11 @@ function mapToACOVisibility(attr) {
   // Show in search results if searchable
   if (attr.is_searchable === 1) {
     visibility.push('SEARCH_RESULTS');
+  }
+  
+  // Enable faceting if filterable (required for Live Search category facets)
+  if (attr.is_filterable === 1 || attr.is_filterable_in_search === 1) {
+    visibility.push('FACET');
   }
   
   return visibility;
@@ -383,19 +504,28 @@ function buildCategoryCodeMap(categoryTree) {
 }
 
 /**
- * Extract category codes from a Commerce product's categories array
- * @param {Array} productCategories - Commerce category paths (e.g., ["Default Category/BuildRight/Lumber"])
+ * Extract category codes from a Commerce product's categories field
+ * @param {String|Array} productCategories - Commerce category paths (string or array, e.g., "BuildRight Catalog/Lumber" or ["Default Category/BuildRight/Lumber"])
  * @param {Map} categoryCodeMap - Map of category names/paths to ACO codes
  * @returns {Array} Array of ACO category codes
  */
 function extractCategoryCodes(productCategories, categoryCodeMap) {
-  if (!productCategories || productCategories.length === 0) {
+  if (!productCategories) {
+    return [];
+  }
+  
+  // Convert string to array if needed (Commerce datapacks use strings)
+  const categoriesArray = typeof productCategories === 'string' 
+    ? [productCategories] 
+    : productCategories;
+  
+  if (categoriesArray.length === 0) {
     return [];
   }
   
   const codes = new Set();
   
-  for (const categoryPath of productCategories) {
+  for (const categoryPath of categoriesArray) {
     // Try full path first
     if (categoryCodeMap.has(categoryPath)) {
       codes.add(categoryCodeMap.get(categoryPath));
@@ -447,8 +577,14 @@ async function transformForAco() {
     const { simples, configurables, variants } = separateByType(commerceProducts);
     const configurableAttrsMap = buildConfigurableAttributesMap(commerceProducts);
     
+    // Build configurations for configurable products
+    const configurationsMap = buildConfigurationsMap(commerceProducts, configurableAttrsMap);
+    
     const acoSimples = simples.map(p => transformToAcoProduct(p, categoryCodeMap));
-    const acoConfigurables = configurables.map(p => transformToAcoProduct(p, categoryCodeMap));
+    const acoConfigurables = configurables.map(p => {
+      const configurations = configurationsMap.get(p.sku);
+      return transformToAcoProduct(p, categoryCodeMap, configurations);
+    });
     // ACO variants file should contain ONLY the variant products, not parent configurables
     // Parent configurables belong in the products file
     const acoVariants = variants.map(v => transformToAcoVariant(v, configurableAttrsMap, categoryCodeMap));
