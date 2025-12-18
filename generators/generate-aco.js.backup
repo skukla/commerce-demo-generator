@@ -1,19 +1,20 @@
 #!/usr/bin/env node
 /**
- * Transform Canonical Datapack to ACO Format
+ * Transform Commerce Datapack to ACO Format
  * 
- * Reads canonical datapack and transforms to ACO format.
+ * Reads Commerce datapack (ACCS format) and transforms to ACO format.
+ * This makes Commerce the source of truth for products, variants, and base pricing.
  * 
  * Flow:
- * 1. Read canonical datapack (datapack.json)
- * 2. Transform to ACO format (products.json, variants.json, metadata.json, etc.)
- * 3. Write to ACO output directory
+ * 1. Read Commerce datapack (accs_products.json)
+ * 2. Transform to ACO format (products.json, variants.json)
+ * 3. Write to local output directory (output/aco-format/)
  * 
  * Usage:
- *   npm run generate:aco
- *   node generators/generate-aco.js
+ *   npm run transform:aco
+ *   node scripts/workflows/transform-for-aco.js
  * 
- * @module generators/generate-aco
+ * @module scripts/workflows/transform-for-aco
  */
 
 import { promises as fs } from 'fs';
@@ -28,7 +29,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Paths
-const CANONICAL_DATAPACK = join(__dirname, '../../buildright-data/generated/canonical/datapack.json');
+const COMMERCE_DATAPACK = join(PROJECT_CONFIG.paths.outputCommerce, 'data/accs/accs_products.json');
+const COMMERCE_ATTRIBUTES = join(PROJECT_CONFIG.paths.outputCommerce, 'data/accs/accs_product_attributes.json');
 const ACO_OUTPUT_DIR = PROJECT_CONFIG.paths.outputAco;
 const ACO_PRODUCTS_FILE = join(ACO_OUTPUT_DIR, 'products.json');
 const ACO_VARIANTS_FILE = join(ACO_OUTPUT_DIR, 'variants.json');
@@ -445,8 +447,8 @@ function transformToAcoCategories(categoryTree) {
       source: {
         locale: acoConfig.locale
       },
-      name: node.name, // REQUIRED - display name
-      families: ['default'] // REQUIRED for navigation query - associates category with catalog family
+      name: node.name // REQUIRED - display name
+      // families: [] // OPTIONAL - not used in BuildRight
     };
     
     categories.push(acoCategory);
@@ -543,130 +545,19 @@ function extractCategoryCodes(productCategories, categoryCodeMap) {
 }
 
 /**
- * Load canonical datapack and Commerce products for ACO transformation
- * Hybrid approach: Simple products from canonical, configurable/variants from Commerce
- */
-async function loadCanonicalForAco() {
-  const canonical = JSON.parse(await fs.readFile(CANONICAL_DATAPACK, 'utf-8'));
-  
-  // Convert canonical products to Commerce-like format
-  const canonicalProducts = canonical.products.map(product => ({
-    sku: product.sku,
-    product_type: product.type,
-    name: product.name,
-    description: product.description,
-    short_description: product.shortDescription,
-    price: product.price.toString(),
-    weight: product.weight.toString(),
-    product_online: product.meta.status === 'enabled' ? 1 : 0,
-    visibility: mapCanonicalVisibilityToCommerce(product.meta.visibility),
-    categories: mapCanonicalCategoriesToPath(product.categories, canonical.categories),
-    url_key: product.urlKey,
-    qty: product.stock.qty,
-    is_in_stock: product.stock.inStock ? 1 : 0,
-    manage_stock: product.stock.manageStock ? 1 : 0,
-    // Flatten attributes to Commerce style
-    ...flattenAttributes(product.attributes)
-  }));
-  
-  // Also read Commerce products to get configurable products and variants
-  // (These are not yet in canonical format)
-  const COMMERCE_PRODUCTS_PATH = join(PROJECT_CONFIG.paths.outputCommerce, 'data/accs/accs_products.json');
-  const commerceData = JSON.parse(await fs.readFile(COMMERCE_PRODUCTS_PATH, 'utf-8'));
-  const commerceProducts = commerceData.source.items;
-  
-  // Extract configurable products and variants from Commerce
-  const configurables = commerceProducts.filter(p => p.product_type === 'configurable');
-  const variants = commerceProducts.filter(p => p.product_type === 'simple' && p.sku.includes('-VAR-'));
-  
-  // Combine: canonical simple products + Commerce configurable products + Commerce variants
-  const commerceLikeProducts = [...canonicalProducts, ...configurables, ...variants];
-  
-  // Convert canonical attributes to Commerce-like format
-  const commerceLikeAttributes = canonical.attributes.map(attr => ({
-    attribute: {
-      attribute_id: attr.code,
-      attribute_code: attr.code,
-      frontend_label: attr.label,
-      frontend_input: attr.type,
-      is_required: attr.required ? 1 : 0,
-      is_searchable: attr.searchable ? 1 : 0,
-      is_filterable: attr.filterable ? 1 : 0,
-      is_comparable: attr.comparable ? 1 : 0,
-      is_visible_on_front: attr.visibleOnFront ? 1 : 0,
-      used_in_product_listing: attr.usedInProductListing ? 1 : 0,
-      is_filterable_in_search: attr.filterable ? 1 : 0,
-      additional_data: attr.options ? JSON.stringify(attr.options) : null,
-      options: attr.options || []
-    }
-  }));
-  
-  return { commerceLikeProducts, commerceLikeAttributes };
-}
-
-/**
- * Flatten canonical attributes to Commerce style
- */
-function flattenAttributes(attributes) {
-  const flattened = {};
-  for (const [key, value] of Object.entries(attributes)) {
-    if (Array.isArray(value)) {
-      flattened[key] = value.join(',');
-    } else {
-      flattened[key] = value;
-    }
-  }
-  return flattened;
-}
-
-/**
- * Map canonical visibility to Commerce visibility codes
- */
-function mapCanonicalVisibilityToCommerce(visibility) {
-  const map = {
-    'not_visible': 1,
-    'catalog': 2,
-    'search': 3,
-    'catalog_search': 4
-  };
-  return map[visibility] || 4;
-}
-
-/**
- * Map canonical categories (slugs) to Commerce category path
- */
-function mapCanonicalCategoriesToPath(categorySlugs, allCategories) {
-  if (!categorySlugs || categorySlugs.length === 0) return '';
-  
-  // Find root category
-  const root = allCategories.find(c => c.parentId === null);
-  const rootName = root ? root.name : PROJECT_CONFIG.project.rootCategoryName || 'Catalog';
-  
-  // Find the product's category
-  const categorySlug = categorySlugs[0]; // Use first category for now
-  const category = allCategories.find(c => c.slug === categorySlug);
-  
-  if (category) {
-    return `${rootName}/${category.name}`;
-  }
-  
-  return rootName;
-}
-
-/**
  * Main transform function
  */
 async function transformForAco() {
   console.log('');
   
   try {
-    // Step 1: Read canonical datapack
-    updateLine('📦 Reading canonical datapack...');
-    const { commerceLikeProducts, commerceLikeAttributes } = await loadCanonicalForAco();
-    const commerceProducts = commerceLikeProducts;
-    const commerceAttributes = commerceLikeAttributes;
+    // Step 1: Read Commerce datapack
+    updateLine('📦 Reading Commerce datapack...');
+    const commerceData = JSON.parse(await fs.readFile(COMMERCE_DATAPACK, 'utf-8'));
+    const commerceProducts = commerceData.source.items;
+    const commerceAttributes = JSON.parse(await fs.readFile(COMMERCE_ATTRIBUTES, 'utf-8'));
     const productCount = commerceProducts.length;
-    updateLine(chalk.green(`✔ Read ${productCount} ${productCount === 1 ? 'product' : 'products'} from canonical datapack`));
+    updateLine(chalk.green(`✔ Read ${productCount} ${productCount === 1 ? 'product' : 'products'} from Commerce datapack`));
     finishLine();
     
     // Step 2: Transform categories to ACO format

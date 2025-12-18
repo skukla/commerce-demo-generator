@@ -19,17 +19,61 @@ This tool generates datapacks for Adobe Commerce and Adobe Commerce Optimizer (A
 
 ## Architecture
 
+### Canonical Format Architecture (v2.0+)
+
+The generator now uses a **canonical format** as an intermediate representation, enabling clean separation between data definitions and platform-specific formats.
+
 ```
-commerce-demo-generator (this repo)
-    ↓ reads from
-buildright-data (or any data repo)
-    ↓ generates
-buildright-data/generated/{commerce,aco}/
-    ↓ consumed by
+Product Definitions (buildright-data)
+    ↓
+generate-canonical.js → Canonical Datapack (JSON)
+    ↓               ↓
+generate-commerce   generate-aco
+    ↓               ↓
+Commerce JSON      ACO JSON
+    ↓               ↓
 commerce-demo-ingestion
-    ↓ imports to
-Adobe Commerce / ACO
+    ↓               ↓
+Adobe Commerce     ACO
 ```
+
+**Benefits:**
+- ✅ Platform-agnostic data model
+- ✅ Independent transformations (Commerce doesn't depend on ACO, or vice versa)
+- ✅ Easier to add new platforms (Shopify, BigCommerce, etc.)
+- ✅ Single source of truth for catalog data
+- ✅ Better maintainability and testability
+
+### Canonical Format
+
+The canonical format is a platform-neutral JSON structure that serves as the single source of truth for catalog data. It includes:
+
+- **Products**: Core product data (SKU, name, price, attributes, etc.)
+- **Categories**: Category hierarchy with slugs and metadata
+- **Attributes**: Attribute definitions with types, options, and visibility rules
+- **Metadata**: Generation timestamp, version, project info
+
+**Example canonical product:**
+```json
+{
+  "id": "STR-49C283DE",
+  "sku": "STR-49C283DE",
+  "type": "simple",
+  "name": "Premium Lumber 2x4 Stud - 8ft",
+  "price": 9.22,
+  "attributes": {
+    "br_brand": "BuildRight",
+    "br_product_category": "Structural Materials",
+    "br_construction_phase": ["Foundation & framing"]
+  },
+  "meta": {
+    "status": "enabled",
+    "visibility": "catalog_search"
+  }
+}
+```
+
+See `docs/CANONICAL-FORMAT.md` for complete schema documentation.
 
 ## Quick Start
 
@@ -55,17 +99,33 @@ cp .env.example .env
 
 ### Generate Datapacks
 
-**Generate Commerce datapack:**
+**Generate all datapacks (recommended):**
+```bash
+npm run generate:all
+```
+This runs the full pipeline: canonical → Commerce → ACO
+
+**Or generate individually:**
+
+**1. Generate canonical datapack:**
+```bash
+npm run generate:canonical
+```
+
+**2. Generate Commerce datapack (from canonical):**
 ```bash
 npm run generate:commerce
 ```
 
-**Generate ACO format (requires Commerce datapack):**
+**3. Generate ACO datapack (from canonical):**
 ```bash
 npm run generate:aco
 ```
 
-**Generate both:**
+**Output Locations:**
+- Canonical: `buildright-data/generated/canonical/datapack.json`
+- Commerce: `buildright-data/generated/commerce/data/accs/*.json`
+- ACO: `buildright-data/generated/aco/*.json`
 ```bash
 npm run generate:all
 ```
@@ -196,9 +256,12 @@ Generated in `{data-repo}/generated/commerce/`:
 
 Generated in `{data-repo}/generated/aco/`:
 
+- `categories.json` - Categories with `families: ['default']` for navigation query
 - `metadata.json` - Attribute metadata
 - `products.json` - Product data
 - `variants.json` - Product variants
+- `price-books.json` - Price books per customer group
+- `prices.json` - Product prices with tier pricing
 
 ## Development
 

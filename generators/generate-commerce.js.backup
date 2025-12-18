@@ -27,7 +27,6 @@ import { generateAttributes, generateAttributeOptions } from './attributes.js';
 import { generateProducts } from './products.js';
 import { generateVariants } from './product-variants.js';
 import { generateCustomersWithDetails } from './customers.js';
-import { PROJECT_CONFIG } from '../config/project-config.js';
 import { 
   generateInventorySources, 
   transformSourcesToAccsFormat,
@@ -47,6 +46,7 @@ import {
   generateB2BConfigReference,
   generateB2BAdminInstructions
 } from './b2b-config.js';
+import { PROJECT_CONFIG } from '../config/project-config.js';
 import { normalizeProductName } from '../lib/name-normalizer.js';
 import { updateLine, finishLine } from '../lib/format.js';
 
@@ -91,119 +91,6 @@ function ensureDir(dirPath) {
 
 // NOTE: Module files (registration.php, composer.json, etc/module.xml) are not needed for ACCS datapacks.
 // ACCS datapacks only require data/ and media/ folders.
-
-/**
- * Read canonical datapack and transform products to Commerce format
- */
-function loadProductsFromCanonical() {
-  const canonicalPath = resolve(__dirname, '../../buildright-data/generated/canonical/datapack.json');
-  
-  if (!existsSync(canonicalPath)) {
-    throw new Error(`Canonical datapack not found at ${canonicalPath}. Run 'npm run generate:canonical' first.`);
-  }
-  
-  const canonical = JSON.parse(readFileSync(canonicalPath, 'utf8'));
-  const products = [];
-  
-  for (const product of canonical.products) {
-    // Transform canonical to Commerce format
-    const commerceProduct = {
-      sku: product.sku,
-      attribute_set_code: 'Default',
-      type_id: product.type,
-      product_websites: 'base',
-      name: product.name,
-      price: product.price.toString(),
-      weight: product.weight.toString(),
-      status: product.meta.status === 'enabled' ? 1 : 2,
-      visibility: mapCanonicalVisibilityToCommerce(product.meta.visibility),
-      tax_class_name: mapCanonicalTaxClass(product.meta.taxClass),
-      categories: mapCanonicalCategoriesToPath(product.categories, canonical.categories),
-      url_key: product.urlKey,
-      description: product.description,
-      short_description: product.shortDescription,
-      
-      // Stock
-      qty: product.stock.qty,
-      is_in_stock: product.stock.inStock ? 1 : 0,
-      manage_stock: product.stock.manageStock ? 1 : 0,
-      
-      // Images
-      image: mapCanonicalImagePath(product.images[0]?.file),
-      small_image: mapCanonicalImagePath(product.images[0]?.file),
-      thumbnail: mapCanonicalImagePath(product.images[0]?.file),
-    };
-    
-    // Add all custom attributes
-    for (const [key, value] of Object.entries(product.attributes)) {
-      if (Array.isArray(value)) {
-        commerceProduct[key] = value.join(',');
-      } else {
-        commerceProduct[key] = value;
-      }
-    }
-    
-    products.push(commerceProduct);
-  }
-  
-  return products;
-}
-
-/**
- * Map canonical visibility to Commerce visibility codes
- */
-function mapCanonicalVisibilityToCommerce(visibility) {
-  const map = {
-    'not_visible': 1,
-    'catalog': 2,
-    'search': 3,
-    'catalog_search': 4
-  };
-  return map[visibility] || 4;
-}
-
-/**
- * Map canonical tax class to Commerce tax class name
- */
-function mapCanonicalTaxClass(taxClass) {
-  const map = {
-    'taxable_goods': 'Taxable Goods',
-    'none': 'None'
-  };
-  return map[taxClass] || 'Taxable Goods';
-}
-
-/**
- * Map canonical categories (slugs) to Commerce category path
- */
-function mapCanonicalCategoriesToPath(categorySlugs, allCategories) {
-  if (!categorySlugs || categorySlugs.length === 0) return '';
-  
-  // Find root category
-  const root = allCategories.find(c => c.parentId === null);
-  const rootName = root ? root.name : PROJECT_CONFIG.project.rootCategoryName || 'Catalog';
-  
-  // Find the product's category
-  const categorySlug = categorySlugs[0]; // Use first category for now
-  const category = allCategories.find(c => c.slug === categorySlug);
-  
-  if (category) {
-    return `${rootName}/${category.name}`;
-  }
-  
-  return rootName;
-}
-
-/**
- * Map canonical image file to Commerce image path
- */
-function mapCanonicalImagePath(imageFile) {
-  if (!imageFile) return '';
-  
-  // Commerce format: /s/t/str-49c283de.jpg (first two chars as path)
-  const sku = imageFile.replace('.jpg', '');
-  return `/${sku.slice(0,1).toLowerCase()}/${sku.slice(1,2).toLowerCase()}/${imageFile}`;
-}
 
 /**
  * Transform products to ACCS format (with source wrapper and flat attributes)
@@ -720,10 +607,10 @@ async function generateDataPack() {
   updateLine(chalk.green(`✔ Generated ${rawAttributes.length} ${pluralize(rawAttributes.length, 'attribute')} with ${attributeAssignments.length} ${pluralize(attributeAssignments.length, 'assignment')}`));
   finishLine();
 
-  // Load products from canonical datapack
-  updateLine('📦 Loading products from canonical...');
-  const rawProducts = loadProductsFromCanonical();
-  updateLine(chalk.green(`✔ Loaded ${rawProducts.length} ${pluralize(rawProducts.length, 'product')} from canonical`));
+  // Generate simple products
+  updateLine('📦 Generating simple products...');
+  const rawProducts = await generateProducts();
+  updateLine(chalk.green(`✔ Generated ${rawProducts.length} simple ${pluralize(rawProducts.length, 'product')}`));
   finishLine();
   
   // Generate configurable products and variants

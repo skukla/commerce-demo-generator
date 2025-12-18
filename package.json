@@ -4,9 +4,10 @@
   "description": "Generic datapack generator for Adobe Commerce demo projects",
   "type": "module",
   "scripts": {
+    "generate:canonical": "node generators/generate-canonical.js",
     "generate:commerce": "node generators/generate-commerce.js",
     "generate:aco": "node generators/generate-aco.js",
-    "generate:all": "npm run generate:commerce && npm run generate:aco"
+    "generate:all": "npm run generate:canonical && npm run generate:commerce && npm run generate:aco"
   },
   "dependencies": {
     "chalk": "^5.6.2",
