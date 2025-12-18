@@ -398,8 +398,8 @@ function extractMetadata(commerceAttributes) {
     // Transform options if present
     if (attr.options && attr.options.length > 0) {
       metadata.options = attr.options.map(opt => ({
-        value: slugify(opt.label || opt.value || opt),
-        label: opt.label || opt.value || opt
+        value: slugify(String(opt.label || opt.value || opt)),
+        label: String(opt.label || opt.value || opt)
       }));
     }
     

@@ -16,6 +16,7 @@ import { PRODUCT_CATEGORIES, BRANDS, BRANDS_BY_CATEGORY } from '../lib/product-d
 import { generateProductDescription, generateShortDescription } from '../lib/description-generator.js';
 import { generateHash, generateUrlKey } from '../lib/product-utils.js';
 import { PROJECT_CONFIG } from '../config/project-config.js';
+import { generateAttributes as generateCommerceAttributes } from './attributes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -211,64 +212,48 @@ function generateCategories() {
 
 /**
  * Generate attributes in canonical format
+ * Reads from Commerce attribute generator to ensure alignment
  */
 function generateAttributes() {
-  const attributes = [];
-  const attributePrefix = PROJECT_CONFIG.project.attributePrefix;
+  // Generate Commerce attributes (the source of truth)
+  const commerceAttributes = generateCommerceAttributes();
   
-  // Read attribute definitions from config
-  const attributeDefs = PROJECT_CONFIG.project.attributes || {};
-  
-  // Core attributes
-  attributes.push({
-    code: `${attributePrefix}product_category`,
-    label: 'Product Category',
-    type: 'select',
-    required: true,
-    searchable: true,
-    filterable: true,
-    comparable: false,
-    visibleOnFront: true,
-    usedInProductListing: true,
-    options: Object.entries(PRODUCT_CATEGORIES).map(([key, def]) => ({
-      value: generateUrlKey(def.name),
-      label: def.attributeValue || def.name
-    }))
-  });
-  
-  attributes.push({
-    code: `${attributePrefix}brand`,
-    label: 'Brand',
-    type: 'select',
-    required: false,
-    searchable: true,
-    filterable: true,
-    comparable: true,
-    visibleOnFront: true,
-    usedInProductListing: true,
-    options: BRANDS.map(brand => ({
-      value: generateUrlKey(brand),
-      label: brand
-    }))
-  });
-  
-  attributes.push({
-    code: `${attributePrefix}unit_of_measure`,
-    label: 'Unit of Measure',
-    type: 'select',
-    required: false,
-    searchable: false,
-    filterable: false,
-    comparable: false,
-    visibleOnFront: true,
-    usedInProductListing: true,
-    options: [
-      { value: 'EA', label: 'Each' },
-      { value: 'BOX', label: 'Box' },
-      { value: 'BDL', label: 'Bundle' },
-      { value: 'LF', label: 'Linear Foot' },
-      { value: 'SF', label: 'Square Foot' }
-    ]
+  // Transform Commerce attributes to canonical format
+  const attributes = commerceAttributes.map(attr => {
+    // Map Commerce attribute types to canonical types
+    const typeMap = {
+      'text': 'text',
+      'textarea': 'textarea',
+      'select': 'select',
+      'multiselect': 'multiselect',
+      'boolean': 'boolean',
+      'date': 'date',
+      'price': 'price',
+      'weight': 'number',
+      'media_image': 'image'
+    };
+    
+    const canonicalAttr = {
+      code: attr.attribute_code,
+      label: attr.frontend_label || attr.attribute_code,
+      type: typeMap[attr.frontend_input] || 'text',
+      required: attr.is_required === 1,
+      searchable: attr.is_searchable === 1,
+      filterable: attr.is_filterable === 1,
+      comparable: attr.is_comparable === 1,
+      visibleOnFront: attr.is_visible_on_front === 1,
+      usedInProductListing: attr.used_in_product_listing === 1
+    };
+    
+    // Transform options if present
+    if (attr.options && attr.options.length > 0) {
+      canonicalAttr.options = attr.options.map(opt => ({
+        value: opt.value || opt.label,
+        label: opt.label || opt.value
+      }));
+    }
+    
+    return canonicalAttr;
   });
   
   return attributes;
