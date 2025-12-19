@@ -2,6 +2,7 @@ import { config } from 'dotenv';
 import { resolve, join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { readFileSync } from 'fs';
+import { validateCategoryTree, getCategorySummary } from './validate-category-tree.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -80,7 +81,23 @@ export const PROJECT_CONFIG = {
   productCatalog: loadJSON('products/catalog.json'),
   brands: loadJSON('products/brands.json'),
   units: loadJSON('products/units.json'),
-  categoryTree: loadJSON('categories/category-tree.json'),
+  categoryTree: (() => {
+    const categoryTree = loadJSON('categories/category-tree.json');
+    
+    // Validate category tree matches fixed taxonomy
+    try {
+      validateCategoryTree(categoryTree);
+      const summary = getCategorySummary(categoryTree);
+      console.log(`✅ Category tree validated: ${summary.totalCount} categories (${summary.topLevelCount} top-level, ${summary.subcategoryCount} subcategories)`);
+    } catch (error) {
+      console.error('\n⚠️  CATEGORY TREE VALIDATION FAILED:\n');
+      console.error(error.message);
+      console.error('\n');
+      process.exit(1);
+    }
+    
+    return categoryTree;
+  })(),
   productAttributes: loadJSON('attributes/product-attributes.json'),
   customerAttributes: loadJSON('attributes/customer-attributes.json'),
   customerGroups: loadJSON('customers/customer-groups.json'),
