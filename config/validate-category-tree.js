@@ -19,7 +19,8 @@ export const FIXED_CATEGORY_TAXONOMY = {
       urlKey: 'structural-materials',
       children: [
         { name: 'Lumber', urlKey: 'lumber' },
-        { name: 'Plywood & Sheathing', urlKey: 'plywood-sheathing' }
+        { name: 'Plywood & Sheathing', urlKey: 'plywood-sheathing' },
+        { name: 'Concrete & Foundation', urlKey: 'concrete-foundation' }
       ]
     },
     {
@@ -28,7 +29,9 @@ export const FIXED_CATEGORY_TAXONOMY = {
       children: [
         { name: 'Metal Studs & Track', urlKey: 'metal-studs-track' },
         { name: 'Drywall', urlKey: 'drywall' },
-        { name: 'Insulation', urlKey: 'insulation' }
+        { name: 'Insulation', urlKey: 'insulation' },
+        { name: 'Flooring', urlKey: 'flooring' },
+        { name: 'Paint', urlKey: 'paint' }
       ]
     },
     {
@@ -36,7 +39,9 @@ export const FIXED_CATEGORY_TAXONOMY = {
       urlKey: 'windows-doors',
       children: [
         { name: 'Windows', urlKey: 'windows' },
-        { name: 'Doors', urlKey: 'doors' }
+        { name: 'Doors', urlKey: 'doors' },
+        { name: 'Lighting', urlKey: 'lighting' },
+        { name: 'Kitchen Appliances', urlKey: 'kitchen-appliances' }
       ]
     },
     {
@@ -44,7 +49,13 @@ export const FIXED_CATEGORY_TAXONOMY = {
       urlKey: 'fasteners-hardware',
       children: [
         { name: 'Nails', urlKey: 'nails' },
-        { name: 'Screws', urlKey: 'screws' }
+        { name: 'Screws', urlKey: 'screws' },
+        { name: 'Wiring', urlKey: 'wiring' },
+        { name: 'Devices', urlKey: 'devices' },
+        { name: 'Panels', urlKey: 'panels' },
+        { name: 'Water Supply', urlKey: 'water-supply' },
+        { name: 'Drain & Waste', urlKey: 'drain-waste' },
+        { name: 'Fittings', urlKey: 'fittings' }
       ]
     },
     {
@@ -53,53 +64,12 @@ export const FIXED_CATEGORY_TAXONOMY = {
       children: [
         { name: 'Shingles', urlKey: 'shingles' },
         { name: 'Underlayment', urlKey: 'underlayment' },
-        { name: 'Siding', urlKey: 'siding' }
-      ]
-    },
-    {
-      name: 'Interior Finishes',
-      urlKey: 'interior-finishes',
-      children: [
-        { name: 'Flooring', urlKey: 'flooring' },
-        { name: 'Paint', urlKey: 'paint' },
-        { name: 'Lighting', urlKey: 'lighting' },
-        { name: 'Plumbing Fixtures', urlKey: 'plumbing-fixtures' }
-      ]
-    },
-    {
-      name: 'Concrete & Foundation',
-      urlKey: 'concrete-foundation'
-    },
-    {
-      name: 'Electrical Systems',
-      urlKey: 'electrical-systems',
-      children: [
-        { name: 'Wiring', urlKey: 'wiring' },
-        { name: 'Devices', urlKey: 'devices' },
-        { name: 'Panels', urlKey: 'panels' }
-      ]
-    },
-    {
-      name: 'Plumbing Pipes & Fittings',
-      urlKey: 'plumbing-pipes-fittings',
-      children: [
-        { name: 'Water Supply', urlKey: 'water-supply' },
-        { name: 'Drain & Waste', urlKey: 'drain-waste' },
-        { name: 'Fittings', urlKey: 'fittings' }
-      ]
-    },
-    {
-      name: 'HVAC Systems',
-      urlKey: 'hvac-systems',
-      children: [
-        { name: 'Units', urlKey: 'hvac-units' },
+        { name: 'Siding', urlKey: 'siding' },
+        { name: 'Plumbing Fixtures', urlKey: 'plumbing-fixtures' },
+        { name: 'HVAC Units', urlKey: 'hvac-units' },
         { name: 'Ductwork', urlKey: 'ductwork' },
         { name: 'Vents & Thermostats', urlKey: 'vents-thermostats' }
       ]
-    },
-    {
-      name: 'Kitchen Appliances',
-      urlKey: 'kitchen-appliances'
     }
   ]
 };
