@@ -1,23 +1,5 @@
 [
   {
-    "attributeCode": "br_product_category",
-    "frontendLabel": "Product Category",
-    "frontendInput": "select",
-    "isRequired": true,
-    "isSearchable": true,
-    "isFilterable": true,
-    "isComparable": true,
-    "isVisibleOnFront": true,
-    "sortOrder": 1,
-    "options": [
-      "Structural Materials",
-      "Framing & Insulation",
-      "Windows & Doors",
-      "Fasteners & Hardware",
-      "Safety Equipment"
-    ]
-  },
-  {
     "attributeCode": "br_brand",
     "frontendLabel": "Brand",
     "frontendInput": "select",
