@@ -17,6 +17,7 @@ export const FIXED_CATEGORY_TAXONOMY = {
     {
       name: 'All Products',
       urlKey: 'all-products',
+      aggregateAll: true,
       children: []
     },
     {
@@ -162,6 +163,49 @@ export function validateCategoryTree(categoryTree) {
   }
   
   return true;
+}
+
+/**
+ * Get slugs of categories marked as aggregateAll
+ * These categories should contain ALL products regardless of their specific category assignment.
+ *
+ * @param {Object} categoryTree - The category tree
+ * @returns {string[]} Array of urlKey slugs for aggregate categories
+ */
+export function getAggregateCategorySlugs(categoryTree) {
+  const slugs = [];
+
+  if (categoryTree.children) {
+    for (const category of categoryTree.children) {
+      if (category.aggregateAll === true) {
+        slugs.push(category.urlKey);
+      }
+    }
+  }
+
+  return slugs;
+}
+
+/**
+ * Get full name paths of categories marked as aggregateAll (for Commerce format)
+ * Returns paths like "BuildRight Catalog/All Products"
+ *
+ * @param {Object} categoryTree - The category tree
+ * @returns {string[]} Array of full name paths for aggregate categories
+ */
+export function getAggregateCategoryPaths(categoryTree) {
+  const paths = [];
+  const rootName = categoryTree.name;
+
+  if (categoryTree.children) {
+    for (const category of categoryTree.children) {
+      if (category.aggregateAll === true) {
+        paths.push(`${rootName}/${category.name}`);
+      }
+    }
+  }
+
+  return paths;
 }
 
 /**

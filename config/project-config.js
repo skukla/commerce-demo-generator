@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 import { resolve, join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { readFileSync } from 'fs';
-import { validateCategoryTree, getCategorySummary } from './validate-category-tree.js';
+import { validateCategoryTree, getCategorySummary, getAggregateCategorySlugs, getAggregateCategoryPaths } from './validate-category-tree.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -98,6 +98,24 @@ export const PROJECT_CONFIG = {
     
     return categoryTree;
   })(),
+
+  // Aggregate categories (categories that contain ALL products, e.g., "All Products")
+  // Derived from categoryTree categories with aggregateAll: true
+  aggregateCategorySlugs: (() => {
+    const categoryTree = loadJSON('categories/category-tree.json');
+    const slugs = getAggregateCategorySlugs(categoryTree);
+    if (slugs.length > 0) {
+      console.log(`✅ Aggregate categories: ${slugs.join(', ')}`);
+    }
+    return slugs;
+  })(),
+
+  // Aggregate category paths for Commerce format (e.g., "BuildRight Catalog/All Products")
+  aggregateCategoryPaths: (() => {
+    const categoryTree = loadJSON('categories/category-tree.json');
+    return getAggregateCategoryPaths(categoryTree);
+  })(),
+
   productAttributes: loadJSON('attributes/product-attributes.json'),
   customerAttributes: loadJSON('attributes/customer-attributes.json'),
   customerGroups: loadJSON('customers/customer-groups.json'),

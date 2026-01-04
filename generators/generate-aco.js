@@ -669,11 +669,15 @@ function extractCategoryCodes(productCategories, categoryCodeMap, productSlug) {
   if (!productCategories || !productSlug) {
     return [];
   }
-  
-  // Convert string to array if needed (Commerce datapacks use strings)
-  const categoriesArray = typeof productCategories === 'string' 
-    ? [productCategories] 
-    : productCategories;
+
+  // Convert string to array if needed (Commerce datapacks use comma-separated strings)
+  let categoriesArray;
+  if (typeof productCategories === 'string') {
+    // Split on commas for Commerce format: "Cat1/Sub1,Cat2/Sub2" -> ["Cat1/Sub1", "Cat2/Sub2"]
+    categoriesArray = productCategories.split(',').map(s => s.trim());
+  } else {
+    categoriesArray = productCategories;
+  }
   
   if (categoriesArray.length === 0) {
     return [productSlug]; // At minimum, return product slug

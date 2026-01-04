@@ -157,10 +157,16 @@ function generateConfigurableParent(configDef, categoryKey, category, subcategor
   
   // Get subcategory name from category tree
   const subcategoryName = SUBCATEGORY_NAMES.get(subcategoryKey) || subcategoryKey;
-  
+
   // Build full category path including subcategory
-  const categoryPath = `${PROJECT_CONFIG.project.rootCategoryName}/${category.name}/${subcategoryName}`;
-  
+  const specificCategoryPath = `${PROJECT_CONFIG.project.rootCategoryName}/${category.name}/${subcategoryName}`;
+
+  // Include aggregate categories (e.g., "All Products") - all products belong to these
+  const allCategoryPaths = [
+    ...PROJECT_CONFIG.aggregateCategoryPaths,
+    specificCategoryPath
+  ].join(',');
+
   const product = {
     sku,
     attribute_set_code: 'Default',
@@ -172,7 +178,7 @@ function generateConfigurableParent(configDef, categoryKey, category, subcategor
     product_online: 1,
     visibility: 4, // Catalog, Search - parent configurable visible everywhere
     tax_class_name: 'Taxable Goods',
-    categories: categoryPath,
+    categories: allCategoryPaths,
     url_key: generateUrlKey(name),
     qty: 100,
     is_in_stock: 1,
@@ -204,10 +210,16 @@ function generateVariantChildren(configDef, parent, categoryKey, category, subca
   
   // Get subcategory name from category tree
   const subcategoryName = SUBCATEGORY_NAMES.get(subcategoryKey) || subcategoryKey;
-  
+
   // Build full category path including subcategory
-  const categoryPath = `${PROJECT_CONFIG.project.rootCategoryName}/${category.name}/${subcategoryName}`;
-  
+  const specificCategoryPath = `${PROJECT_CONFIG.project.rootCategoryName}/${category.name}/${subcategoryName}`;
+
+  // Include aggregate categories (e.g., "All Products") - all products belong to these
+  const allCategoryPaths = [
+    ...PROJECT_CONFIG.aggregateCategoryPaths,
+    specificCategoryPath
+  ].join(',');
+
   for (const dims of combinations) {
     const sku = generateVariantSKU(parent.sku, dims);
     
@@ -241,7 +253,7 @@ function generateVariantChildren(configDef, parent, categoryKey, category, subca
       product_online: 1,
       visibility: 1, // Not Visible Individually - variants not visible in catalog/search
       tax_class_name: 'Taxable Goods',
-      categories: categoryPath,
+      categories: allCategoryPaths,
       url_key: generateUrlKey(name),
       qty: random.nextInt(50, 200),
       is_in_stock: 1,

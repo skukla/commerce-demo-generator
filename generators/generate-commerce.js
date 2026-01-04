@@ -178,39 +178,41 @@ function mapCanonicalTaxClass(taxClass) {
  */
 function mapCanonicalCategoriesToPath(categorySlugs, allCategories) {
   if (!categorySlugs || categorySlugs.length === 0) return '';
-  
+
   // Find root category
   const root = allCategories.find(c => c.parentId === null);
   const rootName = root ? root.name : PROJECT_CONFIG.project.rootCategoryName || 'Catalog';
-  
-  // Look for the most specific category (longest path = deepest in hierarchy)
-  // Example: ["structural-materials", "structural-materials/lumber"]
-  // We want "structural-materials/lumber" (the subcategory)
-  const mostSpecificSlug = categorySlugs.reduce((longest, current) => 
-    current.length > longest.length ? current : longest
-  , categorySlugs[0]);
-  
-  // Find the category by slug
-  const category = allCategories.find(c => c.slug === mostSpecificSlug);
-  
-  if (category) {
-    // Build full path from root through all parents to this category
-    const pathParts = [category.name];
-    let current = category;
-    
-    // Walk up the parent chain
-    while (current.parentId) {
-      const parent = allCategories.find(c => c.id === current.parentId);
-      if (parent && parent.parentId !== null) { // Don't include root
-        pathParts.unshift(parent.name);
+
+  // Convert each canonical category slug to its Commerce name path
+  // Canonical: ['all-products', 'structural-materials', 'structural-materials/lumber']
+  // Commerce: 'BuildRight Catalog/All Products,BuildRight Catalog/Structural Materials/Lumber'
+  const paths = [];
+
+  for (const slug of categorySlugs) {
+    // Find the category by slug
+    const category = allCategories.find(c => c.slug === slug);
+
+    if (category) {
+      // Build full path from root through all parents to this category
+      const pathParts = [category.name];
+      let current = category;
+
+      // Walk up the parent chain
+      while (current.parentId) {
+        const parent = allCategories.find(c => c.id === current.parentId);
+        if (parent && parent.parentId !== null) { // Don't include root
+          pathParts.unshift(parent.name);
+        }
+        current = parent || { parentId: null };
       }
-      current = parent || { parentId: null };
+
+      paths.push(`${rootName}/${pathParts.join('/')}`);
     }
-    
-    return `${rootName}/${pathParts.join('/')}`;
   }
-  
-  return rootName;
+
+  // Deduplicate and join - return comma-separated paths for Commerce
+  const uniquePaths = [...new Set(paths)];
+  return uniquePaths.join(',');
 }
 
 /**

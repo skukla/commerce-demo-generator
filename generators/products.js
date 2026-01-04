@@ -96,7 +96,13 @@ function generateSimpleProduct(template, category, subcategory, index) {
   
   // Build full category path including subcategory
   // Format: "BuildRight Catalog/Structural Materials/Lumber"
-  const categoryPath = `${PROJECT_CONFIG.project.rootCategoryName}/${categoryName}/${subcategoryName}`;
+  const specificCategoryPath = `${PROJECT_CONFIG.project.rootCategoryName}/${categoryName}/${subcategoryName}`;
+
+  // Include aggregate categories (e.g., "All Products") - all products belong to these
+  const allCategoryPaths = [
+    ...PROJECT_CONFIG.aggregateCategoryPaths,
+    specificCategoryPath
+  ].join(',');
   
   // Build product object with attributes first
   const product = {
@@ -110,7 +116,7 @@ function generateSimpleProduct(template, category, subcategory, index) {
     status: 1,
     visibility: 4, // Catalog, Search
     tax_class_name: 'Taxable Goods',
-    categories: categoryPath,
+    categories: allCategoryPaths,
     url_key: slug,
     qty: 100,
     is_in_stock: 1,

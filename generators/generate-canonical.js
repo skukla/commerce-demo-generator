@@ -144,8 +144,12 @@ function generateCanonicalProduct(template, category, subcategory, index) {
       manageStock: true
     },
     
-    // Categorization - all-products first, then parent and subcategory slugs
-    categories: ['all-products', categorySlug, `${categorySlug}/${subcategorySlug}`],
+    // Categorization - aggregate categories first, then parent and subcategory slugs
+    categories: [
+      ...PROJECT_CONFIG.aggregateCategorySlugs,
+      categorySlug,
+      `${categorySlug}/${subcategorySlug}`
+    ],
     
     // Images
     images: [
