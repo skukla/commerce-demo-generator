@@ -7,7 +7,9 @@
     "generate:canonical": "node generators/generate-canonical.js",
     "generate:commerce": "node generators/generate-commerce.js",
     "generate:aco": "node generators/generate-aco.js",
-    "generate:all": "npm run generate:canonical && npm run generate:commerce && npm run generate:aco"
+    "generate:all": "npm run generate:canonical && npm run generate:commerce && npm run generate:aco",
+    "test": "node --test tests/**/*.test.js",
+    "test:unit": "node --test tests/unit/*.test.js"
   },
   "dependencies": {
     "chalk": "^5.6.2",
