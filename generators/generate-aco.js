@@ -61,9 +61,12 @@ function transformToAcoProduct(commerceProduct, categoryCodeMap = null, configur
   };
   
   // Add category routes if available
-  if (categoryCodeMap && commerceProduct.categories) {
+  // Use canonicalCategories (full array including all-products) if available,
+  // otherwise fall back to Commerce categories (single path)
+  const categorySource = commerceProduct.canonicalCategories || commerceProduct.categories;
+  if (categoryCodeMap && categorySource) {
     const categoryCodes = extractCategoryCodes(
-      commerceProduct.categories, 
+      categorySource,
       categoryCodeMap,
       commerceProduct.url_key  // Pass product slug for route generation
     );

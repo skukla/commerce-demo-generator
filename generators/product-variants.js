@@ -4,11 +4,37 @@
  * Commerce is the source of truth (reads from product-definitions.js)
  */
 
-import { PRODUCT_CATEGORIES, BRANDS, BRANDS_BY_CATEGORY } from '../lib/product-definitions.js';
+import { PRODUCT_CATEGORIES, BRANDS } from '../lib/product-definitions.js';
 import { SeededRandom } from '../lib/seeded-random.js';
 import { generateProductDescription, generateShortDescription } from '../lib/description-generator.js';
 import { generateHash, generateUrlKey } from '../lib/product-utils.js';
 import { PROJECT_CONFIG } from '../config/project-config.js';
+
+/**
+ * Build a map of subcategory urlKey to subcategory name from category tree
+ * @returns {Map<string, string>} Map of urlKey → subcategory name
+ */
+function buildSubcategoryNameMap() {
+  const map = new Map();
+  const categoryTree = PROJECT_CONFIG.categoryTree;
+  
+  if (categoryTree.children) {
+    for (const parent of categoryTree.children) {
+      if (parent.children) {
+        for (const child of parent.children) {
+          if (child.urlKey && child.name) {
+            map.set(child.urlKey, child.name);
+          }
+        }
+      }
+    }
+  }
+  
+  return map;
+}
+
+// Build subcategory name map once at module load time
+const SUBCATEGORY_NAMES = buildSubcategoryNameMap();
 
 /**
  * Generate SKU for configurable product
@@ -72,10 +98,9 @@ function cartesianProduct(dimensions) {
  */
 function mapCategoryAttributes(categoryKey, category, subcategory, random) {
   const attributes = {};
-  
-  // Product category
-  attributes.br_product_category = category.attributeValue || category.name;
-  
+
+  // NOTE: br_product_category removed - native 'categories' attribute replaces it
+
   // Construction phase - use first simple product's phase as default
   if (subcategory.simple && subcategory.simple.length > 0) {
     const firstProduct = subcategory.simple[0];
@@ -123,13 +148,18 @@ function generateConfigurableParent(configDef, categoryKey, category, subcategor
   const subcategoryKey = Object.keys(category.subcategories).find(k => category.subcategories[k] === subcategory);
   const sku = generateConfigurableSKU(categoryKey, subcategoryKey, configDef.name);
   
-  // Use category-specific brands if available
-  const categoryBrands = BRANDS_BY_CATEGORY[subcategoryKey] || BRANDS;
-  const brand = categoryBrands[random.nextInt(0, categoryBrands.length - 1)];
+  // Use generic brands only - these match br_brand attribute options
+  const brand = BRANDS[random.nextInt(0, BRANDS.length - 1)];
   const name = `${brand} ${configDef.name} - Configurable`;
   
   // Base attributes
   const attributes = mapCategoryAttributes(categoryKey, category, subcategory, random);
+  
+  // Get subcategory name from category tree
+  const subcategoryName = SUBCATEGORY_NAMES.get(subcategoryKey) || subcategoryKey;
+  
+  // Build full category path including subcategory
+  const categoryPath = `${PROJECT_CONFIG.project.rootCategoryName}/${category.name}/${subcategoryName}`;
   
   const product = {
     sku,
@@ -142,7 +172,7 @@ function generateConfigurableParent(configDef, categoryKey, category, subcategor
     product_online: 1,
     visibility: 4, // Catalog, Search - parent configurable visible everywhere
     tax_class_name: 'Taxable Goods',
-    categories: `${PROJECT_CONFIG.project.rootCategoryName}/${category.name}`,
+    categories: categoryPath,
     url_key: generateUrlKey(name),
     qty: 100,
     is_in_stock: 1,
@@ -171,6 +201,12 @@ function generateVariantChildren(configDef, parent, categoryKey, category, subca
   const subcategoryKey = Object.keys(category.subcategories).find(k => category.subcategories[k] === subcategory);
   const combinations = cartesianProduct(configDef.dimensions);
   const variants = [];
+  
+  // Get subcategory name from category tree
+  const subcategoryName = SUBCATEGORY_NAMES.get(subcategoryKey) || subcategoryKey;
+  
+  // Build full category path including subcategory
+  const categoryPath = `${PROJECT_CONFIG.project.rootCategoryName}/${category.name}/${subcategoryName}`;
   
   for (const dims of combinations) {
     const sku = generateVariantSKU(parent.sku, dims);
@@ -205,7 +241,7 @@ function generateVariantChildren(configDef, parent, categoryKey, category, subca
       product_online: 1,
       visibility: 1, // Not Visible Individually - variants not visible in catalog/search
       tax_class_name: 'Taxable Goods',
-      categories: `${PROJECT_CONFIG.project.rootCategoryName}/${category.name}`,
+      categories: categoryPath,
       url_key: generateUrlKey(name),
       qty: random.nextInt(50, 200),
       is_in_stock: 1,
@@ -215,8 +251,8 @@ function generateVariantChildren(configDef, parent, categoryKey, category, subca
       parent_sku: parent.sku,
       
       // Inherit attributes from parent
+      // NOTE: br_product_category removed - native 'categories' attribute replaces it
       br_brand: parent.br_brand,
-      br_product_category: parent.br_product_category,
       br_unit_of_measure: parent.br_unit_of_measure,
       br_construction_phase: parent.br_construction_phase,
       br_quality_tier: parent.br_quality_tier,
@@ -233,7 +269,8 @@ function generateVariantChildren(configDef, parent, categoryKey, category, subca
     };
     
     // Category-specific attributes for lumber
-    if (categoryKey === 'structural' || parent.br_product_category === 'Structural Materials') {
+    // NOTE: br_product_category check removed - using categoryKey directly
+    if (categoryKey === 'structural') {
       if (dims.depth && dims.width) {
         variant.br_lumber_dimension = `${dims.depth}x${dims.width}`;
       }

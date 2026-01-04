@@ -15,6 +15,11 @@ export const FIXED_CATEGORY_TAXONOMY = {
   name: 'BuildRight Catalog',
   children: [
     {
+      name: 'All Products',
+      urlKey: 'all-products',
+      children: []
+    },
+    {
       name: 'Structural Materials',
       urlKey: 'structural-materials',
       children: [

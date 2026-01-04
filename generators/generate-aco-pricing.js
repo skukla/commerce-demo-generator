@@ -83,6 +83,7 @@ export function generatePriceBooks() {
  * Generate prices by applying price book multipliers and tier rules
  * 
  * Generates ACO-compliant price entries with tier pricing grouped under each SKU+priceBook.
+ * For configurable products, calculates price range from variants and adds price for min value.
  * 
  * @param {Array} commerceProducts - Products from Commerce datapack
  * @returns {Array} Price entries for ACO in format: { sku, priceBookId, regular, tierPrices? }
@@ -92,8 +93,47 @@ export function generatePrices(commerceProducts) {
   const pricingConfig = PROJECT_CONFIG.acoPricingRules;
   const prices = [];
   
+  // Build map of configurable parents to their variants for price range calculation
+  const configurableVariants = new Map();
   for (const product of commerceProducts) {
-    // Skip products without base prices
+    if (product.parent_sku) {
+      if (!configurableVariants.has(product.parent_sku)) {
+        configurableVariants.set(product.parent_sku, []);
+      }
+      configurableVariants.get(product.parent_sku).push(product);
+    }
+  }
+  
+  for (const product of commerceProducts) {
+    // Handle configurable products - calculate price from variants
+    if (product.product_type === 'configurable' || (product.sku && product.sku.endsWith('-CONFIG'))) {
+      const variants = configurableVariants.get(product.sku);
+      if (variants && variants.length > 0) {
+        // Calculate min/max prices from variants
+        const variantPrices = variants
+          .map(v => parseFloat(v.price))
+          .filter(p => !isNaN(p) && p > 0);
+        
+        if (variantPrices.length > 0) {
+          const minPrice = Math.min(...variantPrices);
+          
+          // Generate price entries using minimum variant price
+          // ACO will calculate priceRange automatically from variant prices
+          for (const priceBook of priceBooks) {
+            const pbBasePrice = minPrice * priceBook.baseMultiplier;
+            
+            prices.push({
+              sku: product.sku,
+              priceBookId: priceBook.id,
+              regular: roundPrice(pbBasePrice)
+            });
+          }
+        }
+      }
+      continue; // Skip to next product
+    }
+    
+    // Skip products without base prices (simple products only)
     if (!product.price || product.price === '0' || product.price === 0) {
       continue;
     }

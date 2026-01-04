@@ -12,7 +12,7 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 import { SeededRandom } from '../lib/seeded-random.js';
-import { PRODUCT_CATEGORIES, BRANDS, BRANDS_BY_CATEGORY } from '../lib/product-definitions.js';
+import { PRODUCT_CATEGORIES, BRANDS } from '../lib/product-definitions.js';
 import { generateProductDescription, generateShortDescription } from '../lib/description-generator.js';
 import { generateHash, generateUrlKey } from '../lib/product-utils.js';
 import { PROJECT_CONFIG } from '../config/project-config.js';
@@ -30,6 +30,41 @@ const OUTPUT_FILE = join(OUTPUT_DIR, 'datapack.json');
 
 // Track generated SKUs
 const generatedSkus = new Set();
+
+/**
+ * Build a map of subcategory urlKey to subcategory name from category tree
+ * @returns {Map<string, string>} Map of urlKey → subcategory name
+ */
+function buildSubcategoryNameMap() {
+  const map = new Map();
+  const categoryTree = PROJECT_CONFIG.categoryTree;
+  
+  if (categoryTree.children) {
+    for (const parent of categoryTree.children) {
+      if (parent.children) {
+        for (const child of parent.children) {
+          if (child.urlKey && child.name) {
+            map.set(child.urlKey, child.name);
+          }
+        }
+      }
+    }
+  }
+  
+  return map;
+}
+
+// Build subcategory name map once at module load time
+const SUBCATEGORY_NAMES = buildSubcategoryNameMap();
+
+// Map product catalog subcategory keys to category tree urlKeys
+const SUBCATEGORY_KEY_TO_URL_KEY = {
+  'studs': 'metal-studs-track',
+  'ready-mix': 'concrete-foundation',
+  'units': 'hvac-units',
+  'kitchen': 'kitchen-appliances'
+  // Other keys match directly (lumber, windows, nails, shingles, flooring, wiring, water-supply, drywall)
+};
 
 // Progress indicator
 let currentLine = '';
@@ -71,8 +106,8 @@ function generateSKU(category, subcategory, index) {
  * Generate a simple product in canonical format
  */
 function generateCanonicalProduct(template, category, subcategory, index) {
-  const categoryBrands = BRANDS_BY_CATEGORY[subcategory] || BRANDS;
-  const brand = categoryBrands[random.nextInt(0, categoryBrands.length - 1)];
+  // Use generic brands only - these match br_brand attribute options
+  const brand = BRANDS[random.nextInt(0, BRANDS.length - 1)];
   const price = random.nextFloat(template.priceRange[0], template.priceRange[1]);
   
   const sku = generateSKU(category, subcategory, index);
@@ -80,6 +115,13 @@ function generateCanonicalProduct(template, category, subcategory, index) {
   const urlKey = generateUrlKey(productName);
   const categoryName = PRODUCT_CATEGORIES[category]?.name || category;
   const categorySlug = generateUrlKey(categoryName);
+  
+  // Map product catalog subcategory key to category tree urlKey
+  const mappedSubcategory = SUBCATEGORY_KEY_TO_URL_KEY[subcategory] || subcategory;
+  
+  // Get subcategory name from category tree
+  const subcategoryName = SUBCATEGORY_NAMES.get(mappedSubcategory) || subcategory;
+  const subcategorySlug = generateUrlKey(subcategoryName);
   
   // Build canonical product
   const product = {
@@ -102,8 +144,8 @@ function generateCanonicalProduct(template, category, subcategory, index) {
       manageStock: true
     },
     
-    // Categorization (use actual category from product definition)
-    categories: [categorySlug],
+    // Categorization - all-products first, then parent and subcategory slugs
+    categories: ['all-products', categorySlug, `${categorySlug}/${subcategorySlug}`],
     
     // Images
     images: [
@@ -114,9 +156,9 @@ function generateCanonicalProduct(template, category, subcategory, index) {
     ],
     
     // Custom attributes (with br_ prefix)
+    // NOTE: br_product_category removed - native 'categories' attribute replaces it
     attributes: {
       br_brand: brand,
-      br_product_category: PRODUCT_CATEGORIES[category].attributeValue || categoryName,
       br_unit_of_measure: template.uom || 'EA'
     },
     
@@ -175,6 +217,7 @@ function generateProducts() {
 function generateCategories() {
   const categories = [];
   let position = 1;
+  const categoryTree = PROJECT_CONFIG.categoryTree;
   
   // Root category
   categories.push({
@@ -190,21 +233,47 @@ function generateCategories() {
     }
   });
   
-  // Product categories
-  for (const [key, def] of Object.entries(PRODUCT_CATEGORIES)) {
-    const slug = generateUrlKey(def.name);
-    categories.push({
-      id: key,
-      slug,
-      name: def.name,
-      parentId: 'root',
-      description: def.description || `${def.name} products`,
-      isActive: true,
-      position: position++,
-      meta: {
-        includeInMenu: true
+  // Generate categories from category tree (includes subcategories)
+  if (categoryTree.children) {
+    for (const parent of categoryTree.children) {
+      const parentSlug = parent.urlKey || generateUrlKey(parent.name);
+      const parentId = parentSlug; // Use slug as ID
+      
+      // Add parent category
+      categories.push({
+        id: parentId,
+        slug: parentSlug,
+        name: parent.name,
+        parentId: 'root',
+        description: `${parent.name} products`,
+        isActive: true,
+        position: position++,
+        meta: {
+          includeInMenu: true
+        }
+      });
+      
+      // Add subcategories
+      if (parent.children) {
+        for (const child of parent.children) {
+          const childSlug = child.urlKey || generateUrlKey(child.name);
+          const childId = `${parentSlug}/${childSlug}`; // Hierarchical ID
+          
+          categories.push({
+            id: childId,
+            slug: childId, // Full path as slug for ACO routing
+            name: child.name,
+            parentId: parentId,
+            description: `${child.name} products`,
+            isActive: true,
+            position: position++,
+            meta: {
+              includeInMenu: true
+            }
+          });
+        }
       }
-    });
+    }
   }
   
   return categories;

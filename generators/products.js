@@ -6,7 +6,7 @@
  */
 
 import { SeededRandom } from '../lib/seeded-random.js';
-import { PRODUCT_CATEGORIES, BRANDS, BRANDS_BY_CATEGORY, UNITS_OF_MEASURE } from '../lib/product-definitions.js';
+import { PRODUCT_CATEGORIES, BRANDS, UNITS_OF_MEASURE } from '../lib/product-definitions.js';
 import { generateProductDescription, generateShortDescription } from '../lib/description-generator.js';
 import { generateHash, generateUrlKey } from '../lib/product-utils.js';
 import { PROJECT_CONFIG } from '../config/project-config.js';
@@ -16,6 +16,32 @@ const random = new SeededRandom(SEED);
 
 // Track generated SKUs to avoid duplicates
 const generatedSkus = new Set();
+
+/**
+ * Build a map of subcategory urlKey to subcategory name from category tree
+ * @returns {Map<string, string>} Map of urlKey → subcategory name
+ */
+function buildSubcategoryNameMap() {
+  const map = new Map();
+  const categoryTree = PROJECT_CONFIG.categoryTree;
+  
+  if (categoryTree.children) {
+    for (const parent of categoryTree.children) {
+      if (parent.children) {
+        for (const child of parent.children) {
+          if (child.urlKey && child.name) {
+            map.set(child.urlKey, child.name);
+          }
+        }
+      }
+    }
+  }
+  
+  return map;
+}
+
+// Build subcategory name map once at module load time
+const SUBCATEGORY_NAMES = buildSubcategoryNameMap();
 
 /**
  * Generate SKU for simple product
@@ -54,9 +80,8 @@ function generateSKU(category, subcategory, index) {
  * Generate a simple product in Commerce format
  */
 function generateSimpleProduct(template, category, subcategory, index) {
-  // Use category-specific brands if available, otherwise fall back to general brands
-  const categoryBrands = BRANDS_BY_CATEGORY[subcategory] || BRANDS;
-  const brand = categoryBrands[random.nextInt(0, categoryBrands.length - 1)];
+  // Use generic brands only - these match the br_brand attribute options
+  const brand = BRANDS[random.nextInt(0, BRANDS.length - 1)];
   const price = random.nextFloat(template.priceRange[0], template.priceRange[1]);
   
   const sku = generateSKU(category, subcategory, index);
@@ -65,6 +90,13 @@ function generateSimpleProduct(template, category, subcategory, index) {
   
   // Get category name for path
   const categoryName = PRODUCT_CATEGORIES[category]?.name || category;
+  
+  // Get subcategory name from category tree
+  const subcategoryName = SUBCATEGORY_NAMES.get(subcategory) || subcategory;
+  
+  // Build full category path including subcategory
+  // Format: "BuildRight Catalog/Structural Materials/Lumber"
+  const categoryPath = `${PROJECT_CONFIG.project.rootCategoryName}/${categoryName}/${subcategoryName}`;
   
   // Build product object with attributes first
   const product = {
@@ -78,7 +110,7 @@ function generateSimpleProduct(template, category, subcategory, index) {
     status: 1,
     visibility: 4, // Catalog, Search
     tax_class_name: 'Taxable Goods',
-    categories: `${PROJECT_CONFIG.project.rootCategoryName}/${categoryName}`,
+    categories: categoryPath,
     url_key: slug,
     qty: 100,
     is_in_stock: 1,
@@ -88,8 +120,8 @@ function generateSimpleProduct(template, category, subcategory, index) {
     thumbnail: `/${sku.slice(0,1).toLowerCase()}/${sku.slice(1,2).toLowerCase()}/${sku}.jpg`,
     
     // BuildRight custom attributes
+    // NOTE: br_product_category removed - native 'categories' attribute replaces it
     br_brand: brand,
-    br_product_category: PRODUCT_CATEGORIES[category].attributeValue || category,
     br_unit_of_measure: template.uom || 'EA'
   };
   
