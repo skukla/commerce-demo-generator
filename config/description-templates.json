@@ -1,0 +1,136 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "description": "Description templates for product generation. Use {{attribute}} for values, {{#attr}}...{{/attr}} for conditionals."
+  },
+
+  "lumber": {
+    "description": "{{brand}} {{name}} delivers exceptional {{quality_tier}} quality for {{construction_phase}} applications. {{#lumber_dimension}}Actual dimensions: {{lumber_dimension}} x {{lumber_length}}. {{/lumber_dimension}}{{#deck_compatible}}Ideal for deck framing and outdoor structures. {{/deck_compatible}}Kiln-dried for dimensional stability and minimal warping. Meets or exceeds industry standards for residential and commercial construction.",
+    "short": "{{brand}} {{name}} - {{quality_tier}} lumber for {{construction_phase}}. Kiln-dried for stability."
+  },
+
+  "sheathing": {
+    "description": "{{brand}} {{name}} provides superior structural performance and moisture resistance. {{#sheathing_location}}Engineered for {{sheathing_location}} sheathing applications. {{/sheathing_location}}Precision-manufactured for consistent thickness and strength. Tongue-and-groove edges ensure tight joints and easy installation.",
+    "short": "Structural {{sheathing_location}} sheathing with superior strength. Moisture-resistant."
+  },
+
+  "windows": {
+    "description": "{{brand}} {{name}} combines energy efficiency with classic styling. Features {{window_glazing_type}} glazing that blocks harmful UV rays while reducing energy costs. The {{window_material}} frame construction requires minimal maintenance and resists warping in all weather conditions. ENERGY STAR certified for superior thermal performance.",
+    "short": "{{window_glazing_type}} {{window_operation_type}} with {{window_material}} frame. ENERGY STAR certified."
+  },
+
+  "doors": {
+    "description": "{{brand}} {{name}} provides security and style for any entrance. {{#door_material}}Constructed from durable {{door_material}} for long-lasting performance. {{/door_material}}{{#door_style}}{{door_style}} design complements various architectural styles. {{/door_style}}Professional-grade hardware and weatherstripping included.",
+    "short": "{{door_material}} {{door_style}} door. Secure and stylish entrance solution."
+  },
+
+  "nails": {
+    "description": "{{brand}} {{name}} provides secure fastening for {{construction_phase}} applications. {{#fastener_material}}{{fastener_material}} construction resists corrosion and provides lasting hold. {{/fastener_material}}{{#fastener_head_type}}{{fastener_head_type}} head design ensures flush finish. {{/fastener_head_type}}Professional-grade fasteners trusted by contractors.",
+    "short": "{{fastener_material}} nails for {{construction_phase}}. Corrosion-resistant, secure hold."
+  },
+
+  "screws": {
+    "description": "{{brand}} {{name}} delivers superior holding power for {{construction_phase}} applications. {{#fastener_material}}{{fastener_material}} construction provides corrosion resistance. {{/fastener_material}}{{#fastener_drive_type}}{{fastener_drive_type}} drive ensures positive engagement. {{/fastener_drive_type}}Self-drilling tip reduces splitting in wood applications.",
+    "short": "{{fastener_material}} screws with {{fastener_drive_type}} drive. Superior holding power."
+  },
+
+  "bolts": {
+    "description": "{{brand}} {{name}} provides structural fastening for heavy-duty applications. {{#fastener_material}}{{fastener_material}} construction meets or exceeds ASTM standards. {{/fastener_material}}Precision threads ensure consistent torque values. Ideal for structural connections and load-bearing assemblies.",
+    "short": "{{fastener_material}} bolts for structural applications. ASTM compliant."
+  },
+
+  "drywall": {
+    "description": "{{brand}} {{#drywall_thickness}}{{drywall_thickness}}\" {{/drywall_thickness}}drywall provides smooth, professional finish for interior applications. Precision-manufactured gypsum core with heavy-duty paper facing. Tapered edges simplify taping and finishing. Meets ASTM C1396 specifications. Each 4'x8' sheet covers 32 square feet.{{#construction_phase}} Ideal for {{construction_phase}} projects.{{/construction_phase}}",
+    "short": "{{drywall_thickness}}\" drywall for smooth finish. Tapered edges, 32 sq ft coverage."
+  },
+
+  "studs": {
+    "description": "{{brand}} {{name}} provides reliable structural support for wall framing systems. Precision-cut to exact length for consistent quality. Grade-stamped for easy inspection and code compliance. Straight grain minimizes twisting and warping. Ideal for interior partitions and load-bearing walls.",
+    "short": "{{brand}} framing studs. Precision-cut, grade-stamped for code compliance."
+  },
+
+  "insulation": {
+    "description": "{{brand}} {{insulation_type}} delivers {{insulation_r_value}} thermal performance for energy-efficient buildings. Pre-cut batts fit snugly between standard stud spacing. Formaldehyde-free composition ensures healthy indoor air quality. Reduces heating and cooling costs. Fire-resistant treatment provides added safety.",
+    "short": "{{insulation_r_value}} {{insulation_type}}. Formaldehyde-free, easy to install."
+  },
+
+  "flooring": {
+    "description": "{{brand}} {{name}} transforms any space with {{flooring_material}} beauty. {{#flooring_finish}}{{flooring_finish}} finish provides lasting protection. {{/flooring_finish}}{{#flooring_thickness}}{{flooring_thickness}} thickness ensures durability. {{/flooring_thickness}}Easy installation with click-lock or nail-down options. Backed by comprehensive warranty.",
+    "short": "{{flooring_material}} flooring with {{flooring_finish}} finish. Durable and beautiful."
+  },
+
+  "paint": {
+    "description": "{{brand}} {{name}} delivers exceptional coverage and color retention. {{#paint_finish}}{{paint_finish}} finish provides the perfect sheen. {{/paint_finish}}{{#paint_coverage}}Covers up to {{paint_coverage}} per gallon. {{/paint_coverage}}Low-VOC formula for healthier indoor air. Soap and water cleanup.",
+    "short": "{{paint_finish}} paint with excellent coverage. Low-VOC, easy cleanup."
+  },
+
+  "lighting": {
+    "description": "{{brand}} {{name}} provides efficient illumination for any space. {{#lighting_type}}{{lighting_type}} technology delivers energy savings. {{/lighting_type}}{{#lighting_lumens}}{{lighting_lumens}} lumens of bright, even light. {{/lighting_lumens}}{{#lighting_color_temp}}{{lighting_color_temp}} color temperature suits various applications.{{/lighting_color_temp}}",
+    "short": "{{lighting_type}} lighting - {{lighting_lumens}} lumens, {{lighting_color_temp}}."
+  },
+
+  "plumbing": {
+    "description": "{{brand}} {{name}} ensures reliable water delivery and drainage. {{#plumbing_material}}{{plumbing_material}} construction provides corrosion resistance. {{/plumbing_material}}Meets or exceeds plumbing code requirements. Professional-grade fittings ensure leak-free connections. Backed by manufacturer warranty.",
+    "short": "{{plumbing_material}} plumbing. Code-compliant, leak-free connections."
+  },
+
+  "concrete": {
+    "description": "{{brand}} {{concrete_type}} delivers reliable strength for {{construction_phase}} applications. Precision-blended aggregates and Portland cement ensure consistent performance. High early strength development allows faster construction. Meets ASTM C387 specifications. Each bag yields approximately 0.45 cubic feet.",
+    "short": "{{concrete_type}} mix for {{construction_phase}}. ASTM C387 compliant."
+  },
+
+  "rebar": {
+    "description": "{{brand}} {{name}} provides tensile reinforcement for concrete structures. High-strength steel resists deformation under load. Deformed surface pattern ensures superior concrete bond. Meets ASTM A615 Grade 60 specifications. Ideal for footings, foundations, and structural concrete.",
+    "short": "{{brand}} rebar - ASTM A615 Grade 60. Superior concrete bond."
+  },
+
+  "shingles": {
+    "description": "{{brand}} {{name}} offers superior weather protection with architectural styling. {{#roofing_material}}Heavy-duty {{roofing_material}} construction provides excellent tear strength. {{/roofing_material}}Wind-resistant design withstands high winds. Class A fire rating delivers maximum protection. Algae-resistant granules prevent staining.",
+    "short": "{{roofing_material}} shingles - Class A fire rated, wind resistant."
+  },
+
+  "underlayment": {
+    "description": "{{brand}} {{name}} provides essential moisture protection beneath finished surfaces. {{#underlayment_material}}{{underlayment_material}} construction ensures durability. {{/underlayment_material}}Vapor barrier properties prevent moisture damage. Easy installation with overlap seams. Compatible with various flooring and roofing systems.",
+    "short": "{{underlayment_material}} underlayment. Moisture protection, easy installation."
+  },
+
+  "siding": {
+    "description": "{{brand}} {{name}} enhances curb appeal while protecting your structure. {{#siding_material}}{{siding_material}} construction provides lasting durability. {{/siding_material}}{{#siding_style}}{{siding_style}} profile complements various architectural styles. {{/siding_style}}Low maintenance finish resists fading and weathering.",
+    "short": "{{siding_material}} {{siding_style}} siding. Low maintenance, weather resistant."
+  },
+
+  "decking": {
+    "description": "{{brand}} {{name}} creates beautiful, durable outdoor living spaces. {{#decking_material}}{{decking_material}} construction resists rot, insects, and weather. {{/decking_material}}Slip-resistant surface ensures safety. Low maintenance design - no staining or sealing required. Backed by comprehensive warranty.",
+    "short": "{{decking_material}} decking. Weather-resistant, low maintenance."
+  },
+
+  "safety": {
+    "description": "{{brand}} {{name}} provides essential protection on the job site. {{#safety_rating}}Meets {{safety_rating}} safety standards. {{/safety_rating}}Durable construction withstands demanding work environments. Comfortable design encourages consistent use. OSHA compliant for workplace safety requirements.",
+    "short": "{{brand}} safety equipment. {{safety_rating}} rated, OSHA compliant."
+  },
+
+  "electrical_boxes": {
+    "description": "{{brand}} {{name}} provides safe, code-compliant electrical connections. {{#electrical_material}}{{electrical_material}} construction ensures durability. {{/electrical_material}}Multiple knockout options for flexible wiring configurations. UL listed for safety compliance. Meets NEC requirements for residential and commercial installations.",
+    "short": "{{electrical_material}} electrical box. UL listed, NEC compliant."
+  },
+
+  "wiring": {
+    "description": "{{brand}} {{name}} delivers safe, reliable electrical connections. {{#wire_gauge}}{{wire_gauge}} gauge conductor sized for appropriate amperage. {{/wire_gauge}}{{#wire_type}}{{wire_type}} insulation provides protection. {{/wire_type}}UL listed and NEC compliant. Color-coded for easy identification.",
+    "short": "{{wire_gauge}} gauge {{wire_type}} wire. UL listed, color-coded."
+  },
+
+  "switches": {
+    "description": "{{brand}} {{name}} provides reliable electrical control. {{#switch_type}}{{switch_type}} operation for convenient control. {{/switch_type}}Professional-grade components ensure long life. UL listed for safety. Easy installation with standard wiring. Available in multiple colors to match décor.",
+    "short": "{{switch_type}} switch. UL listed, easy installation."
+  },
+
+  "hvac": {
+    "description": "{{brand}} {{name}} provides efficient climate control for comfort and energy savings. {{#hvac_type}}{{hvac_type}} technology delivers reliable performance. {{/hvac_type}}{{#hvac_efficiency}}{{hvac_efficiency}} efficiency rating reduces operating costs. {{/hvac_efficiency}}Professional installation recommended. Backed by manufacturer warranty.",
+    "short": "{{hvac_type}} HVAC - {{hvac_efficiency}} efficiency. Energy-saving climate control."
+  },
+
+  "default": {
+    "description": "{{brand}} {{name}} delivers professional-grade performance{{#construction_phase}} for {{construction_phase}} applications{{/construction_phase}}. Engineered for reliability and long-term performance. Meets or exceeds industry standards for quality and safety.",
+    "short": "{{name}}. Professional quality, reliable performance."
+  }
+}
