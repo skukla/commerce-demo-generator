@@ -179,14 +179,22 @@ function generateCanonicalProduct(template, category, subcategory, index) {
   const sku = generateSKU(category, subcategory, index);
   const productName = `${brand} ${template.name}`;
   const urlKey = generateUrlKey(productName);
+  
+  // Build product-like object for description generation
+  // (needs br_brand and name before we can generate descriptions)
+  const productForDesc = {
+    br_brand: brand,
+    name: productName,
+    ...template // Include all template attributes (br_* attributes)
+  };
 
   const product = {
     id: sku,
     sku,
     type: 'simple',
     name: productName,
-    description: generateProductDescription(template, brand),
-    shortDescription: generateShortDescription(template, brand),
+    description: generateProductDescription(productForDesc, template, category, subcategory),
+    shortDescription: generateShortDescription(productForDesc, template, category, subcategory),
     urlKey,
     price: parseFloat(price.toFixed(2)),
     weight: parseFloat(template.weight || random.nextInt(1, 10)),
@@ -254,6 +262,13 @@ export function generateCanonicalConfigurable(configDef, categoryKey, subcategor
 
   // Build configurable attributes list (dimension keys with br_ prefix)
   const configurableAttributes = Object.keys(configDef.dimensions).map(key => `br_${key}`);
+  
+  // Build product-like object for description generation
+  const productForDesc = {
+    br_brand: brand,
+    name: productName,
+    ...configDef // Include all config attributes
+  };
 
   const product = {
     id: sku,
@@ -261,7 +276,7 @@ export function generateCanonicalConfigurable(configDef, categoryKey, subcategor
     type: 'configurable',
     name: productName,
     description: `${brand} ${configDef.name} - Available in multiple configurations. ` +
-      generateProductDescription({ name: configDef.name, priceRange: [0, 0] }, brand),
+      generateProductDescription(productForDesc, configDef, categoryKey, subcategoryKey),
     shortDescription: `${configDef.name} configurable - Choose from multiple size options`,
     urlKey,
     price: 0, // Configurable parents have price 0; variants have actual prices
@@ -321,6 +336,14 @@ export function generateCanonicalVariant(parentSku, dimensions, configDef, categ
   const price = dimValues.length > 0
     ? basePrice + dimValues.reduce((sum, val) => sum + val, 0)
     : basePrice;
+  
+  // Build product-like object for description generation
+  const productForDesc = {
+    br_brand: brand,
+    name: productName,
+    ...configDef, // Include all config attributes
+    ...dimensions // Include dimension values
+  };
 
   const product = {
     id: sku,
@@ -328,8 +351,8 @@ export function generateCanonicalVariant(parentSku, dimensions, configDef, categ
     type: 'simple',
     parentSku, // Reference to parent configurable
     name: productName,
-    description: generateProductDescription({ name: configDef.name, priceRange: [price, price] }, brand),
-    shortDescription: generateShortDescription({ name: configDef.name, priceRange: [price, price] }, brand),
+    description: generateProductDescription(productForDesc, configDef, categoryKey, subcategoryKey),
+    shortDescription: generateShortDescription(productForDesc, configDef, categoryKey, subcategoryKey),
     urlKey,
     price: parseFloat(price.toFixed(2)),
     weight: dimValues.length > 0

@@ -111,12 +111,8 @@ function transformToAcoProduct(commerceProduct, categoryCodeMap = null, configur
   }
   
   // Add other important attributes
-  if (commerceProduct.price) {
-    acoProduct.attributes.push({
-      code: 'price',
-      values: [commerceProduct.price.toString()]
-    });
-  }
+  // Note: price is NOT added as an attribute - ACO has native pricing via price books
+  // This avoids redundancy and keeps price management centralized
   
   if (commerceProduct.weight) {
     acoProduct.attributes.push({
@@ -343,14 +339,18 @@ function mapToACODataType(frontendInput) {
 
 /**
  * Map Commerce attribute flags to ACO visibility array
+ * Respects is_visible_on_front to control PDP display
  */
 function mapToACOVisibility(attr) {
   const visibility = [];
   
-  // Always show on product detail
-  visibility.push('PRODUCT_DETAIL');
+  // Show on product detail only if visible on front
+  // This is the standard Commerce pattern for controlling storefront display
+  if (attr.is_visible_on_front === 1) {
+    visibility.push('PRODUCT_DETAIL');
+  }
   
-  // Show in product listing if visible on front
+  // Show in product listing if visible on front or used in listing
   if (attr.is_visible_on_front === 1 || attr.used_in_product_listing === 1) {
     visibility.push('PRODUCT_LISTING');
   }
@@ -738,7 +738,7 @@ async function loadCanonicalForAco() {
     attribute: {
       attribute_id: attr.code,
       attribute_code: attr.code,
-      frontend_label: attr.label,
+      default_frontend_label: attr.label,  // Must match what extractMetadata expects
       frontend_input: attr.type,
       is_required: attr.required ? 1 : 0,
       is_searchable: attr.searchable ? 1 : 0,
