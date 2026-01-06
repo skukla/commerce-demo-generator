@@ -109,13 +109,13 @@ npm run generate:commerce
 ### Data Flow
 
 ```
-Products (266 SKUs)
+Products (281 SKUs: 146 simple, 15 configurable, 120 variants)
     ↓
 Inventory Sources (4 locations)
     ↓
-Source Items (1,064 records)
+Source Items (records per product per source)
     └─> Each product × each source = quantity assignment
-    
+
 Customers (5 personas)
     ↓
 Companies (4 B2B organizations)

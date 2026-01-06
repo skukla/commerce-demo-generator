@@ -27,48 +27,54 @@ const SAMPLE_DATA_DIR = join(__dirname, '../../config/sample-data');
 /**
  * Default company definitions based on BuildRight personas
  */
+/**
+ * Company definitions matching demo-customers.json company field
+ * IMPORTANT: company_name must match exactly with demo-customers.json "company" field
+ * Also includes admin_email to link customer as company admin
+ */
 const DEFAULT_COMPANIES = [
   {
-    company_name: 'Sunset Valley Homes',
-    company_email: 'info@sunsetvalleyhomes.example.com',
-    legal_name: 'Sunset Valley Homes, LLC',
+    company_name: 'Sunbelt Homes',
+    admin_email: 'sarah.martinez@sunbelthomes.com', // Links to Sarah Martinez
+    company_email: 'info@sunbelthomes.com',
+    legal_name: 'Sunbelt Homes, LLC',
     vat_tax_id: '12-3456789',
-    reseller_id: 'SVH-2024',
-    comment: 'Regional production builder - 20-30 homes per year in Desert Ridge subdivision',
-    street: ['1500 Desert Ridge Parkway'],
+    reseller_id: 'SBH-2024',
+    comment: 'Regional production builder - 20-30 homes per year',
+    street: ['2847 N Central Ave', 'Suite 100'],
     city: 'Phoenix',
     country_id: 'US',
     region: 'Arizona',
     region_id: 4,
-    postcode: '85054',
-    telephone: '(602) 555-0150',
-    customer_group_id: 2, // Commercial-Tier2
+    postcode: '85004',
+    telephone: '(602) 555-0101',
+    customer_group_code: 'Production-Builder', // Resolved to ID at import time
     sales_representative_id: null,
     reject_reason: null,
     rejected_at: null,
     super_user_id: null, // Will be linked to customer after creation
     extension_attributes: {
-      // Company type/tier for BuildRight demo
-      company_type: 'regional_builder',
+      company_type: 'production_builder',
       annual_volume: '20-30 homes',
-      tier: 'Commercial-Tier2'
+      tier: 'Production-Builder'
     }
   },
   {
-    company_name: 'Johnson Custom Builders',
-    company_email: 'info@johnsoncustombuilders.example.com',
-    legal_name: 'Johnson Custom Builders, Inc.',
+    company_name: 'Johnson Construction',
+    admin_email: 'marcus.johnson@johnsonconstruction.com', // Links to Marcus Johnson
+    company_email: 'info@johnsonconstruction.com',
+    legal_name: 'Johnson Construction, Inc.',
     vat_tax_id: '23-4567890',
-    reseller_id: 'JCB-2024',
+    reseller_id: 'JC-2024',
     comment: 'General contractor - 3-5 custom homes per year, $800K-$1.5M each',
-    street: ['789 Mountain View Drive'],
+    street: ['1550 Wewatta St'],
     city: 'Denver',
     country_id: 'US',
     region: 'Colorado',
-    region_id: 6,
+    region_id: 13,
     postcode: '80202',
-    telephone: '(303) 555-0200',
-    customer_group_id: 3, // Residential-Builder
+    telephone: '(303) 555-0102',
+    customer_group_code: 'Trade-Professional', // Resolved to ID at import time
     sales_representative_id: null,
     reject_reason: null,
     rejected_at: null,
@@ -76,24 +82,25 @@ const DEFAULT_COMPANIES = [
     extension_attributes: {
       company_type: 'general_contractor',
       annual_volume: '3-5 homes',
-      tier: 'Residential-Builder'
+      tier: 'Trade-Professional'
     }
   },
   {
-    company_name: 'Chen Kitchen & Bath Remodeling',
-    company_email: 'info@chenkitchenbath.example.com',
-    legal_name: 'Chen Kitchen & Bath Remodeling, LLC',
+    company_name: 'Chen Design Build',
+    admin_email: 'lisa.chen@chendesignbuild.com', // Links to Lisa Chen
+    company_email: 'info@chendesignbuild.com',
+    legal_name: 'Chen Design Build, LLC',
     vat_tax_id: '34-5678901',
-    reseller_id: 'CKB-2024',
+    reseller_id: 'CDB-2024',
     comment: 'Remodeling contractor - 30-40 kitchen/bath remodels per year, $20K-$60K each',
-    street: ['456 Trade Center Boulevard'],
+    street: ['401 S Tryon St', 'Suite 250'],
     city: 'Charlotte',
     country_id: 'US',
     region: 'North Carolina',
-    region_id: 37,
+    region_id: 34,
     postcode: '28202',
-    telephone: '(704) 555-0300',
-    customer_group_id: 3, // Residential-Builder
+    telephone: '(704) 555-0103',
+    customer_group_code: 'Trade-Professional', // Resolved to ID at import time
     sales_representative_id: null,
     reject_reason: null,
     rejected_at: null,
@@ -101,32 +108,33 @@ const DEFAULT_COMPANIES = [
     extension_attributes: {
       company_type: 'remodeling_contractor',
       annual_volume: '30-40 projects',
-      tier: 'Residential-Builder'
+      tier: 'Trade-Professional'
     }
   },
   {
     company_name: 'Precision Lumber & Supply',
-    company_email: 'info@precisionlumber.example.com',
+    admin_email: 'kevin.rodriguez@precisionlumber.com', // Links to Kevin Rodriguez
+    company_email: 'info@precisionlumber.com',
     legal_name: 'Precision Lumber & Supply, Inc.',
     vat_tax_id: '45-6789012',
     reseller_id: 'PLS-2024',
-    comment: 'Regional hardware/lumber chain - 3 locations in Texas',
-    street: ['4521 South Congress Avenue'],
-    city: 'Austin',
+    comment: 'Regional hardware/lumber chain - 3 locations',
+    street: ['4302 S Pine St', 'Unit 12'],
+    city: 'Tacoma',
     country_id: 'US',
-    region: 'Texas',
-    region_id: 57,
-    postcode: '78745',
-    telephone: '(512) 555-0100',
-    customer_group_id: 4, // Retail-Chain-Buyer
+    region: 'Washington',
+    region_id: 62,
+    postcode: '98409',
+    telephone: '(253) 555-0105',
+    customer_group_code: 'Wholesale-Reseller', // Resolved to ID at import time
     sales_representative_id: null,
     reject_reason: null,
     rejected_at: null,
     super_user_id: null,
     extension_attributes: {
-      company_type: 'retail_chain',
-      annual_volume: '15 stores',
-      tier: 'Retail-Chain-Buyer'
+      company_type: 'wholesale_reseller',
+      annual_volume: '3 locations',
+      tier: 'Wholesale-Reseller'
     }
   }
 ];
@@ -313,7 +321,7 @@ export function transformCompaniesToAccsFormat(companies) {
         region_id: company.region_id || null,
         postcode: company.postcode || '',
         telephone: company.telephone || '',
-        customer_group_id: company.customer_group_id || 1,
+        customer_group_code: company.customer_group_code || 'General', // Resolved to ID at import time
         sales_representative_id: company.sales_representative_id || null,
         reject_reason: company.reject_reason || null,
         rejected_at: company.rejected_at || null,

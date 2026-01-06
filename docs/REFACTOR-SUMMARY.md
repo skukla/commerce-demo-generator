@@ -9,7 +9,7 @@
 **New File:** `generators/generate-canonical.js`
 - Generates platform-neutral JSON datapack
 - Output: `buildright-data/generated/canonical/datapack.json`
-- **Result:** 146 products, 13 categories, 3 attributes
+- **Result:** 281 products (146 simple, 15 configurable, 120 variants), 13 categories, 3 attributes
 
 **Documentation:**
 - `docs/CANONICAL-FORMAT.md` - Complete schema reference
@@ -21,7 +21,8 @@
 - Changed from generating products internally to reading from canonical
 - Added `loadProductsFromCanonical()` function
 - Added transformation functions for visibility, categories, images
-- **Result:** Successfully loads 146 products from canonical
+- Removed `generateVariants` import - all products now flow through canonical
+- **Result:** Successfully loads 281 products from canonical (simple, configurable, and variants)
 
 **Backup:** `generators/generate-commerce.js.backup`
 
@@ -31,7 +32,8 @@
 - Changed from reading Commerce datapack to reading canonical
 - Added `loadCanonicalForAco()` function
 - Converts canonical → Commerce-like format → ACO format
-- **Result:** Successfully generates 146 products, 36 categories, 3 attributes
+- Removed hybrid approach that previously read Commerce products file
+- **Result:** Successfully generates 281 products (with configurable/variant relationships), 36 categories, 3 attributes
 
 **Backup:** `generators/generate-aco.js.backup`
 
@@ -92,7 +94,7 @@ Product Definitions → generate-canonical → Canonical JSON
 
 ### Canonical Generator
 ```
-✔ Generated 146 products
+✔ Generated 281 products (146 simple, 15 configurable, 120 variants)
 ✔ Generated 13 categories
 ✔ Generated 3 attributes
 ✔ Wrote datapack to buildright-data/generated/canonical/datapack.json
@@ -100,19 +102,19 @@ Product Definitions → generate-canonical → Canonical JSON
 
 ### Commerce Generator
 ```
-✔ Loaded 146 products from canonical
-✔ Generated 15 configurables with 120 variants
+✔ Loaded 281 products from canonical (all types: simple, configurable, variants)
 ✔ Generated 64 attributes with 64 assignments
+✔ Product types: 146 simple, 15 configurable, 120 variants
 ```
 
 ### ACO Generator
 ```
-✔ Read 146 products from canonical datapack
+✔ Read 281 products from canonical datapack
 ✔ Transformed 36 categories
-✔ Transformed 146 simple, 0 configurable, 0 variants
+✔ Transformed 146 simple, 15 configurable, 120 variants
 ✔ Extracted 3 attributes
 ✔ Generated 5 price books
-✔ Generated 730 prices (730 with tiers)
+✔ Generated prices for all products with tier pricing
 ```
 
 ### End-to-End Test
@@ -186,8 +188,8 @@ No need to touch Commerce or ACO generators!
 
 ## Next Steps (Future Enhancements)
 
-1. **Add Configurable Products to Canonical** - Currently only simple products
-2. **Add Validation** - JSON Schema validation for canonical format
+1. ~~**Add Configurable Products to Canonical**~~ - **COMPLETE** (January 2026): All 281 products (simple, configurable, variants) now flow through canonical datapack
+2. ~~**Add Validation**~~ - **COMPLETE** (January 2026): Added `lib/canonical-validator.js` with validation utilities
 3. **Add More Platforms** - Shopify, BigCommerce, etc.
 4. **Optimize Performance** - Parallel generation for large catalogs
 5. **Add Tests** - Unit tests for transformation functions

@@ -140,12 +140,12 @@ function transformToAcoProduct(commerceProduct, categoryCodeMap = null, configur
     }
 
     if (categorySlugs.length > 0) {
-      const { category, subcategory } = extractCategorySlugs(categorySlugs);
+      const { categories, subcategory } = extractCategorySlugs(categorySlugs);
 
-      if (category) {
+      if (categories && categories.length > 0) {
         acoProduct.attributes.push({
           code: 'category',
-          values: [category]
+          values: categories
         });
       }
 
@@ -264,19 +264,11 @@ function transformToAcoVariant(commerceVariant, configurableAttrsMap = new Map()
   // Transform as a standard product first
   const acoProduct = transformToAcoProduct(commerceVariant, categoryCodeMap, null, slugToName);
   
-  // Control variant visibility for import/delete operations
-  // DEFAULT: Variants are generated as visible for verification during import
+  // Variant visibility: visible by default for import verification
   // Set VARIANT_INITIAL_VISIBLE=false to generate as invisible (for testing)
-  // The import script will toggle them to invisible after verification
-  const variantInitialVisible = process.env.VARIANT_INITIAL_VISIBLE !== 'false';
-  
-  if (variantInitialVisible) {
-    // Make variants visible for verification during import
-    acoProduct.visibleIn = ['CATALOG', 'SEARCH'];
-  } else {
-    // Default: variants are invisible (not shown as standalone products)
-    acoProduct.visibleIn = [];
-  }
+  acoProduct.visibleIn = process.env.VARIANT_INITIAL_VISIBLE === 'false'
+    ? []
+    : ['CATALOG', 'SEARCH'];
   
   // Add variant-specific fields required by ACO schema
   // Per ACO TypeScript SDK: interface ProductLink { type: string; sku: string; }
@@ -309,26 +301,26 @@ function transformToAcoVariant(commerceVariant, configurableAttrsMap = new Map()
 }
 
 /**
- * Separate products by type
+ * Separate products by type into standalone simples, configurables, and variants
  */
 function separateByType(products) {
   const simples = [];
   const configurables = [];
   const variants = [];
-  
+
   for (const product of products) {
-    if (product.product_type === 'simple') {
-      // Check if it's a variant (has configurable_variations or parent)
-      if (product.configurable_variations || product.parent_sku) {
+    if (product.product_type === 'configurable') {
+      configurables.push(product);
+    } else if (product.product_type === 'simple') {
+      // Variants have parent_sku; standalone simples do not
+      if (product.parent_sku) {
         variants.push(product);
       } else {
         simples.push(product);
       }
-    } else if (product.product_type === 'configurable') {
-      configurables.push(product);
     }
   }
-  
+
   return { simples, configurables, variants };
 }
 
@@ -485,24 +477,30 @@ function buildCategoryNameMaps(categoryTree) {
  */
 function extractCategorySlugs(categorySlugs) {
   if (!categorySlugs || categorySlugs.length === 0) {
-    return { category: null, subcategory: null };
+    return { categories: [], subcategory: null };
   }
 
-  // Find the deepest category path (most specific)
-  const deepestPath = categorySlugs.reduce((longest, current) =>
-    current.length > longest.length ? current : longest
-  , categorySlugs[0]);
+  // Collect ALL unique top-level categories (first segment of each path)
+  // This includes aggregate categories like "all-products" AND specific categories like "structural-materials"
+  const topLevelCategories = new Set();
+  let deepestPath = categorySlugs[0];
 
-  // Parse the path: "structural-materials/lumber" -> ["structural-materials", "lumber"]
+  for (const path of categorySlugs) {
+    // Get first segment (top-level category)
+    const firstSegment = path.split('/')[0];
+    topLevelCategories.add(firstSegment);
+
+    // Track deepest path for subcategory extraction
+    if (path.length > deepestPath.length) {
+      deepestPath = path;
+    }
+  }
+
+  // Subcategory is the last part of the deepest path if it has multiple levels
   const pathParts = deepestPath.split('/');
-
-  // Category is always the first part (top-level slug)
-  const category = pathParts[0];
-
-  // Subcategory is the last part if there are multiple levels (leaf slug)
   const subcategory = pathParts.length > 1 ? pathParts[pathParts.length - 1] : null;
 
-  return { category, subcategory };
+  return { categories: Array.from(topLevelCategories), subcategory };
 }
 
 /**
@@ -549,61 +547,38 @@ function extractMetadata(commerceAttributes) {
  */
 function transformToAcoCategories(categoryTree) {
   const categories = [];
-  const categoryMap = new Map(); // Track codes for building slugs
-  
+  const acoConfig = PROJECT_CONFIG.project.aco;
+
   /**
    * Recursively flatten category tree
-   * @param {Object} node - Category node
-   * @param {string} slugPath - Accumulated slug path (hierarchy via slug)
-   * 
-   * ACO Category Schema (v1.0.0):
-   * - slug: REQUIRED - hierarchical path (e.g., "men/clothing/pants")
-   * - source: REQUIRED - { locale: "en-US" }
-   * - name: REQUIRED - display name
-   * - families: OPTIONAL - array of product family identifiers
-   * 
-   * REMOVED from schema (no longer supported):
-   * - code (use slug instead)
-   * - description (not supported)
-   * - active (not supported)
-   * - parentId (hierarchy via slug path)
+   * ACO Category Schema v1.0.0: slug (hierarchical path), source, name, families
    */
   function flattenCategory(node, slugPath = '') {
     const code = node.urlKey || slugify(node.name);
     const currentSlug = slugPath ? `${slugPath}/${code}` : code;
-    
-    // Get ACO configuration defaults from project config
-    const acoConfig = PROJECT_CONFIG.project.aco;
-    
-    // ACO Category Schema v1.0.0 - ONLY these fields are allowed
-    const acoCategory = {
-      slug: currentSlug, // REQUIRED - hierarchical path represents parent-child
-      source: {
-        locale: acoConfig.locale
-      },
-      name: node.name, // REQUIRED - display name
-      families: ['default'] // REQUIRED for navigation query - associates category with catalog family
-    };
-    
-    categories.push(acoCategory);
-    categoryMap.set(code, currentSlug);
-    
-    // Process children - hierarchy is represented via slug path
+
+    categories.push({
+      slug: currentSlug,
+      source: { locale: acoConfig.locale },
+      name: node.name,
+      families: ['default']
+    });
+
     if (node.children && node.children.length > 0) {
       for (const child of node.children) {
-        flattenCategory(child, currentSlug); // Pass current slug as parent path
+        flattenCategory(child, currentSlug);
       }
     }
   }
-  
+
   // Start with root node's children
   if (categoryTree.children && categoryTree.children.length > 0) {
     for (const child of categoryTree.children) {
-      flattenCategory(child, null, '');
+      flattenCategory(child, '');
     }
   }
-  
-  return { categories, categoryMap };
+
+  return categories;
 }
 
 /**
@@ -714,14 +689,21 @@ function extractCategoryCodes(productCategories, categoryCodeMap, productSlug) {
 }
 
 /**
- * Load canonical datapack and Commerce products for ACO transformation
- * Hybrid approach: Simple products from canonical, configurable/variants from Commerce
+ * Load canonical datapack for ACO transformation
+ *
+ * Canonical datapack is the SINGLE SOURCE OF TRUTH for ALL products:
+ * - Simple products (standalone)
+ * - Configurable products (parents with variants array)
+ * - Variant products (simple products with parentSku reference)
+ *
+ * No longer reads Commerce products file - all product data comes from canonical.
  */
 async function loadCanonicalForAco() {
   const canonical = JSON.parse(await fs.readFile(CANONICAL_DATAPACK, 'utf-8'));
-  
-  // Convert canonical products to Commerce-like format
-  const canonicalProducts = canonical.products.map(product => ({
+
+  // Convert ALL canonical products to Commerce-like format
+  // This includes simple, configurable, and variant products
+  const commerceLikeProducts = canonical.products.map(product => ({
     sku: product.sku,
     product_type: product.type,
     name: product.name,
@@ -738,23 +720,19 @@ async function loadCanonicalForAco() {
     qty: product.stock.qty,
     is_in_stock: product.stock.inStock ? 1 : 0,
     manage_stock: product.stock.manageStock ? 1 : 0,
+    // Handle configurable products - map variants and configurableAttributes from canonical
+    ...(product.type === 'configurable' && product.variants && {
+      configurable_variations: product.variants.join(','),
+      configurable_attributes: product.configurableAttributes?.join(',') || ''
+    }),
+    // Handle variant products - map parentSku from canonical
+    ...(product.parentSku && { parent_sku: product.parentSku }),
     // Flatten attributes to Commerce style
     ...flattenAttributes(product.attributes)
   }));
-  
-  // Also read Commerce products to get configurable products and variants
-  // (These are not yet in canonical format)
-  const COMMERCE_PRODUCTS_PATH = join(PROJECT_CONFIG.paths.outputCommerce, 'data/accs/accs_products.json');
-  const commerceData = JSON.parse(await fs.readFile(COMMERCE_PRODUCTS_PATH, 'utf-8'));
-  const commerceProducts = commerceData.source.items;
-  
-  // Extract configurable products and variants from Commerce
-  const configurables = commerceProducts.filter(p => p.product_type === 'configurable');
-  const variants = commerceProducts.filter(p => p.product_type === 'simple' && p.sku.includes('-VAR-'));
-  
-  // Combine: canonical simple products + Commerce configurable products + Commerce variants
-  const commerceLikeProducts = [...canonicalProducts, ...configurables, ...variants];
-  
+
+  // NO Commerce file read - canonical is the single source of truth
+
   // Convert canonical attributes to Commerce-like format
   const commerceLikeAttributes = canonical.attributes.map(attr => ({
     attribute: {
@@ -864,7 +842,7 @@ async function transformForAco() {
     // Step 2: Transform categories to ACO format
     updateLine('📦 Transforming categories...');
     const categoryTree = PROJECT_CONFIG.categoryTree;
-    const { categories: acoCategories, categoryMap } = transformToAcoCategories(categoryTree);
+    const acoCategories = transformToAcoCategories(categoryTree);
     const categoryCodeMap = buildCategoryCodeMap(categoryTree);
     // Build slug-to-name map for Dyson pattern (category/subcategory with display names)
     const { slugToName } = buildCategoryNameMaps(categoryTree);

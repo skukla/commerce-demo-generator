@@ -68,15 +68,15 @@ The generator is **100% generic**:
 
 ```
 buildright-data/definitions/*.json
-  ↓ npm run generate:commerce
-commerce-demo-generator/scripts/generators/*.js
-  ↓ 
-buildright-data/generated/commerce/*.json
-  ↓ npm run generate:aco
-commerce-demo-generator/scripts/generators/generate-aco.js
-  ↓
-buildright-data/generated/aco/*.json
+  ↓ npm run generate:canonical
+buildright-data/generated/canonical/datapack.json (281 products: simple, configurable, variants)
+  ↓                    ↓
+generate-commerce    generate-aco
+  ↓                    ↓
+Commerce JSON        ACO JSON
 ```
+
+**Key principle:** Both Commerce and ACO generators read from the canonical datapack, ensuring a true single source of truth for all 281 products.
 
 ---
 

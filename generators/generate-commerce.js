@@ -13,8 +13,7 @@
 
 import { fileURLToPath } from 'url';
 import { dirname, resolve, join } from 'path';
-import { existsSync, mkdirSync, writeFileSync, readFileSync, readdirSync, rmSync, createWriteStream } from 'fs';
-import { execSync } from 'child_process';
+import { existsSync, mkdirSync, writeFileSync, readFileSync, rmSync } from 'fs';
 import chalk from 'chalk';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -23,9 +22,8 @@ const __dirname = dirname(__filename);
 // Import generators
 import { generateStores } from './stores.js';
 import { generateCustomerGroups } from './customer-groups.js';
-import { generateAttributes, generateAttributeOptions } from './attributes.js';
-import { generateProducts } from './products.js';
-import { generateVariants } from './product-variants.js';
+import { generateAttributes } from './attributes.js';
+// NOTE: generateVariants import REMOVED - all products now come from canonical datapack
 import { generateCustomersWithDetails } from './customers.js';
 import { PROJECT_CONFIG } from '../config/project-config.js';
 import { 
@@ -73,7 +71,7 @@ function pluralize(count, singular, plural = null) {
 /**
  * Write JSON file with pretty formatting
  */
-function writeJsonFile(filePath, data, description, countField = null) {
+function writeJsonFile(filePath, data, description) {
   const jsonContent = JSON.stringify(data, null, 4);
   writeFileSync(filePath, jsonContent, 'utf8');
   updateLine(chalk.green(`✔ Generated ${description}`));
@@ -94,17 +92,18 @@ function ensureDir(dirPath) {
 
 /**
  * Read canonical datapack and transform products to Commerce format
+ * Handles all product types: simple, configurable, and variants
  */
 function loadProductsFromCanonical() {
   const canonicalPath = resolve(__dirname, '../../buildright-data/generated/canonical/datapack.json');
-  
+
   if (!existsSync(canonicalPath)) {
     throw new Error(`Canonical datapack not found at ${canonicalPath}. Run 'npm run generate:canonical' first.`);
   }
-  
+
   const canonical = JSON.parse(readFileSync(canonicalPath, 'utf8'));
   const products = [];
-  
+
   for (const product of canonical.products) {
     // Transform canonical to Commerce format
     const commerceProduct = {
@@ -122,18 +121,35 @@ function loadProductsFromCanonical() {
       url_key: product.urlKey,
       description: product.description,
       short_description: product.shortDescription,
-      
+
       // Stock
       qty: product.stock.qty,
       is_in_stock: product.stock.inStock ? 1 : 0,
       manage_stock: product.stock.manageStock ? 1 : 0,
-      
+
       // Images
       image: mapCanonicalImagePath(product.images[0]?.file),
       small_image: mapCanonicalImagePath(product.images[0]?.file),
       thumbnail: mapCanonicalImagePath(product.images[0]?.file),
     };
-    
+
+    // Handle configurable products
+    if (product.type === 'configurable') {
+      // Convert variants array to comma-separated SKUs
+      if (product.variants && product.variants.length > 0) {
+        commerceProduct.configurable_variations = product.variants.join(',');
+      }
+      // Convert configurableAttributes array to comma-separated attribute codes
+      if (product.configurableAttributes && product.configurableAttributes.length > 0) {
+        commerceProduct.configurable_attributes = product.configurableAttributes.join(',');
+      }
+    }
+
+    // Handle variant products (simple products with parent reference)
+    if (product.parentSku) {
+      commerceProduct.parent_sku = product.parentSku;
+    }
+
     // Add all custom attributes
     for (const [key, value] of Object.entries(product.attributes)) {
       if (Array.isArray(value)) {
@@ -142,10 +158,10 @@ function loadProductsFromCanonical() {
         commerceProduct[key] = value;
       }
     }
-    
+
     products.push(commerceProduct);
   }
-  
+
   return products;
 }
 
@@ -155,6 +171,7 @@ function loadProductsFromCanonical() {
 function mapCanonicalVisibilityToCommerce(visibility) {
   const map = {
     'not_visible': 1,
+    'not_visible_individually': 1,  // For variant products
     'catalog': 2,
     'search': 3,
     'catalog_search': 4
@@ -298,51 +315,14 @@ function transformProductsToAccsFormat(products) {
 }
 
 /**
- * Transform categories to ACCS format
- */
-function transformCategoriesToAccsFormat(categories) {
-  const commerceConfig = PROJECT_CONFIG.project.commerce;
-  
-  return {
-    root_category: {
-      name: PROJECT_CONFIG.project.rootCategoryName,
-      parent_id: 1,
-      is_active: commerceConfig.defaultActive,
-      include_in_menu: false,
-      customAttributes: [
-        {
-          attributeCode: "is_anchor",
-          value: "1"
-        }
-      ]
-    },
-    categories: categories.map((cat, index) => ({
-      category: {
-        name: cat.name,
-        parent_id: 0,
-        is_active: commerceConfig.defaultActive,
-        position: index + 1,
-        path: "",
-        include_in_menu: commerceConfig.defaultIncludeInMenu,
-        customAttributes: [
-          {
-            attributeCode: "is_anchor",
-            value: "1"
-          },
-          {
-            attribute_code: "url_key",
-            value: cat.url_key || cat.name.toLowerCase().replace(/\s+/g, '-')
-          }
-        ]
-      }
-    }))
-  };
-}
-
-/**
  * Transform customers to ACCS format
+ * Uses project config for website/store codes
  */
 function transformCustomersToAccsFormat(customers) {
+  const websiteCode = PROJECT_CONFIG.project.websiteCode || 'base';
+  const storeViewCode = PROJECT_CONFIG.project.storeViewCode || 'default';
+  const displayName = PROJECT_CONFIG.project.displayName || 'Default Store View';
+
   return {
     source: {
       entity: "customer_composite",
@@ -351,8 +331,8 @@ function transformCustomersToAccsFormat(customers) {
       allowedErrorCount: "10",
       items: customers.map(customer => ({
         email: customer.email,
-        _website: "base",
-        _store: "default",
+        _website: websiteCode,
+        _store: storeViewCode,
         firstname: customer.firstname,
         lastname: customer.lastname,
         dob: "",
@@ -365,10 +345,11 @@ function transformCustomersToAccsFormat(customers) {
         password: customer.password || "Password1",
         confirmation: "",
         created_at: "",
-        created_in: "Default Store View",
+        created_in: displayName,
         disable_auto_group_change: 0,
-        website_id: 0,
-        store_id: 1,
+        // Note: website_id and store_id are resolved by Commerce import based on codes
+        website_id: customer.website_id || 0,
+        store_id: customer.store_id || 1,
         _address_firstname: customer.firstname,
         _address_lastname: customer.lastname,
         _address_company: customer.company || "",
@@ -741,49 +722,28 @@ async function generateDataPack() {
   updateLine(chalk.green(`✔ Generated ${rawAttributes.length} ${pluralize(rawAttributes.length, 'attribute')} with ${attributeAssignments.length} ${pluralize(attributeAssignments.length, 'assignment')}`));
   finishLine();
 
-  // Load products from canonical datapack
-  updateLine('📦 Loading products from canonical...');
-  const rawProducts = loadProductsFromCanonical();
-  updateLine(chalk.green(`✔ Loaded ${rawProducts.length} ${pluralize(rawProducts.length, 'product')} from canonical`));
+  // Load all products from canonical datapack (simple, configurable, and variants)
+  updateLine('📦 Loading all products from canonical...');
+  const allProducts = loadProductsFromCanonical();
+
+  // Count product types for logging
+  const simpleCount = allProducts.filter(p => p.type_id === 'simple' && !p.parent_sku).length;
+  const configurableCount = allProducts.filter(p => p.type_id === 'configurable').length;
+  const variantCount = allProducts.filter(p => p.parent_sku).length;
+
+  updateLine(chalk.green(`✔ Loaded ${allProducts.length} products (${simpleCount} simple, ${configurableCount} configurable, ${variantCount} variants)`));
   finishLine();
-  
-  // Generate configurable products and variants
-  updateLine('📦 Generating configurable products...');
-  const rawVariants = await generateVariants();
-  const configurableCount = rawVariants.filter(p => p.type_id === 'configurable').length;
-  const variantCount = rawVariants.filter(p => p.type_id === 'simple').length;
-  updateLine(chalk.green(`✔ Generated ${configurableCount} ${pluralize(configurableCount, 'configurable')} with ${variantCount} ${pluralize(variantCount, 'variant')}`));
-  finishLine();
-  
-  // Combine all products
-  const allProducts = [...rawProducts, ...rawVariants];
   
   // Check for duplicate SKUs
-  const skuCounts = {};
-  const duplicates = [];
-  allProducts.forEach(p => {
-    if (skuCounts[p.sku]) {
-      skuCounts[p.sku]++;
-      if (skuCounts[p.sku] === 2) {
-        duplicates.push(p.sku);
-      }
-    } else {
-      skuCounts[p.sku] = 1;
-    }
-  });
-  
+  const seen = new Set();
+  const duplicates = allProducts.filter(p => seen.has(p.sku) || !seen.add(p.sku)).map(p => p.sku);
   if (duplicates.length > 0) {
-    throw new Error(`Duplicate SKUs detected: ${duplicates.join(', ')}`);
+    throw new Error(`Duplicate SKUs detected: ${[...new Set(duplicates)].join(', ')}`);
   }
   
   // Transform and write products
   const accsProducts = transformProductsToAccsFormat(allProducts);
   writeFileSync(join(DATA_DIR, 'accs_products.json'), JSON.stringify(accsProducts, null, 4), 'utf8');
-  
-  // Calculate totals for summary
-  const simpleCount = rawProducts.length;
-  const totalSkus = simpleCount + configurableCount;
-  const totalRecords = allProducts.length;
 
   // Generate product images
   updateLine('📦 Generating product images...');
@@ -826,13 +786,13 @@ async function generateDataPack() {
   const inventorySources = generateInventorySources({ includeStorePickup: true });
   const accsInventorySources = transformSourcesToAccsFormat(inventorySources);
   const sourceCount = accsInventorySources.sources?.length || inventorySources.length;
-  writeJsonFile(join(DATA_DIR, 'accs_inventory_sources.json'), accsInventorySources, `${sourceCount} MSI ${pluralize(sourceCount, 'source')}`, 'sources');
+  writeJsonFile(join(DATA_DIR, 'accs_inventory_sources.json'), accsInventorySources, `${sourceCount} MSI ${pluralize(sourceCount, 'source')}`);
   
   // Generate stock-source links (linking sources to stock_id 2)
   updateLine('📦 Generating stock-source links...');
   const stockSourceLinks = generateStockSourceLinks(inventorySources, 2);
   const linkCount = stockSourceLinks.links?.length || 0;
-  writeJsonFile(join(DATA_DIR, 'accs_stock_source_links.json'), stockSourceLinks, `${linkCount} stock ${pluralize(linkCount, 'link')}`, 'links');
+  writeJsonFile(join(DATA_DIR, 'accs_stock_source_links.json'), stockSourceLinks, `${linkCount} stock ${pluralize(linkCount, 'link')}`);
   
   // Generate source items (inventory quantities per source per product)
   updateLine('📦 Generating source inventory quantities...');
@@ -857,7 +817,7 @@ async function generateDataPack() {
   const companies = generateCompanies();
   const accsCompanies = transformCompaniesToAccsFormat(companies);
   const companyCount = accsCompanies.companies?.length || companies.length;
-  writeJsonFile(join(DATA_DIR, 'accs_companies.json'), accsCompanies, `${companyCount} B2B ${pluralize(companyCount, 'company', 'companies')}`, 'companies');
+  writeJsonFile(join(DATA_DIR, 'accs_companies.json'), accsCompanies, `${companyCount} B2B ${pluralize(companyCount, 'company', 'companies')}`);
   
   // Generate company roles (shared across all companies)
   updateLine('📦 Generating B2B company structures...');
@@ -893,9 +853,14 @@ async function generateDataPack() {
   console.log('');
 }
 
-// Run generator
-generateDataPack().catch(error => {
-  console.error(chalk.red(`✖ Generation failed: ${error.message}`));
-  console.error(error.stack);
-  process.exit(1);
-});
+// Export functions for testing
+export { loadProductsFromCanonical };
+
+// Run generator only when executed directly (not when imported for testing)
+if (import.meta.url === `file://${process.argv[1]}` || process.argv[1]?.endsWith('generate-commerce.js')) {
+  generateDataPack().catch(error => {
+    console.error(chalk.red(`\u2716 Generation failed: ${error.message}`));
+    console.error(error.stack);
+    process.exit(1);
+  });
+}

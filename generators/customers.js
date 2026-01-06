@@ -12,14 +12,17 @@ const DEMO_CUSTOMERS = PROJECT_CONFIG.demoCustomers;
  * @returns {Array} Array of customer objects
  */
 export function generateCustomers() {
+  const websiteCode = PROJECT_CONFIG.project.websiteCode || 'base';
+  const storeViewCode = PROJECT_CONFIG.project.storeViewCode || 'default';
+
   return DEMO_CUSTOMERS.map(customer => {
     const customerData = {
       email: customer.email,
       firstname: customer.firstname,
       lastname: customer.lastname,
       group_code: customer.groupCode,
-      website_code: 'base',
-      store_view_code: 'default',
+      website_code: websiteCode,
+      store_view_code: storeViewCode,
       password: customer.password,
       
       // Billing address
@@ -96,16 +99,19 @@ export function generateCustomersWithDetails() {
     }
   };
   
+  const websiteCode = PROJECT_CONFIG.project.websiteCode || 'base';
+  const storeViewCode = PROJECT_CONFIG.project.storeViewCode || 'default';
+
   return DEMO_CUSTOMERS.map(customer => {
     const details = customerDetails[customer.firstname.toLowerCase()] || customerDetails.david;
-    
+
     const customerData = {
       email: customer.email,
       firstname: customer.firstname,
       lastname: customer.lastname,
       group_code: customer.groupCode,
-      website_code: 'base',
-      store_view_code: 'default',
+      website_code: websiteCode,
+      store_view_code: storeViewCode,
       password: customer.password,
       
       // Billing address
