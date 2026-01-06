@@ -124,11 +124,28 @@ Product Definitions → Canonical Format (JSON)
       "searchable": true,
       "filterable": true,
       "comparable": false,
-      "visibleOnFront": true,
+      "visibleOnFront": true,        // Show in PDP specifications
       "usedInProductListing": true,
       "options": [
         { "value": "structural-materials", "label": "Structural Materials" },
         { "value": "roofing", "label": "Roofing" }
+      ]
+    },
+    {
+      // Internal attribute example - available for logic but hidden from display
+      "code": "br_restock_priority",
+      "label": "Restock Priority",
+      "type": "select",
+      "required": false,
+      "searchable": false,
+      "filterable": false,
+      "comparable": false,
+      "visibleOnFront": false,       // NOT shown in PDP specifications
+      "usedInProductListing": false,
+      "options": [
+        { "value": "high", "label": "High" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "low", "label": "Low" }
       ]
     }
   ],
@@ -160,6 +177,26 @@ Product Definitions → Canonical Format (JSON)
 | catalog | 2 | ["CATALOG"] |
 | search | 3 | ["SEARCH"] |
 | catalog_search | 4 | ["CATALOG", "SEARCH"] |
+
+### Attribute Visibility Mapping
+
+The `visibleOnFront` field controls whether an attribute appears in the PDP specifications list.
+This follows the standard Commerce pattern for attribute visibility.
+
+| Canonical Field | Commerce Field | ACO Metadata |
+|-----------------|----------------|--------------|
+| `visibleOnFront: true` | `is_visible_on_front: 1` | `visibility: ["PRODUCT_DETAIL", ...]` |
+| `visibleOnFront: false` | `is_visible_on_front: 0` | `visibility: []` (no PRODUCT_DETAIL) |
+
+**Important:** Attributes with `visibleOnFront: false` are still included on products and available 
+for business logic, filtering, and API consumers. They are only hidden from the customer-facing 
+specifications display.
+
+**Use Cases:**
+- **Customer-facing attributes** (`visibleOnFront: true`): Brand, material, dimensions
+- **Internal attributes** (`visibleOnFront: false`): Restock priority, velocity category, internal codes
+
+See [ADR-019: Attribute Visibility Pattern](../../buildright-eds/docs/adr/ADR-019-attribute-visibility-pattern.md) for architectural details.
 
 ### Product Type Mapping
 

@@ -33,11 +33,29 @@ The `dataType` field must be one of:
 
 The `visibility` array determines where the attribute appears:
 
-- `PRODUCT_DETAIL` - Show on product detail pages
-- `PRODUCT_LISTING` - Show in product listing/grid views
-- `SEARCH_RESULTS` - Show in search result displays
+| Value | Description |
+|-------|-------------|
+| `PRODUCT_DETAIL` | Show in product detail page specifications |
+| `PRODUCT_LISTING` | Show in product listing/grid views |
+| `SEARCH_RESULTS` | Show in search result displays |
+| `FACET` | Enable as a facet/filter in search |
 
-**Note:** An attribute can have multiple visibility contexts. For example, a brand attribute might appear in all three contexts.
+**Note:** An attribute can have multiple visibility contexts. For example, a brand attribute might appear in all contexts.
+
+### Visibility and `isVisibleOnFront`
+
+Visibility is derived from the canonical data `isVisibleOnFront` field:
+
+| Canonical | Generated ACO Visibility |
+|-----------|--------------------------|
+| `isVisibleOnFront: true` | Includes `PRODUCT_DETAIL` |
+| `isVisibleOnFront: false` | Does NOT include `PRODUCT_DETAIL` |
+
+**Internal Attributes:** Attributes with `isVisibleOnFront: false` (like `br_restock_priority`) 
+will have `visibility: []` or only include `FACET` if filterable. They are still available on 
+products for business logic but are filtered out by the mesh before reaching the frontend.
+
+See [ADR-019: Attribute Visibility Pattern](../../../../buildright-eds/docs/adr/ADR-019-attribute-visibility-pattern.md) for details.
 
 ## Options
 
@@ -147,6 +165,32 @@ Attributes for detailed specifications:
   "searchWeight": 1
 }
 ```
+
+### Internal/Operational Attributes
+
+Attributes used for business logic but NOT displayed to customers:
+- `visibility: []` (empty array - no display contexts)
+- May include `FACET` if used for internal filtering
+- Generated from canonical `isVisibleOnFront: false`
+
+```json
+{
+  "attributeId": "br_store_velocity_category",
+  "name": "Store Velocity Category",
+  "dataType": "TEXT",
+  "visibility": [],
+  "searchWeight": 1,
+  "options": [
+    { "value": "fast-moving", "label": "Fast-Moving" },
+    { "value": "slow-moving", "label": "Slow-Moving" }
+  ]
+}
+```
+
+These attributes are:
+- ✅ Available on products via API (for dashboards, logic, B2B features)
+- ✅ Queryable through GraphQL
+- ❌ NOT shown in PDP specifications (filtered by mesh)
 
 ## Implementation Notes
 
